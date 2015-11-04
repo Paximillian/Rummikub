@@ -1,3 +1,5 @@
+package mvcViewComponent;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -8,6 +10,6 @@
  *
  * @author Mor
  */
-public class gameView {
-    
+public interface ViewPrinter {
+    public void Print();
 }
