@@ -31,6 +31,6 @@ public class MainMenu {
         Scanner inputScanner = new Scanner(System.in);
         int menuChoice = inputScanner.nextInt();
         
-        menuCommands.get(menuChoice).execute();
+        menuCommands.get(menuChoice - 1).execute();
     }
 }
