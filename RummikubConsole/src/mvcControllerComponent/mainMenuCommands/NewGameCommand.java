@@ -31,6 +31,7 @@ public class NewGameCommand implements MenuCommand {
             }
             catch(IllegalArgumentException ex){
                 System.out.print(ex.getMessage());
+                return;
             }
 
             //Game name
@@ -38,9 +39,14 @@ public class NewGameCommand implements MenuCommand {
             GameController.getInstance().setGameName(nameOfGame);
 
             //Get the name of each player
-            for(int i = 0; i < playerCount; ++i){
+            for(int i = 1; i <= playerCount - computerPlayerCount; ++i){
                 String playerName = InputRequester.RequestString(String.format("Name of player %d?", i));
-                GameController.getInstance().addPlayer(playerName);
+                GameController.getInstance().addPlayer(playerName, false);
+            }
+            
+            //Add bots
+            for(int i = 0; i < computerPlayerCount; ++i){
+                GameController.getInstance().addPlayer(String.format("Bot%d", i + 1), true);
             }
         }
         catch(IllegalStateException ex){

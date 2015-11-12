@@ -31,6 +31,15 @@ public class MainMenu {
         Scanner inputScanner = new Scanner(System.in);
         int menuChoice = inputScanner.nextInt();
         
-        menuCommands.get(menuChoice - 1).execute();
+        try{
+            if(menuChoice < 1 || menuChoice > menuCommands.size()){
+                throw new IndexOutOfBoundsException("Invalid menu choice");
+            }
+            
+            menuCommands.get(menuChoice - 1).execute();
+        }
+        catch(Exception ex){
+            System.out.print(ex.getMessage());
+        }
     }
 }

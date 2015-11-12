@@ -7,9 +7,7 @@ package mvcControllerComponent;
 
 import consoleSpecificRummikubImplementations.mvcViewComponent.gameMenus.MainMenu;
 import java.util.*;
-import mvcControllerComponent.mainMenuCommands.LoadGameCommand;
-import mvcControllerComponent.mainMenuCommands.MenuCommand;
-import mvcControllerComponent.mainMenuCommands.NewGameCommand;
+import mvcControllerComponent.mainMenuCommands.*;
 
 /**
  *
@@ -22,6 +20,16 @@ public class GameLobbyManager {
         Map menuCommands = new HashMap();
         menuCommands.put("New Game", new NewGameCommand());
         menuCommands.put("Load Game", new LoadGameCommand());
-        menu.showMenu(menuCommands);
+        menuCommands.put("Exit", new ExitGameCommand());
+        
+        do{
+            menu.showMenu(menuCommands);
+            
+            //If all the details have been validated, we can start a new game.
+            if(GameController.getInstance().getGameReady()){
+                
+            }
+        }
+        while(!GameController.getInstance().hasGameEnded());
     }
 }

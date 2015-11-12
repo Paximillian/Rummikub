@@ -7,6 +7,7 @@ package mvcControllerComponent;
 
 import java.util.ArrayList;
 import java.util.List;
+import mvcModelComponent.Player;
 
 /**
  *
@@ -20,11 +21,14 @@ public class GameController {
     
     private static GameController instance;
         
-    private static int numberOfPlayers;
-    private static int numberOfComputerPlayers;
-    private static String gameName;
+    private int numberOfPlayers;
+    private int numberOfComputerPlayers;
+    private String gameName;
+    private final List<Player> activePlayers = new ArrayList<Player>();
     
-    private static boolean gameStarted = false;
+    private boolean gameStarted = false;
+    private boolean gameEnded = false;
+    private boolean gameReady = false;
     
     public static GameController getInstance(){
         if(instance == null){
@@ -36,6 +40,18 @@ public class GameController {
     
     private GameController(){
         
+    }
+
+    public void endGame() {
+        gameEnded = true;
+    }
+    
+    public boolean hasGameEnded(){
+        return gameEnded;
+    }
+    
+    boolean getGameReady() {
+        return gameReady;
     }
     
     public void setNumberOfPlayers(int playerCount) throws IllegalArgumentException, IllegalStateException{
@@ -70,9 +86,33 @@ public class GameController {
         gameName = nameOfGame;
     }
 
-    public void addPlayer(String playerName) throws IllegalStateException {
+    public void addPlayer(String playerName, boolean isBot) throws IllegalStateException, IllegalArgumentException {
         if(gameStarted){
             throw new IllegalStateException("Can't add a player to a game that already started");
+        }
+        
+        //Name can't already exist.
+        if(activePlayers.stream().noneMatch(player -> player.getName().equals(playerName))){
+            //Name can't be empty
+            if(playerName.length() == 0){
+                throw new IllegalArgumentException("Player name can't be empty");
+            }
+            else{
+                activePlayers.add(new Player(playerName, isBot));
+            }
+        }
+        else{
+            if(isBot){
+                addPlayer(String.format("B%s", playerName), isBot);
+            }
+            else{
+                throw new IllegalArgumentException("This player name already exists.");
+            }
+        }
+                
+        //If all players have been added.
+        if(activePlayers.size() == numberOfPlayers){
+            gameReady = true;
         }
     }
     

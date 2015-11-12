@@ -17,7 +17,17 @@ public class InputRequester {
     
     public static int RequestInt(String requestMessage){
         System.out.print(requestMessage);
-        return inputScanner.nextInt();
+        
+        int inputNumber = 0;
+        try{
+            inputNumber = Integer.parseInt(inputScanner.nextLine());
+        }
+        catch(Exception ex){
+            System.out.print(ex.getMessage());
+            return -1;
+        }
+        
+        return inputNumber;
     }
 
     public static String RequestString(String requestMessage) {
