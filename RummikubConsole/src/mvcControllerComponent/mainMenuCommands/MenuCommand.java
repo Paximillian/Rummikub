@@ -10,5 +10,5 @@ package mvcControllerComponent.mainMenuCommands;
  * @author Mor
  */
 public interface MenuCommand {
-    public void execute();
+    public void execute() throws Exception;
 }
