@@ -6,6 +6,8 @@
 package mvcModelComponent;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  *
@@ -22,6 +24,16 @@ public class Deck {
                 tiles.add(tile);
                 tiles.add(tile);                
             }
-        }      
+        }
+        Collections.shuffle(tiles);
     }
+    
+    public Tile getTile(){
+        return tiles.remove(0);
+    }
+    
+    public boolean isDeckEmptey(){
+        return tiles.isEmpty();
+    }
+    
 }

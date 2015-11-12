@@ -10,7 +10,15 @@ package mvcModelComponent;
  *
  * @author yafita870
  */
-public class Tile {
+public class Tile implements Comparable{
+
+    @Override
+    public int compareTo(Object tile) {
+        if(this.renk.value() > ((Tile)tile).renk.value())
+            return 1;
+        else return 0;
+    }
+    
     
     public enum Color {
 
@@ -54,12 +62,13 @@ public class Tile {
         }
         
     }
-    public Tile(Color color, Rank value)
+    public Tile(Color color, Rank renk)
     {
         this.color = color;
-        this.value = value;
+        this.renk = renk;
     }
-    private final Rank value;
+    
+    private final Rank renk;
     private final Color color; 
     
 }
