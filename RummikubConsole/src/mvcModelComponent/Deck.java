@@ -20,11 +20,13 @@ public class Deck {
     public Deck(){
         for (Tile.Color color : Tile.Color.values()) {
             for (Tile.Rank rank : Tile.Rank.values()) {
+                if( rank == Tile.Rank.JOKER && Tile.Color.RED != color)
+                    continue;
                 Tile tile = new Tile(color, rank);
                 tiles.add(tile);
-                tiles.add(tile);                
+                tiles.add(tile);
             }
-        }
+        }    
         Collections.shuffle(tiles);
     }
     

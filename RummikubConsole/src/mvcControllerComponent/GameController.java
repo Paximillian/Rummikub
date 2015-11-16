@@ -98,7 +98,7 @@ public class GameController {
                 throw new IllegalArgumentException("Player name can't be empty");
             }
             else{
-                activePlayers.add(new Player(playerName, isBot));
+                //activePlayers.add(new Player(playerName, isBot));
             }
         }
         else{

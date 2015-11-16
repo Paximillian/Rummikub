@@ -5,6 +5,8 @@
  */
 package mvcModelComponent;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Mor
@@ -12,10 +14,12 @@ package mvcModelComponent;
 public class Player {
     private String playerName;
     private boolean isBot;
+    public ArrayList<Tile> hand ;
 
-    public Player(String newName, boolean isBotStatus) {
+    public Player(String newName, boolean isBotStatus,ArrayList<Tile> hand) {
         playerName = newName;
         isBot = isBotStatus;
+        this.hand = hand;
     }
     
     public void setName(String newName){
@@ -25,4 +29,14 @@ public class Player {
     public String getName(){
         return playerName;
     }
+    
+    public boolean isBot(){
+        return isBot;
+    }
+    
+    public void setIsBot(boolean isBot){
+        this.isBot = isBot;
+    }
+    
+    
 }

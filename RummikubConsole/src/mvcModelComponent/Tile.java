@@ -50,7 +50,8 @@ public class Tile implements Comparable{
         TEN(10),
         ELEVEN(11),
         TWELVE(12),
-        THIRTEEN(13);
+        THIRTEEN(13),
+        JOKER(14);
         
         private final int value;
         
@@ -59,6 +60,9 @@ public class Tile implements Comparable{
         }
         public int value(){
             return this.value;
+        }
+        public boolean isJoker(Tile.Rank isJoker){
+            return isJoker == Tile.Rank.JOKER;
         }
         
     }
