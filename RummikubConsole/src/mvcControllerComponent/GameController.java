@@ -6,14 +6,14 @@
 package mvcControllerComponent;
 
 import consoleSpecificRummikubImplementations.mvcViewComponent.gameMenus.Menu;
-import consoleSpecificRummikubImplementations.mvcViewComponent.gameViewElements.GameView;
+import consoleSpecificRummikubImplementations.mvcViewComponent.gameViewElements.*;
 import consoleSpecificRummikubImplementations.mvcViewComponent.inputRequestMenus.InputRequester;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import mvcControllerComponent.mainMenuCommands.*;
-import mvcModelComponent.Player;
+import mvcModelComponent.*;
 
 /**
  *
@@ -30,9 +30,8 @@ public class GameController {
     private int numberOfPlayers;
     private int numberOfComputerPlayers;
     private String gameName;
-    private final List<Player> activePlayers = new ArrayList<Player>();
     
-    private GameView gameView;
+    private Game gameState;
     
     private boolean gameStarted = false;
     private boolean gameEnded = false;
@@ -47,7 +46,7 @@ public class GameController {
     }
     
     private GameController(){
-        
+        gameState = new Game();
     }
 
     public void endGame() {
@@ -100,13 +99,13 @@ public class GameController {
         }
         
         //Name can't already exist.
-        if(activePlayers.stream().noneMatch(player -> player.getName().equals(playerName))){
+        if(gameState.getPlayers().stream().noneMatch(player -> player.getName().equals(playerName))){
             //Name can't be empty
             if(playerName.length() == 0){
                 throw new IllegalArgumentException("Player name can't be empty");
             }
             else{
-                //activePlayers.add(new Player(playerName, isBot));
+                gameState.newPlayer(playerName, isBot);
             }
         }
         else{
@@ -119,7 +118,7 @@ public class GameController {
         }
                 
         //If all players have been added.
-        if(activePlayers.size() == numberOfPlayers){
+        if(gameState.getPlayers().size() == numberOfPlayers){
             gameReady = true;
         }
     }
@@ -131,13 +130,11 @@ public class GameController {
     //Start a new game.
     void startGame() {
         //Create a new game, make it into a Game view.
-        //TODO: Change to Eitan's game object
-        //Game game = new Game();
-        Object game = new Object();
+        GameView gameView = generateGameView();
         
         //While the game is running, we'll print the game state and ask the user to enter an action.
         while(!gameEnded){
-            gameView = generateGameViewFor(game);
+            gameView = generateGameView();
             gameView.printComponent();
             
             //Show the action menu;
@@ -162,7 +159,21 @@ public class GameController {
     }
 
     //TODO: Fix with Eitan's Game object.
-    private GameView generateGameViewFor(Object game) {
-        return new GameView();
+    private GameView generateGameView() {
+        GameView newGameView = new GameView();
+        
+        //Add the players
+        for(Player player : gameState.getPlayers()){
+            PlayerView playerView = new PlayerView(player.getName());
+            
+            //Add the players' cards
+            for(Tile card : player.getHand()){
+                CardView cardView = new CardView(card.toString());
+                
+                playerView.addCardToHand(cardView);
+            }
+        }
+                
+        return newGameView;
     }
 }

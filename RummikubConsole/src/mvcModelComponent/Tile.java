@@ -14,7 +14,7 @@ public class Tile implements Comparable{
 
     @Override
     public int compareTo(Object tile) {
-        if(this.renk.value() > ((Tile)tile).renk.value())
+        if(this.rank.value() > ((Tile)tile).rank.value())
             return 1;
         else return 0;
     }
@@ -69,10 +69,14 @@ public class Tile implements Comparable{
     public Tile(Color color, Rank renk)
     {
         this.color = color;
-        this.renk = renk;
+        this.rank = renk;
     }
     
-    private final Rank renk;
+    private final Rank rank;
     private final Color color; 
     
+    @Override 
+    public String toString(){
+        return color.toString()+rank.toString();
+    }
 }

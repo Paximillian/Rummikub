@@ -9,7 +9,7 @@ package consoleSpecificRummikubImplementations.mvcViewComponent.gameViewElements
  *
  * @author Mor
  */
-class PlayerView implements ViewComponentPrinter{
+public class PlayerView implements ViewComponentPrinter{
     private final CardSetView hand;
     private String name;
     
