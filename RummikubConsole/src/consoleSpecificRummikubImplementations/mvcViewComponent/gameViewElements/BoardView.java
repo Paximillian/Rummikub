@@ -37,6 +37,8 @@ class BoardView implements ViewComponentPrinter{
             
             ++currentSetID;
         }
+        
+        System.out.print(String.format("%d-[]%s", currentSetID, System.lineSeparator()));
     }
     
 }

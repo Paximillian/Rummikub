@@ -5,8 +5,14 @@
  */
 package mvcControllerComponent;
 
+import consoleSpecificRummikubImplementations.mvcViewComponent.gameMenus.Menu;
+import consoleSpecificRummikubImplementations.mvcViewComponent.gameViewElements.GameView;
+import consoleSpecificRummikubImplementations.mvcViewComponent.inputRequestMenus.InputRequester;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import mvcControllerComponent.mainMenuCommands.*;
 import mvcModelComponent.Player;
 
 /**
@@ -25,6 +31,8 @@ public class GameController {
     private int numberOfComputerPlayers;
     private String gameName;
     private final List<Player> activePlayers = new ArrayList<Player>();
+    
+    private GameView gameView;
     
     private boolean gameStarted = false;
     private boolean gameEnded = false;
@@ -118,5 +126,43 @@ public class GameController {
     
     public void resetGame(){
         instance = null;
+    }
+
+    //Start a new game.
+    void startGame() {
+        //Create a new game, make it into a Game view.
+        //TODO: Change to Eitan's game object
+        //Game game = new Game();
+        Object game = new Object();
+        
+        //While the game is running, we'll print the game state and ask the user to enter an action.
+        while(!gameEnded){
+            gameView = generateGameViewFor(game);
+            gameView.printComponent();
+            
+            //Show the action menu;
+            Menu actionMenu = new Menu();
+            Map menuItems = new HashMap();
+            menuItems.put("Add Card To Series", new AddCardToSeriesCommand());
+            menuItems.put("Combine Series", new CombineSeriesCommand());
+            menuItems.put("Split Series", new SplitSeriesCommand());
+            menuItems.put("Move Card Between Series", new MoveCardCommand());
+            menuItems.put("Done", new EndTurnCommand());
+            actionMenu.showMenu(menuItems);
+            
+            //Request input from the view component
+            int fromSetID = InputRequester.RequestInt("ID of set you want to move a card from:");
+            int fromCardID = InputRequester.RequestInt("ID of card in the set that you want to move:");
+            int toSetID = InputRequester.RequestInt("ID of set you want to move a card to:");
+            int toPositionID = InputRequester.RequestInt("ID of position in the set you want to move to:");
+            
+            //Move the cards around according to input
+            gameView.moveCard(fromSetID, fromCardID, toSetID, toPositionID);
+        }
+    }
+
+    //TODO: Fix with Eitan's Game object.
+    private GameView generateGameViewFor(Object game) {
+        return new GameView();
     }
 }

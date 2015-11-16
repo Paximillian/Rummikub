@@ -11,9 +11,11 @@ package consoleSpecificRummikubImplementations.mvcViewComponent.gameViewElements
  */
 class PlayerView implements ViewComponentPrinter{
     private final CardSetView hand;
+    private String name;
     
-    public PlayerView(){
+    public PlayerView(String playerName){
         hand = new CardSetView();
+        name = playerName;
     }
     
     public void addCardToHand(CardView card){
@@ -22,6 +24,7 @@ class PlayerView implements ViewComponentPrinter{
     
     @Override
     public void printComponent() {
+        System.out.print(name);
         System.out.print(String.format("Hand:%s", System.lineSeparator()));
         
         hand.printComponent();
