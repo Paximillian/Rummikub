@@ -23,7 +23,12 @@ public class GameLobbyManager {
         menuCommands.put("Exit", new ExitGameCommand());
         
         do{
-            menu.showMenu(menuCommands);
+            try{
+                menu.showMenu(menuCommands);
+            }
+            catch(InputMismatchException e){
+                System.out.println(e.getMessage());
+            }
             
             //If all the details have been validated, we can start a new game.
             if(GameController.getInstance().getGameReady()){
