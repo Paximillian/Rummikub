@@ -1,14 +1,13 @@
 
-import java.util.ArrayList;
-import mvcModelComponent.Deck;
-import mvcModelComponent.Player;
-import mvcModelComponent.Tile;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package mvcModelComponent;
+
+import java.util.ArrayList;
 
 /**
  *
@@ -42,5 +41,9 @@ public class Game {
             newHand.add(this.deck.getTile());
         }
         return newHand;
+    }
+    
+    public ArrayList<Player> getPlayers(){
+        return players;
     }
 }

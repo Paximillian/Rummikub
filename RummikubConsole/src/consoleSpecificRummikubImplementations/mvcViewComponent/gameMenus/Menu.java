@@ -12,7 +12,7 @@ import java.util.*;
  *
  * @author Mor
  */
-public class MainMenu {
+public class Menu{
     public void showMenu(Map<String, MenuCommand> menuItems){
         System.out.print("Choose an action:");
         System.out.print(System.lineSeparator());

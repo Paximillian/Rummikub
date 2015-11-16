@@ -25,7 +25,10 @@ class CardSetView implements ViewComponentPrinter{
     
     @Override
     public void printComponent() {
-        int currentCardId = 1;
+        int currentCardId = 0;
+        
+        System.out.print(String.format(" %d%s", currentCardId, "-[]"));
+        ++currentCardId;
         
         //Printing all cards in the set and their ID for IO purpose.
         for(CardView card : cardsInSet){
@@ -34,6 +37,8 @@ class CardSetView implements ViewComponentPrinter{
             
             ++currentCardId;
         }
+        
+        System.out.print(String.format(" %d%s", currentCardId, "-[]"));
     }
     
 }

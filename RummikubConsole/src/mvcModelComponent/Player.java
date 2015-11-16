@@ -6,6 +6,7 @@
 package mvcModelComponent;
 
 import java.util.ArrayList;
+import javax.smartcardio.Card;
 
 /**
  *
@@ -36,6 +37,10 @@ public class Player {
     
     public void setIsBot(boolean isBot){
         this.isBot = isBot;
+    }
+
+    public Iterable<Tile> getHand() {
+        return hand;
     }
     
     public void addTileToHand(Tile tile)

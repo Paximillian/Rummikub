@@ -5,9 +5,15 @@
  */
 package mvcControllerComponent;
 
+import consoleSpecificRummikubImplementations.mvcViewComponent.gameMenus.Menu;
+import consoleSpecificRummikubImplementations.mvcViewComponent.gameViewElements.*;
+import consoleSpecificRummikubImplementations.mvcViewComponent.inputRequestMenus.InputRequester;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import mvcModelComponent.Player;
+import java.util.Map;
+import mvcControllerComponent.mainMenuCommands.*;
+import mvcModelComponent.*;
 
 /**
  *
@@ -24,7 +30,8 @@ public class GameController {
     private int numberOfPlayers;
     private int numberOfComputerPlayers;
     private String gameName;
-    private final List<Player> activePlayers = new ArrayList<Player>();
+    
+    private Game gameState;
     
     private boolean gameStarted = false;
     private boolean gameEnded = false;
@@ -39,7 +46,7 @@ public class GameController {
     }
     
     private GameController(){
-        
+        gameState = new Game();
     }
 
     public void endGame() {
@@ -92,13 +99,13 @@ public class GameController {
         }
         
         //Name can't already exist.
-        if(activePlayers.stream().noneMatch(player -> player.getName().equals(playerName))){
+        if(gameState.getPlayers().stream().noneMatch(player -> player.getName().equals(playerName))){
             //Name can't be empty
             if(playerName.length() == 0){
                 throw new IllegalArgumentException("Player name can't be empty");
             }
             else{
-                //activePlayers.add(new Player(playerName, isBot));
+                gameState.newPlayer(playerName, isBot);
             }
         }
         else{
@@ -111,12 +118,62 @@ public class GameController {
         }
                 
         //If all players have been added.
-        if(activePlayers.size() == numberOfPlayers){
+        if(gameState.getPlayers().size() == numberOfPlayers){
             gameReady = true;
         }
     }
     
     public void resetGame(){
         instance = null;
+    }
+
+    //Start a new game.
+    void startGame() {
+        //Create a new game, make it into a Game view.
+        GameView gameView = generateGameView();
+        
+        //While the game is running, we'll print the game state and ask the user to enter an action.
+        while(!gameEnded){
+            gameView = generateGameView();
+            gameView.printComponent();
+            
+            //Show the action menu;
+            Menu actionMenu = new Menu();
+            Map menuItems = new HashMap();
+            menuItems.put("Add Card To Series", new AddCardToSeriesCommand());
+            menuItems.put("Combine Series", new CombineSeriesCommand());
+            menuItems.put("Split Series", new SplitSeriesCommand());
+            menuItems.put("Move Card Between Series", new MoveCardCommand());
+            menuItems.put("Done", new EndTurnCommand());
+            actionMenu.showMenu(menuItems);
+            
+            //Request input from the view component
+            int fromSetID = InputRequester.RequestInt("ID of set you want to move a card from:");
+            int fromCardID = InputRequester.RequestInt("ID of card in the set that you want to move:");
+            int toSetID = InputRequester.RequestInt("ID of set you want to move a card to:");
+            int toPositionID = InputRequester.RequestInt("ID of position in the set you want to move to:");
+            
+            //Move the cards around according to input
+            gameView.moveCard(fromSetID, fromCardID, toSetID, toPositionID);
+        }
+    }
+
+    //TODO: Fix with Eitan's Game object.
+    private GameView generateGameView() {
+        GameView newGameView = new GameView();
+        
+        //Add the players
+        for(Player player : gameState.getPlayers()){
+            PlayerView playerView = new PlayerView(player.getName());
+            
+            //Add the players' cards
+            for(Tile card : player.getHand()){
+                CardView cardView = new CardView(card.toString());
+                
+                playerView.addCardToHand(cardView);
+            }
+        }
+                
+        return newGameView;
     }
 }

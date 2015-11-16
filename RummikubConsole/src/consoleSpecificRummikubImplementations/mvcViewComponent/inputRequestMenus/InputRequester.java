@@ -16,7 +16,7 @@ public class InputRequester {
     private static final Scanner inputScanner = new Scanner(System.in);
     
     public static int RequestInt(String requestMessage){
-        System.out.print(requestMessage);
+        System.out.println(requestMessage);
         
         int inputNumber = 0;
         try{
@@ -31,7 +31,7 @@ public class InputRequester {
     }
 
     public static String RequestString(String requestMessage) {
-        System.out.print(requestMessage);
+        System.out.println(requestMessage);
         return inputScanner.nextLine();
     }
 }

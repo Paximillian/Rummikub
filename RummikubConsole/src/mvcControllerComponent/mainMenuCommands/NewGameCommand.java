@@ -40,8 +40,14 @@ public class NewGameCommand implements MenuCommand {
 
             //Get the name of each player
             for(int i = 1; i <= playerCount - computerPlayerCount; ++i){
-                String playerName = InputRequester.RequestString(String.format("Name of player %d?", i));
-                GameController.getInstance().addPlayer(playerName, false);
+                try{
+                    String playerName = InputRequester.RequestString(String.format("Name of player %d?", i));
+                    GameController.getInstance().addPlayer(playerName, false);
+                }
+                catch(IllegalArgumentException e){
+                    System.out.println(e.getMessage());
+                    --i;
+                }
             }
             
             //Add bots

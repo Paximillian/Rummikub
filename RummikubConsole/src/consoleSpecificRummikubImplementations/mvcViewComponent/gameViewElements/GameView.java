@@ -8,11 +8,8 @@ public class GameView implements ViewComponentPrinter {
     private PlayerView currentPlayerView;
     
     private BoardView boardView;
-    
-    private final List<CardSetView> cardSets;
-    
+        
     public GameView(){
-        cardSets = new ArrayList<CardSetView>();
     }
 
     @Override
@@ -22,9 +19,13 @@ public class GameView implements ViewComponentPrinter {
         System.out.print(System.lineSeparator());
         
         //Print the player's hand
-        System.out.print("h-");
+        System.out.print("0-");
         currentPlayerView.printComponent();
         System.out.print(System.lineSeparator());
         System.out.print(System.lineSeparator());
+    }
+
+    public void moveCard(int fromSetID, int fromCardID, int toSetID, int toPositionID) {
+        
     }
 }
