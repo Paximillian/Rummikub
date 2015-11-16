@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class Player {
     private String playerName;
     private boolean isBot;
-    public ArrayList<Tile> hand ;
+    private  ArrayList<Tile> hand ;
 
     public Player(String newName, boolean isBotStatus,ArrayList<Tile> hand) {
         playerName = newName;
@@ -38,5 +38,17 @@ public class Player {
         this.isBot = isBot;
     }
     
+    public void addTileToHand(Tile tile)
+    {
+        this.hand.add(tile);
+    }
+    
+    public Tile GetTileFromHand(int index)
+    {
+        if(this.hand.size() <= index)
+            return null;
+        else
+            return this.hand.remove(index);
+    }
     
 }

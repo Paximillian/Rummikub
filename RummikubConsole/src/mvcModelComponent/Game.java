@@ -19,7 +19,15 @@ public class Game {
     private final Deck deck = new Deck();
     private final ArrayList<Player> players = new ArrayList<Player>();
     
-    
+    public boolean addTileToPlayer(Player player)
+    {
+        if(deck.isDeckEmptey())
+            return false;
+        
+        player.addTileToHand(deck.getTile());
+        return true;
+    }
+
     public Player newPlayer(String newName, boolean isBotStatus)
     {
         Player newPlayer = new Player(newName, isBotStatus, newHand());
