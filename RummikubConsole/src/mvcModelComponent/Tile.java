@@ -11,7 +11,22 @@ package mvcModelComponent;
  * @author yafita870
  */
 public class Tile implements Comparable{
-
+    
+    private final Rank rank;
+    private final Color color;
+    
+    public Tile(Color color, Rank rank)
+    {
+        this.color = color;
+        this.rank = rank;
+    }
+    
+    public Tile(String stringRepresentation)
+    {
+        color = Color.fromValue(stringRepresentation.substring(0, 3));
+        rank = Rank.fromValue(Integer.parseInt(stringRepresentation.substring(3)));
+    }
+    
     @Override
     public int compareTo(Object tile) {
         if(this.rank.rankValue() > ((Tile)tile).rank.rankValue())
@@ -32,12 +47,27 @@ public class Tile implements Comparable{
         }
 
         public static Color fromValue(String v) {
+            switch(v){
+                case "red":
+                    v = "RED";
+                    break;
+                case "bla":
+                    v = "BLACK";
+                    break;
+                case "blu":
+                    v = "BLUE";
+                    break;
+                case "yel":
+                    v = "YELLOW";
+                    break;
+            }
+            
             return valueOf(v);
         }  
         
         @Override
         public String toString(){
-            return name().substring(0, 1).toLowerCase();
+            return name().substring(0, 3).toLowerCase();
         }
     }
     
@@ -63,6 +93,56 @@ public class Tile implements Comparable{
         private  Rank(int value){
             this.value = value;
         }
+        
+        public static Rank fromValue(int val){
+            Rank result;
+            
+            switch(val){
+                case 1:
+                    result = Rank.ONE;
+                    break;
+                case 2:
+                    result = Rank.TWO;
+                    break;
+                case 3:
+                    result = Rank.THREE;
+                    break;
+                case 4:
+                    result = Rank.FOUR;
+                    break;
+                case 5:
+                    result = Rank.FIVE;
+                    break;
+                case 6:
+                    result = Rank.SIX;
+                    break;
+                case 7:
+                    result = Rank.SEVEN;
+                    break;
+                case 8:
+                    result = Rank.EIGHT;
+                    break;
+                case 9:
+                    result = Rank.NINE;
+                    break;
+                case 10:
+                    result = Rank.TEN;
+                    break;
+                case 11:
+                    result = Rank.ELEVEN;
+                    break;
+                case 12:
+                    result = Rank.TWELVE;
+                    break;
+                case 13:
+                    result = Rank.THIRTEEN;
+                    break;
+                case 14:
+                    result = Rank.JOKER;
+                    break;
+            }
+        }
+        
         public int rankValue(){
             return this.value;
         }  
@@ -76,15 +156,6 @@ public class Tile implements Comparable{
     public boolean isJoker(){      
         return this.rank == Tile.Rank.JOKER;
     }
-    
-    public Tile(Color color, Rank renk)
-    {
-        this.color = color;
-        this.rank = renk;
-    }
-    
-    private final Rank rank;
-    private final Color color;
     
     public Rank getRank(){
         return this.rank;

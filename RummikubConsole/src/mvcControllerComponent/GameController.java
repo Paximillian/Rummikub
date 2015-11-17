@@ -5,6 +5,7 @@
  */
 package mvcControllerComponent;
 
+import consoleSpecificRummikubImplementations.mvcViewComponent.errorModule.ErrorDisplayer;
 import mvcControllerComponent.turnMenuCommands.EndTurnCommand;
 import mvcControllerComponent.turnMenuCommands.BustAMoveCommand;
 import mvcControllerComponent.turnMenuCommands.SaveAsCommand;
@@ -37,7 +38,7 @@ public class GameController {
     private String gameName;
     
     private Game gameState;
-    private GameView gameView;
+    private Game gameStateBackup;
     
     private boolean gameStarted = false;
     private boolean gameEnded = false;
@@ -135,7 +136,8 @@ public class GameController {
 
     //Start a new game.
     void startGame() {
-        gameView = generateGameView();
+        GameView gameView = generateGameView();
+        gameStateBackup = gameState.clone();
             
         //While the game is running, we'll print the game state and ask the user to enter an action.
         while(!gameEnded){
@@ -154,8 +156,10 @@ public class GameController {
     
     //When a turn ends we check the validity of all the changes, if they're legal, we'll set the new state.
     public void endTurn(){
-        if(gameState.isLegalGameState()){
-           gameState = generateGameState(); 
+        Game newGameState = generateGameState();
+        
+        if(newGameState.isLegalGameState()){
+           gameState = newGameState;
         }
         else{
             for(int i = 0; i < PENALTY_DRAW_COUNT; ++i){
@@ -172,7 +176,7 @@ public class GameController {
         
         //Add the players
         for(Player player : gameState.getPlayers()){
-            PlayerView playerView = new PlayerView(player.getName());
+            PlayerView playerView = new PlayerView(player.getName(), player.isBot());
             
             //Add the players' cards
             for(Tile card : player.getHand()){
@@ -206,10 +210,11 @@ public class GameController {
     }
 
     public void moveCard(int fromSetID, int fromCardID, int toSetID, int toPositionID) {
-        gameView.moveCard(fromSetID, fromCardID, toSetID, toPositionID);
-    }
-
-    private Game generateGameState() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try{
+            gameState.moveCard(fromSetID, fromCardID, toSetID, toPositionID);
+        }
+        catch(Exception e){
+            ErrorDisplayer.showError(e.getMessage());
+        }
     }
 }

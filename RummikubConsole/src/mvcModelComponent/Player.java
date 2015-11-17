@@ -15,12 +15,13 @@ import javax.smartcardio.Card;
 public class Player {
     private String playerName;
     private boolean isBot;
-    private  ArrayList<Tile> hand ;
+    private Sequence hand ;
 
-    public Player(String newName, boolean isBotStatus,ArrayList<Tile> hand) {
+    public Player(String newName, boolean isBotStatus, ArrayList<Tile> hand) {
         playerName = newName;
         isBot = isBotStatus;
-        this.hand = hand;
+        
+        this.hand = new Sequence(hand);
     }
     
     public void setName(String newName){
@@ -39,7 +40,7 @@ public class Player {
         this.isBot = isBot;
     }
 
-    public Iterable<Tile> getHand() {
+    public Sequence getHand() {
         return hand;
     }
     

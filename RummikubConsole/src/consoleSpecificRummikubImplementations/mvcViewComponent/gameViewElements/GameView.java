@@ -26,14 +26,6 @@ public class GameView implements ViewComponentPrinter {
         System.out.print(System.lineSeparator());
     }
 
-    public void moveCard(int fromSetID, int fromCardID, int toSetID, int toPositionID) throws IllegalArgumentException {
-        //Checking if set ID is valid.
-        if(fromSetID < 0 || fromSetID >= boardView.getCardSets().size() 
-            || toSetID < 0 || toSetID >= boardView.getCardSets().size()){
-            //Checking if card ID is valid.
-        }
-    }
-
     public void addPlayer(PlayerView playerView) {
         players.add(playerView);
     }

@@ -23,7 +23,7 @@ public class BoardView implements ViewComponentPrinter{
         publicCardSets.add(cardSet);
     }
     
-    public List<CardSetView> getCardSets(){
+    List<CardSetView> getCardSets(){
         return publicCardSets;
     }
     

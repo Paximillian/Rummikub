@@ -12,10 +12,12 @@ package consoleSpecificRummikubImplementations.mvcViewComponent.gameViewElements
 public class PlayerView implements ViewComponentPrinter{
     private final CardSetView hand;
     private String name;
+    private boolean isBot;
     
-    public PlayerView(String playerName){
+    public PlayerView(String playerName, boolean isABot){
         hand = new CardSetView();
         name = playerName;
+        isBot = isABot;
     }
     
     public void addCardToHand(CardView card){
@@ -29,5 +31,16 @@ public class PlayerView implements ViewComponentPrinter{
         
         hand.printComponent();
     }
+
+    public CardSetView getHand() {
+        return hand;
+    }
     
+    public String getName(){
+        return name;
+    }
+
+    public boolean isBot() {
+        return isBot;
+    }
 }
