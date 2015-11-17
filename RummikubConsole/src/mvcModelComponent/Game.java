@@ -105,22 +105,30 @@ public class Game {
         }
         else{
             //Checking if the source card position is out of range.
-            if(fromCardID >= board.getCardSets().get(fromSetID - 1).size()){
+            if(fromCardID >= board.getSequences().get(fromSetID - 1).size()){
                 throw new IllegalArgumentException("Illegal card ID");
             }
             
-            sourceCardSet = board.getCardSets().get(fromSetID - 1);
+            sourceCardSet = board.getSequences().get(fromSetID - 1);
         }
         
         //Checking if the target card position is out of range.
-        if(toPositionID > board.getCardSets().get(toSetID - 1).size() || toPositionID < 0){
+        if(toPositionID > board.getSequences().get(toSetID - 1).size() || toPositionID < 0){
             throw new IllegalArgumentException("Illegal card ID");
         }
         else{
-            targetCardSet = board.getCardSets().get(toSetID - 1);
+            targetCardSet = board.getSequences().get(toSetID - 1);
         }
         
-        CardView movedCard = sourceCardSet.getCardAt(fromCardID - 1);
-        targetCardSet.addCard(movedCard, toPositionID);
+        Tile movedCard = sourceCardSet.getTileAt(fromCardID - 1);
+        targetCardSet.addTileToSequence(movedCard, toPositionID);
+    }
+    
+    @Override
+    public Game clone() throws CloneNotSupportedException{
+        Game clonedGame = new Game();
+        clonedGame = (Game)super.clone();
+        
+        return clonedGame;
     }
 }

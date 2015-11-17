@@ -18,12 +18,33 @@ public class Sequence {
         this.tiles = tiles;
     }
     
+    public void addTileToSequence(Tile tile, int index)
+    {
+        if(index < 0 || index >= tiles.size()){
+            throw new IndexOutOfBoundsException("Illegal index");
+        }
+        
+        this.tiles.add(index, tile);
+    }
+    
     public void addTileToSequence(Tile tile)
     {
         this.tiles.add(tile);
     }
     
     public Tile removeTailFromSequence(int index){
+        if(index < 0 || index >= tiles.size()){
+            throw new IndexOutOfBoundsException("Illegal index");
+        }
+        
+        return this.tiles.remove(index);
+    }
+    
+    public Tile getTileAt(int index){
+        if(index < 0 || index >= tiles.size()){
+            throw new IndexOutOfBoundsException("Illegal index");
+        }
+        
         return this.tiles.remove(index);
     }
     
@@ -53,6 +74,10 @@ public class Sequence {
                 return false;
         }
         return true;
+    }
+    
+    public int size(){
+        return tiles.size();
     }
     
     private boolean isStraight()

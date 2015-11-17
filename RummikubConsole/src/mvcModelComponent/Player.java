@@ -46,7 +46,7 @@ public class Player {
     
     public void addTileToHand(Tile tile)
     {
-        this.hand.add(tile);
+        this.hand.addTileToSequence(tile);
     }
     
     public Tile GetTileFromHand(int index)
@@ -54,7 +54,7 @@ public class Player {
         if(this.hand.size() <= index)
             return null;
         else
-            return this.hand.remove(index);
+            return this.hand.removeTailFromSequence(index);
     }
     
 }

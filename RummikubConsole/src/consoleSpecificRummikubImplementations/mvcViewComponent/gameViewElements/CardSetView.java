@@ -22,19 +22,6 @@ public class CardSetView implements ViewComponentPrinter{
     public void addCard(CardView cardToAdd){
         cardsInSet.add(cardToAdd);
     }
-
-    public void addCard(CardView movedCard, int toPositionID) {
-        if(toPositionID < 0 || toPositionID > cardsInSet.size()){
-            throw new IndexOutOfBoundsException("Index out of range");
-        }
-        
-        if(toPositionID == cardsInSet.size()){
-            cardsInSet.add(movedCard);
-        }
-        else{
-            cardsInSet.add(toPositionID, movedCard);
-        }
-    }
     
     @Override
     public void printComponent() {
@@ -56,22 +43,6 @@ public class CardSetView implements ViewComponentPrinter{
 
     public int size() {
         return cardsInSet.size();
-    }
-
-    CardView getCardAt(int fromCardID) {
-        if(fromCardID < 0 ||  fromCardID >= size()){
-            throw new IndexOutOfBoundsException("Index out of range");
-        }
-        
-        return cardsInSet.get(fromCardID);
-    }
-    
-    void removeCardAt(int fromCardID) {
-        if(fromCardID < 0 ||  fromCardID >= size()){
-            throw new IndexOutOfBoundsException("Index out of range");
-        }
-        
-        cardsInSet.remove(fromCardID);
     }
 
     public Iterable<CardView> getCards() {

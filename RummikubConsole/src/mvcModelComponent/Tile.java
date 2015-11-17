@@ -95,7 +95,7 @@ public class Tile implements Comparable{
         }
         
         public static Rank fromValue(int val){
-            Rank result;
+            Rank result = null;
             
             switch(val){
                 case 1:
@@ -141,6 +141,8 @@ public class Tile implements Comparable{
                     result = Rank.JOKER;
                     break;
             }
+            
+            return result;
         }
         
         public int rankValue(){

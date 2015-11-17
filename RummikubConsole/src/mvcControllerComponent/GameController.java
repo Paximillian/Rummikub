@@ -137,8 +137,13 @@ public class GameController {
     //Start a new game.
     void startGame() {
         GameView gameView = generateGameView();
-        gameStateBackup = gameState.clone();
-            
+        try{
+            gameStateBackup = gameState.clone();
+        }
+        catch(CloneNotSupportedException e){
+            ErrorDisplayer.showError(e.getMessage());
+        }
+        
         //While the game is running, we'll print the game state and ask the user to enter an action.
         while(!gameEnded){
             gameView.printComponent();
@@ -155,11 +160,9 @@ public class GameController {
     }
     
     //When a turn ends we check the validity of all the changes, if they're legal, we'll set the new state.
-    public void endTurn(){
-        Game newGameState = generateGameState();
-        
-        if(newGameState.isLegalGameState()){
-           gameState = newGameState;
+    public void endTurn(){        
+        if(gameState.isLegalGameState()){
+           gameStateBackup = gameState;
         }
         else{
             for(int i = 0; i < PENALTY_DRAW_COUNT; ++i){
@@ -168,7 +171,6 @@ public class GameController {
         }
         
         gameState.advancePlayerTurn();
-        gameView = generateGameView();
     }
 
     private GameView generateGameView() {
@@ -179,7 +181,7 @@ public class GameController {
             PlayerView playerView = new PlayerView(player.getName(), player.isBot());
             
             //Add the players' cards
-            for(Tile card : player.getHand()){
+            for(Tile card : player.getHand().getTiles()){
                 CardView cardView = new CardView(card.toString());
                 
                 playerView.addCardToHand(cardView);
