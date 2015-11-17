@@ -6,7 +6,7 @@
 package mvcControllerComponent.mainMenuCommands;
 
 import mvcControllerComponent.GameController;
-import mvcControllerComponent.mainMenuCommands.MenuCommand;
+import mvcControllerComponent.MenuCommand;
 
 /**
  *

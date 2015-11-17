@@ -10,17 +10,17 @@ import java.util.ArrayList;
 
 public class Board {
     
-    private final ArrayList<Sequence> board = new ArrayList<Sequence>();
+    private final ArrayList<Sequence> sequences = new ArrayList<Sequence>();
     
-    Board()
+    public Board()
     {
         for(int i = 0; i < 30; ++i)
-            board.add(new Sequence(new ArrayList<Tile>()));
+            sequences.add(new Sequence(new ArrayList<Tile>()));
     }
     
     public boolean isBoardLegal()
     {
-        for (Sequence sequence : board) {
+        for (Sequence sequence : sequences) {
             if(!sequence.isGoodSequence() || !sequence.isEmptySequence())
                 return false;
         }
@@ -32,7 +32,7 @@ public class Board {
         if(sequenceIndex > 30)
             return false;
         
-        this.board.get(sequenceIndex).addTileToSequence(tile);
+        this.sequences.get(sequenceIndex).addTileToSequence(tile);
         return true;
     }
     
@@ -41,10 +41,12 @@ public class Board {
         if(sequenceIndex > 30)               
             return null;
         
-        Sequence sequence = this.board.get(sequenceIndex);
+        Sequence sequence = this.sequences.get(sequenceIndex);
         
         return sequence.removeTailFromSequence(tileIndex);          
     }
     
-   
+    public ArrayList<Sequence> getSequences(){
+        return sequences;
+    }
 }

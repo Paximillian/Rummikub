@@ -11,7 +11,7 @@ import java.util.*;
  *
  * @author Mor
  */
-class BoardView implements ViewComponentPrinter{
+public class BoardView implements ViewComponentPrinter{
 
     private final List<CardSetView> publicCardSets;
 
@@ -23,13 +23,14 @@ class BoardView implements ViewComponentPrinter{
         publicCardSets.add(cardSet);
     }
     
+    public List<CardSetView> getCardSets(){
+        return publicCardSets;
+    }
+    
     @Override
     public void printComponent() {
         int currentSetID = 1;
-        
-        //Printing all cards sets on the board and their ID for IO purpose.
-        System.out.print(String.format("Sets:%s", System.lineSeparator()));
-        
+                
         for(CardSetView cardSet : publicCardSets){
             System.out.print(String.format("%d-[", currentSetID));
             cardSet.printComponent();
@@ -37,8 +38,5 @@ class BoardView implements ViewComponentPrinter{
             
             ++currentSetID;
         }
-        
-        System.out.print(String.format("%d-[]%s", currentSetID, System.lineSeparator()));
     }
-    
 }

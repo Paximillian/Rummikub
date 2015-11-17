@@ -3,7 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mvcControllerComponent.mainMenuCommands;
+package mvcControllerComponent.turnMenuCommands;
+
+import mvcControllerComponent.GameController;
+import mvcControllerComponent.MenuCommand;
 
 /**
  *
@@ -13,7 +16,7 @@ public class EndTurnCommand implements MenuCommand {
 
     @Override
     public void execute() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        GameController.getInstance().endTurn();
     }
     
 }

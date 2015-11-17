@@ -5,6 +5,8 @@
  */
 package mvcControllerComponent.mainMenuCommands;
 
+import mvcControllerComponent.MenuCommand;
+
 /**
  *
  * @author Mor

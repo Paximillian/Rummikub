@@ -11,7 +11,7 @@ import java.util.*;
  *
  * @author Mor
  */
-class CardSetView implements ViewComponentPrinter{
+public class CardSetView implements ViewComponentPrinter{
 
     private final List<CardView> cardsInSet;
 

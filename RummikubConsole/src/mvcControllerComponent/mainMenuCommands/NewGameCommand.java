@@ -5,6 +5,7 @@
  */
 package mvcControllerComponent.mainMenuCommands;
 
+import mvcControllerComponent.MenuCommand;
 import consoleSpecificRummikubImplementations.mvcViewComponent.inputRequestMenus.InputRequester;
 import mvcControllerComponent.GameController;
 

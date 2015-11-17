@@ -16,14 +16,27 @@ import java.util.ArrayList;
 public class Game {
     
     private final Deck deck = new Deck();
+    private final Board board = new Board();
     private final ArrayList<Player> players = new ArrayList<Player>();
     
-    public boolean addTileToPlayer(Player player)
+    private int currentPlayerTurn = 0;
+    public Player getCurrentPlayer(){
+        return players.get(currentPlayerTurn);
+    }
+    public void advancePlayerTurn(){
+        ++currentPlayerTurn;
+        
+        if(currentPlayerTurn >= players.size()){
+            currentPlayerTurn = 0;
+        }
+    }
+    
+    public boolean addTileToPlayer()
     {
         if(deck.isDeckEmptey())
             return false;
         
-        player.addTileToHand(deck.getTile());
+        getCurrentPlayer().addTileToHand(deck.getTile());
         return true;
     }
 
@@ -45,5 +58,13 @@ public class Game {
     
     public ArrayList<Player> getPlayers(){
         return players;
+    }
+    
+    public Board getBoard(){
+        return board;
+    }
+
+    public boolean isLegalGameState() {
+        return board.isBoardLegal();
     }
 }

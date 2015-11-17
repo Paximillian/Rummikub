@@ -5,6 +5,7 @@
  */
 package consoleSpecificRummikubImplementations.mvcViewComponent.gameMenus;
 
+import mvcControllerComponent.MenuCommand;
 import mvcControllerComponent.mainMenuCommands.*;
 import java.util.*;
 

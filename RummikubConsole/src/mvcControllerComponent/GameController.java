@@ -5,6 +5,10 @@
  */
 package mvcControllerComponent;
 
+import mvcControllerComponent.turnMenuCommands.EndTurnCommand;
+import mvcControllerComponent.turnMenuCommands.BustAMoveCommand;
+import mvcControllerComponent.turnMenuCommands.SaveAsCommand;
+import mvcControllerComponent.turnMenuCommands.SaveCommand;
 import consoleSpecificRummikubImplementations.mvcViewComponent.gameMenus.Menu;
 import consoleSpecificRummikubImplementations.mvcViewComponent.gameViewElements.*;
 import consoleSpecificRummikubImplementations.mvcViewComponent.inputRequestMenus.InputRequester;
@@ -24,6 +28,7 @@ import mvcModelComponent.*;
 public class GameController {
     private static final int MAX_PLAYER_COUNT = 4;
     private static final int MIN_PLAYER_COUNT = 2;
+    private static final int PENALTY_DRAW_COUNT = 3;
     
     private static GameController instance;
         
@@ -32,6 +37,7 @@ public class GameController {
     private String gameName;
     
     private Game gameState;
+    private GameView gameView;
     
     private boolean gameStarted = false;
     private boolean gameEnded = false;
@@ -129,36 +135,38 @@ public class GameController {
 
     //Start a new game.
     void startGame() {
-        //Create a new game, make it into a Game view.
-        GameView gameView = generateGameView();
-        
+        gameView = generateGameView();
+            
         //While the game is running, we'll print the game state and ask the user to enter an action.
         while(!gameEnded){
-            gameView = generateGameView();
             gameView.printComponent();
             
             //Show the action menu;
             Menu actionMenu = new Menu();
             Map menuItems = new HashMap();
-            menuItems.put("Add Card To Series", new AddCardToSeriesCommand());
-            menuItems.put("Combine Series", new CombineSeriesCommand());
-            menuItems.put("Split Series", new SplitSeriesCommand());
-            menuItems.put("Move Card Between Series", new MoveCardCommand());
+            menuItems.put("Bust a Move", new BustAMoveCommand());
+            menuItems.put("Save", new SaveCommand());
+            menuItems.put("Save As", new SaveAsCommand());
             menuItems.put("Done", new EndTurnCommand());
             actionMenu.showMenu(menuItems);
-            
-            //Request input from the view component
-            int fromSetID = InputRequester.RequestInt("ID of set you want to move a card from:");
-            int fromCardID = InputRequester.RequestInt("ID of card in the set that you want to move:");
-            int toSetID = InputRequester.RequestInt("ID of set you want to move a card to:");
-            int toPositionID = InputRequester.RequestInt("ID of position in the set you want to move to:");
-            
-            //Move the cards around according to input
-            gameView.moveCard(fromSetID, fromCardID, toSetID, toPositionID);
         }
     }
+    
+    //When a turn ends we check the validity of all the changes, if they're legal, we'll set the new state.
+    public void endTurn(){
+        if(gameState.isLegalGameState()){
+           gameState = generateGameState(); 
+        }
+        else{
+            for(int i = 0; i < PENALTY_DRAW_COUNT; ++i){
+                gameState.addTileToPlayer();
+            }
+        }
+        
+        gameState.advancePlayerTurn();
+        gameView = generateGameView();
+    }
 
-    //TODO: Fix with Eitan's Game object.
     private GameView generateGameView() {
         GameView newGameView = new GameView();
         
@@ -172,8 +180,36 @@ public class GameController {
                 
                 playerView.addCardToHand(cardView);
             }
+            
+            newGameView.addPlayer(playerView);
+            
+            //We're comparing references to tell if this is the player whose turn it is.
+            if(gameState.getCurrentPlayer() == player){
+                newGameView.setCurrentPlayer(playerView);
+            }
         }
-                
+            
+        BoardView boardView = new BoardView();
+        for(Sequence sequence : gameState.getBoard().getSequences()){
+            CardSetView cardSet = new CardSetView();
+            
+            for(Tile tile : sequence.getTiles()){
+                cardSet.addCard(new CardView(tile.toString()));
+            }
+            
+            boardView.addCardSet(cardSet);
+        }
+        
+        newGameView.setBoard(boardView);
+        
         return newGameView;
+    }
+
+    public void moveCard(int fromSetID, int fromCardID, int toSetID, int toPositionID) {
+        gameView.moveCard(fromSetID, fromCardID, toSetID, toPositionID);
+    }
+
+    private Game generateGameState() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

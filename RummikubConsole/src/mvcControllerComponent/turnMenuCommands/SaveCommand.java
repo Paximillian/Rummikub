@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mvcControllerComponent.mainMenuCommands;
+package mvcControllerComponent.turnMenuCommands;
+
+import mvcControllerComponent.MenuCommand;
 
 /**
  *
  * @author Mor
  */
-public class SplitSeriesCommand implements MenuCommand {
+public class SaveCommand implements MenuCommand {
 
     @Override
     public void execute() throws Exception {

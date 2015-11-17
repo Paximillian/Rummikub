@@ -14,7 +14,7 @@ public class Tile implements Comparable{
 
     @Override
     public int compareTo(Object tile) {
-        if(this.renk.rankValue() > ((Tile)tile).renk.rankValue())
+        if(this.rank.rankValue() > ((Tile)tile).rank.rankValue())
             return 1;
         else return 0;
     }
@@ -33,7 +33,12 @@ public class Tile implements Comparable{
 
         public static Color fromValue(String v) {
             return valueOf(v);
-        }           
+        }  
+        
+        @Override
+        public String toString(){
+            return name().substring(0, 1).toLowerCase();
+        }
     }
     
     public enum Rank{
@@ -61,27 +66,36 @@ public class Tile implements Comparable{
         public int rankValue(){
             return this.value;
         }  
+        
+        @Override
+        public String toString(){
+            return value == 14 ? "J" : Integer.toString(value);
+        }
     }
     
     public boolean isJoker(){      
-        return this.renk == Tile.Rank.JOKER;
+        return this.rank == Tile.Rank.JOKER;
     }
     
     public Tile(Color color, Rank renk)
     {
         this.color = color;
-        this.renk = renk;
+        this.rank = renk;
     }
     
-    private final Rank renk;
+    private final Rank rank;
     private final Color color;
     
     public Rank getRank(){
-        return this.renk;
+        return this.rank;
     }
     
     public Color getColor(){
         return this.color;
     }
     
+    @Override
+    public String toString(){
+        return color.toString() + rank.toString();
+    }
 }

@@ -11,36 +11,36 @@ import java.util.Collections;
 
 public class Sequence {
     
-    private  ArrayList<Tile> sequence;
+    private  ArrayList<Tile> tiles;
     
-    Sequence(ArrayList<Tile> sequence)
+    public Sequence(ArrayList<Tile> tiles)
     {
-        this.sequence = sequence;
+        this.tiles = tiles;
     }
     
     public void addTileToSequence(Tile tile)
     {
-        this.sequence.add(tile);
+        this.tiles.add(tile);
     }
     
     public Tile removeTailFromSequence(int index){
-        return this.sequence.remove(index);
+        return this.tiles.remove(index);
     }
     
     public boolean isEmptySequence(){
-        return sequence.isEmpty();
+        return tiles.isEmpty();
     }
     
     public  boolean isGoodSequence(){
-        return( sequence.size() >= 3 && (isFlush() || isStraight()));         
+        return( tiles.size() >= 3 && (isFlush() || isStraight()));         
     }
     
     private boolean isFlush()
     {
-        Tile ferstTile = sequence.get(0);       
+        Tile ferstTile = tiles.get(0);       
         ArrayList<Tile.Color> clolorsInSet = new ArrayList<Tile.Color>();
 
-        for (Tile tile : sequence) {
+        for (Tile tile : tiles) {
             if(tile.getRank() == ferstTile.getRank()){
                 if(!clolorsInSet.contains(tile.getColor())){
                     clolorsInSet.add(tile.getColor());
@@ -55,10 +55,10 @@ public class Sequence {
     
     private boolean isStraight()
     {      
-        Collections.sort(sequence);
+        Collections.sort(tiles);
         int prvRankVal = 0;
         int jokerNeeded = 0;
-        for (Tile tile : sequence) {
+        for (Tile tile : tiles) {
             if(tile.isJoker())
             {
                 jokerNeeded -= 1;
@@ -76,5 +76,9 @@ public class Sequence {
             }                
         }
         return jokerNeeded <= 0;
+    }
+
+    public Iterable<Tile> getTiles() {
+        return tiles;
     }
 }
