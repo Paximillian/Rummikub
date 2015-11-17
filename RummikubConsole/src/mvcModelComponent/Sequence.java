@@ -37,6 +37,8 @@ public class Sequence {
     
     private boolean isFlush()
     {
+        if(tiles.size() > 4)
+            return false;
         Tile ferstTile = tiles.get(0);       
         ArrayList<Tile.Color> clolorsInSet = new ArrayList<Tile.Color>();
 
@@ -54,28 +56,22 @@ public class Sequence {
     }
     
     private boolean isStraight()
-    {      
-        Collections.sort(tiles);
-        int prvRankVal = 0;
-        int jokerNeeded = 0;
+    {
+        int prvRank = 0;
+        if(tiles.get(0).isJoker() && tiles.get(1).getRank().rankValue() == 1)
+            return false;
         for (Tile tile : tiles) {
-            if(tile.isJoker())
-            {
-                jokerNeeded -= 1;
-                continue;
+            if(tile.isJoker()){ 
+                if(prvRank == 13)
+                    return false;
+                else if(prvRank != 0)
+                    prvRank++;
             }
-            if(prvRankVal == 0){
-                prvRankVal = tile.getRank().rankValue();
-            }
-            else{
-                if(prvRankVal == tile.getRank().rankValue())
-                   return false;
-                
-                jokerNeeded += tile.getRank().rankValue() -prvRankVal + 1;
-                prvRankVal = tile.getRank().rankValue();
-            }                
+            else if(prvRank == 0 || prvRank + 1 == tile.getRank().rankValue())
+                prvRank = tile.getRank().rankValue();
+            else return false;
         }
-        return jokerNeeded <= 0;
+        return true;
     }
 
     public Iterable<Tile> getTiles() {
