@@ -20,11 +20,16 @@ public class Sequence {
     
     public void addTileToSequence(Tile tile, int index)
     {
-        if(index < 0 || index >= tiles.size()){
+        if(index < 0 || index > tiles.size()){
             throw new IndexOutOfBoundsException("Illegal index");
         }
         
-        this.tiles.add(index, tile);
+        if(index == tiles.size()){
+            this.tiles.add(tile);
+        }
+        else{
+            this.tiles.add(index, tile);
+        }
     }
     
     public void addTileToSequence(Tile tile)
@@ -40,12 +45,20 @@ public class Sequence {
         return this.tiles.remove(index);
     }
     
-    public Tile getTileAt(int index){
+    public Tile removeTileAt(int index){
         if(index < 0 || index >= tiles.size()){
             throw new IndexOutOfBoundsException("Illegal index");
         }
         
         return this.tiles.remove(index);
+    }
+    
+    public Tile getTileAt(int index){
+        if(index < 0 || index >= tiles.size()){
+            throw new IndexOutOfBoundsException("Illegal index");
+        }
+        
+        return this.tiles.get(index);
     }
     
     public boolean isEmptySequence(){

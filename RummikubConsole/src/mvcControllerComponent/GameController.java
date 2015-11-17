@@ -146,6 +146,7 @@ public class GameController {
         
         //While the game is running, we'll print the game state and ask the user to enter an action.
         while(!gameEnded){
+            gameView = generateGameView();
             gameView.printComponent();
             
             //Show the action menu;

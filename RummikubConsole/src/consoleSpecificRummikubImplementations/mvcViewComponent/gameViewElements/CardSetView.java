@@ -37,8 +37,6 @@ public class CardSetView implements ViewComponentPrinter{
             
             ++currentCardId;
         }
-        
-        System.out.print(String.format(" %d%s", currentCardId, "-[]"));
     }
 
     public int size() {

@@ -120,7 +120,7 @@ public class Game {
             targetCardSet = board.getSequences().get(toSetID - 1);
         }
         
-        Tile movedCard = sourceCardSet.getTileAt(fromCardID - 1);
+        Tile movedCard = sourceCardSet.removeTileAt(fromCardID - 1);
         targetCardSet.addTileToSequence(movedCard, toPositionID);
     }
     
