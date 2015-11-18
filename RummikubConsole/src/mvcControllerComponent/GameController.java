@@ -5,14 +5,11 @@
  */
 package mvcControllerComponent;
 
-import consoleSpecificRummikubImplementations.mvcViewComponent.errorModule.ErrorDisplayer;
-import mvcControllerComponent.turnMenuCommands.EndTurnCommand;
-import mvcControllerComponent.turnMenuCommands.BustAMoveCommand;
-import mvcControllerComponent.turnMenuCommands.SaveAsCommand;
-import mvcControllerComponent.turnMenuCommands.SaveCommand;
+import consoleSpecificRummikubImplementations.mvcViewComponent.messagingModule.ErrorDisplayer;
 import consoleSpecificRummikubImplementations.mvcViewComponent.gameMenus.Menu;
 import consoleSpecificRummikubImplementations.mvcViewComponent.gameViewElements.*;
 import consoleSpecificRummikubImplementations.mvcViewComponent.inputRequestMenus.InputRequester;
+import consoleSpecificRummikubImplementations.mvcViewComponent.messagingModule.MessageDisplayer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +26,6 @@ import mvcModelComponent.*;
 public class GameController {
     private static final int MAX_PLAYER_COUNT = 4;
     private static final int MIN_PLAYER_COUNT = 2;
-    private static final int PENALTY_DRAW_COUNT = 3;
     
     private static GameController instance;
         
@@ -112,7 +108,7 @@ public class GameController {
                 throw new IllegalArgumentException("Player name can't be empty");
             }
             else{
-                gameState.newPlayer(playerName, isBot);
+                gameState.addNewPlayer(playerName, isBot);
             }
         }
         else{
@@ -151,27 +147,29 @@ public class GameController {
             
             //Show the action menu;
             Menu actionMenu = new Menu();
-            Map menuItems = new HashMap();
-            menuItems.put("Bust a Move", new BustAMoveCommand());
-            menuItems.put("Save", new SaveCommand());
-            menuItems.put("Save As", new SaveAsCommand());
-            menuItems.put("Done", new EndTurnCommand());
+            Map<String, MenuCommand> menuItems = new HashMap();
+            menuItems.put("Bust a Move", () -> moveCard());
+            menuItems.put("Save As", () -> System.out.print("Not implemented"));
+            menuItems.put("Save", () -> System.out.print("Not implemented"));
+            menuItems.put("Clear Last Play", () -> gameState = gameStateBackup.clone());
+            menuItems.put("Done", () -> endTurn());
             actionMenu.showMenu(menuItems);
         }
     }
     
     //When a turn ends we check the validity of all the changes, if they're legal, we'll set the new state.
-    public void endTurn(){        
+    public void endTurn() throws CloneNotSupportedException{        
         if(gameState.isLegalGameState()){
-           gameStateBackup = gameState;
+           MessageDisplayer.showMessage("Valid turn, advancing.");
         }
         else{
-            for(int i = 0; i < PENALTY_DRAW_COUNT; ++i){
-                gameState.addTileToPlayer();
-            }
+           MessageDisplayer.showMessage("Invalid board state! Penalty given, advancing.");
+           gameState = gameStateBackup.clone();
+           gameState.applyPenaltyDraw();
         }
         
         gameState.advancePlayerTurn();
+        gameStateBackup = gameState.clone();
     }
 
     private GameView generateGameView() {
@@ -212,8 +210,14 @@ public class GameController {
         return newGameView;
     }
 
-    public void moveCard(int fromSetID, int fromCardID, int toSetID, int toPositionID) {
+    public void moveCard() {
         try{
+            //Request input from the view component
+            int fromSetID = InputRequester.RequestInt("ID of set you want to move a card from:");
+            int fromCardID = InputRequester.RequestInt("ID of card in the set that you want to move:");
+            int toSetID = InputRequester.RequestInt("ID of set you want to move a card to:");
+            int toPositionID = InputRequester.RequestInt("ID of position in the set you want to move to:");
+
             gameState.moveCard(fromSetID, fromCardID, toSetID, toPositionID);
         }
         catch(Exception e){

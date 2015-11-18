@@ -57,4 +57,15 @@ public class Player {
             return this.hand.removeTailFromSequence(index);
     }
     
+    @Override
+    public Player clone(){
+        ArrayList<Tile> clonedHand = new ArrayList<Tile>();
+        
+        for(Tile tile : this.getHand().getTiles()){
+            //We cann add the tiles by reference because the tile itself never changes.
+            clonedHand.add(tile);
+        }
+        
+        return new Player(this.getName(), this.isBot, clonedHand);
+    }
 }

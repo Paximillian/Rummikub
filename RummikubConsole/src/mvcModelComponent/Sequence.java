@@ -20,15 +20,15 @@ public class Sequence {
     
     public void addTileToSequence(Tile tile, int index)
     {
-        if(index < 0 || index > tiles.size()){
+        if(index < 0){
             throw new IndexOutOfBoundsException("Illegal index");
         }
         
-        if(index == tiles.size()){
-            this.tiles.add(tile);
+        if(index < tiles.size()){
+            this.tiles.add(index, tile);
         }
         else{
-            this.tiles.add(index, tile);
+            this.tiles.add(tile);
         }
     }
     

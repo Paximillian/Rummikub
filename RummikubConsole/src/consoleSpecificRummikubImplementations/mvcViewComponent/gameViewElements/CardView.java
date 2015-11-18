@@ -18,6 +18,9 @@ public class CardView implements ViewComponentPrinter{
     
     @Override
     public void printComponent() {
-        System.out.print(String.format("%s%s%s", "|", cardValue, "|"));
+        String color = cardValue.substring(0, 3);
+        String value = cardValue.substring(3);
+                
+        System.out.print(String.format("%s%s%s", "|", color + value, "|"));
     }
 }

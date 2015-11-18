@@ -21,7 +21,7 @@ public class Board {
     public boolean isBoardLegal()
     {
         for (Sequence sequence : sequences) {
-            if(!sequence.isGoodSequence() || !sequence.isEmptySequence())
+            if(!sequence.isGoodSequence() && !sequence.isEmptySequence())
                 return false;
         }
         return true;
@@ -48,5 +48,22 @@ public class Board {
     
     public ArrayList<Sequence> getSequences(){
         return sequences;
+    }
+    
+    @Override
+    public Board clone(){
+        Board clonedBoard = new Board();
+        
+        //We'll clone all sequences.
+        ArrayList<Sequence> sequences = getSequences();
+        for(int i = 0; i < sequences.size(); ++i){
+            for(Tile tile : sequences.get(i).getTiles()){
+                //We can add the tiles by reference because the tile information never changes after
+                //being initially set.
+                clonedBoard.addTileToSequence(i, tile);
+            }
+        }
+        
+        return clonedBoard;
     }
 }

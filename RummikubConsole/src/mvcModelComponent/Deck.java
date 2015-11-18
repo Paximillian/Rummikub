@@ -15,7 +15,7 @@ import java.util.Collections;
  */
 public class Deck {
     
-    private final ArrayList<Tile> tiles =new ArrayList<Tile>();
+    private final ArrayList<Tile> tiles = new ArrayList<Tile>();
     
     public Deck(){
         for (Tile.Color color : Tile.Color.values()) {
@@ -30,12 +30,24 @@ public class Deck {
         Collections.shuffle(tiles);
     }
     
-    public Tile getTile(){
+    private Deck(ArrayList<Tile> cardsRemaining){
+        for(Tile tile : cardsRemaining){
+            tiles.add(tile);
+        }
+    }
+    
+    public Tile getNextTile(){
         return tiles.remove(0);
     }
     
-    public boolean isDeckEmptey(){
+    public boolean isDeckEmpty(){
         return tiles.isEmpty();
     }
     
+    @Override
+    public Deck clone(){
+        Deck clonedDeck = new Deck(tiles);
+        
+        return clonedDeck;
+    }
 }
