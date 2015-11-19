@@ -5,7 +5,13 @@
  */
 package mvcControllerComponent.mainMenuCommands;
 
+import consoleSpecificRummikubImplementations.mvcViewComponent.inputRequestMenus.InputRequester;
+import consoleSpecificRummikubImplementations.mvcViewComponent.messagingModule.MessageDisplayer;
+import javax.xml.bind.JAXBException;
+import mvcControllerComponent.GameController;
 import mvcControllerComponent.MenuCommand;
+import mvcModelComponent.xmlHandler.InvalidLoadFileException;
+import mvcModelComponent.xmlHandler.XmlHandler;
 
 /**
  *
@@ -15,7 +21,19 @@ public class LoadGameCommand implements MenuCommand {
 
     @Override
     public void execute() {
-        System.out.print("Load");
+        XmlHandler xmlHandler = new XmlHandler();
+        
+        String filePath = InputRequester.RequestString("plase enter afail-path to load the game");
+       try{
+            GameController.getInstance().loadGame(xmlHandler.loadGame(filePath));
+            MessageDisplayer.showMessage("Game loaded...");
+            GameController.getInstance().startGame();
+       }
+       catch(JAXBException | InvalidLoadFileException e)
+       {
+           MessageDisplayer.showMessage("erro game not loaded");
+       }
+       
     }
     
 }

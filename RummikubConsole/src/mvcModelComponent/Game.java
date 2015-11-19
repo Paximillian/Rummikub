@@ -23,6 +23,27 @@ public class Game {
     private final Board board = new Board();
     private final ArrayList<Player> players = new ArrayList<Player>();
     
+    private String gameName;
+
+    /**
+     * Get the value of gameName
+     *
+     * @return the value of gameName
+     */
+    public String getGameName() {
+        return gameName;
+    }
+
+    /**
+     * Set the value of gameName
+     *
+     * @param gameName new value of gameName
+     */
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
+    }
+
+    
     private int currentPlayerTurn = 0;
     public Player getCurrentPlayer(){
         return players.get(currentPlayerTurn);
@@ -53,7 +74,7 @@ public class Game {
         return newPlayer;
     }
 
-    private Player addNewPlayer(Player newPlayer)
+    public  Player addNewPlayer(Player newPlayer)
     {
         this.players.add(newPlayer);
         return newPlayer;
@@ -84,7 +105,7 @@ public class Game {
         deck = newDeck;
     }
 
-    private void setPlayerTurnTo(Player playerToSetTurnFor) throws IllegalArgumentException{
+    public  void setPlayerTurnTo(Player playerToSetTurnFor) throws IllegalArgumentException{
         if(!players.contains(playerToSetTurnFor)){
             throw new IllegalArgumentException("Player is not in the game");
         }

@@ -14,8 +14,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.xml.bind.JAXBException;
 import mvcControllerComponent.mainMenuCommands.*;
 import mvcModelComponent.*;
+import mvcModelComponent.xmlHandler.*;
 
 /**
  *
@@ -46,6 +48,10 @@ public class GameController {
         }
         
         return instance;
+    }
+    public void loadGame(Game gameToLoad)
+    {
+        gameState = gameToLoad;
     }
     
     private GameController(){
@@ -131,7 +137,7 @@ public class GameController {
     }
 
     //Start a new game.
-    void startGame() {
+    public void startGame() {
         try{
             gameStateBackup = gameState.clone();
         }
@@ -154,7 +160,7 @@ public class GameController {
             Menu actionMenu = new Menu();
             Map<String, MenuCommand> menuItems = new HashMap();
             menuItems.put("Bust a Move", () -> moveCard());
-            menuItems.put("Save As", () -> System.out.print("Not implemented"));
+            menuItems.put("Save As", () -> saveGameAs());
             menuItems.put("Save", () -> System.out.print("Not implemented"));
             menuItems.put("Clear Last Play", () -> gameState = gameStateBackup.clone());
             menuItems.put("Done", () -> endTurn());
@@ -228,5 +234,19 @@ public class GameController {
         catch(Exception e){
             ErrorDisplayer.showError(e.getMessage());
         }
+    }
+
+    private void saveGameAs() {
+        
+        XmlHandler xmlHandler = new XmlHandler(); 
+        String filePath = InputRequester.RequestString("plase enter afail-path to save the game");
+        if(xmlHandler.saveGame(filePath, this.gameStateBackup))
+            MessageDisplayer.showMessage("game saved");
+        else
+            MessageDisplayer.showMessage("erro game not saved");
+            
+        
+                   
+
     }
 }

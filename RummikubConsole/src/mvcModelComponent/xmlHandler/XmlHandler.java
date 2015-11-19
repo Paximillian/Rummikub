@@ -6,15 +6,20 @@
 package mvcModelComponent.xmlHandler;
 
 
+import generated.Color;
 import generated.ObjectFactory;
+import generated.Players;
 
 import generated.Rummikub;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import mvcModelComponent.Player;
+import mvcModelComponent.Tile;
 
 public class XmlHandler {
     
@@ -34,9 +39,11 @@ public class XmlHandler {
         ObjectFactory obj = new ObjectFactory();
         Rummikub gameToSave = obj.createRummikub();
         
+        
         saveCurrentPlayer(gameToSave);
         saveBoard(gameToSave);
         savePlayers(gameToSave);
+        gameToSave.setName(this.game.getGameName());
         try{
             saveGameToXML(gameToSave, saveFileNameAndPath);
             return true;
@@ -72,9 +79,10 @@ public class XmlHandler {
     }
 
     private void saveGameToXML(generated.Rummikub gameToSave, String saveFileNameAndPath) throws JAXBException {
+        
         JAXBContext context = JAXBContext.newInstance(generated.Rummikub.class);
         Marshaller marshaller = context.createMarshaller();
-        marshaller.marshal(gameToSave, new File(saveFileNameAndPath));
+        marshaller.marshal(gameToSave, new File(saveFileNameAndPath.endsWith(".xml") ? saveFileNameAndPath : saveFileNameAndPath + ".xml"));
     }
 
     private generated.Board.Sequence convertGameSequenceToXMLSequence(mvcModelComponent.Sequence sequence) {
@@ -130,5 +138,91 @@ public class XmlHandler {
             convertedPlayerTails.getTile().add(convertGametileToXMLtile(tail));
         }
         return convertedPlayerTails;
+    }
+    
+        public mvcModelComponent.Game loadGame(String filePath) throws JAXBException, InvalidLoadFileException{
+            
+        File file = new File(filePath.endsWith(".xml") ? filePath : filePath + ".xml");                                  
+        generated.Rummikub jaxBGame = createJaxBGame(file);
+        loadPlayers(jaxBGame);
+        loadBoard(jaxBGame);       
+        loadCurrentPlayer(jaxBGame);
+        this.game.setGameName(jaxBGame.getName());
+        return game;
+    }
+
+    private generated.Rummikub createJaxBGame(File file) throws JAXBException {
+        
+        JAXBContext context = JAXBContext.newInstance(generated.Rummikub.class);
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+        
+        return (generated.Rummikub)unmarshaller.unmarshal(file);
+    }
+
+    private void loadPlayers(generated.Rummikub jaxBGame) {
+        
+        for (generated.Players.Player loadedPlayer : jaxBGame.getPlayers().getPlayer()) {
+            loadPlayer(loadedPlayer);
+        }      
+    }
+
+    private void loadPlayer(generated.Players.Player loadedPlayer) {
+        
+        String playerName = loadedPlayer.getName();
+        boolean isPlayerBot = loadedPlayer.getType() == generated.PlayerType.COMPUTER;
+        ArrayList<mvcModelComponent.Tile> hand = loadTiles(loadedPlayer.getTiles().getTile());       
+        
+        this.game.addNewPlayer(new mvcModelComponent.Player(playerName, isPlayerBot, hand));
+    }
+
+    private ArrayList<mvcModelComponent.Tile> loadTiles(List<generated.Tile> loadedTiles) {
+        
+        ArrayList<mvcModelComponent.Tile> tiles = new ArrayList<mvcModelComponent.Tile>();
+        for (generated.Tile loadedTile : loadedTiles) {
+            tiles.add(loadTile(loadedTile));
+        }
+        return tiles;
+    }
+
+    private Tile loadTile(generated.Tile loadedTile) {
+        
+        mvcModelComponent.Tile.Rank rank =mvcModelComponent.Tile.Rank.fromValue(loadedTile.getValue());
+        mvcModelComponent.Tile.Color color = loadColor(loadedTile.getColor());
+        
+        return new Tile(color, rank);
+    }
+
+    private mvcModelComponent.Tile.Color loadColor(generated.Color color) {
+        
+        switch (color) {
+            
+            case RED :
+                return mvcModelComponent.Tile.Color.RED;
+                
+            case BLACK :
+               return mvcModelComponent.Tile.Color.BLACK;
+             
+            case BLUE :
+                return mvcModelComponent.Tile.Color.BLUE;                          
+       }
+        return mvcModelComponent.Tile.Color.YELLOW;
+    }
+
+    private void loadBoard(generated.Rummikub jaxBGame) {
+        
+        for (generated.Board.Sequence loadedSequence: jaxBGame.getBoard().getSequence()) {
+            this.game.getBoard().getSequences().add(new mvcModelComponent.Sequence(loadTiles(loadedSequence.getTile())));
+        }
+    }
+
+    private void loadCurrentPlayer(generated.Rummikub jaxBGame) {
+        
+        for (mvcModelComponent.Player player : this.game.getPlayers()) {
+            if(player.getName() == jaxBGame.getCurrentPlayer())
+            {
+                this.game.setPlayerTurnTo(player);
+                break;
+            }
+        }
     }
 }
