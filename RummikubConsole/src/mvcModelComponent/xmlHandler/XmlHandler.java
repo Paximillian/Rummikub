@@ -116,7 +116,7 @@ public class XmlHandler {
         
         convertedPlayer.setName(player.getName());
         convertedPlayer.setType(player.isBot() ? generated.PlayerType.COMPUTER : generated.PlayerType.HUMAN );
-        convertedPlayer.setTiles(convertGamePlayerTailsToXMLPlayerTails(player.getHand()));
+        convertedPlayer.setTiles(convertGamePlayerTailsToXMLPlayerTails(player.getHand().getTiles()));
         
         return convertedPlayer;
         

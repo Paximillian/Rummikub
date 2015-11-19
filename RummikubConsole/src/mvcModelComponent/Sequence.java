@@ -73,11 +73,16 @@ public class Sequence {
     {
         if(tiles.size() > 4)
             return false;
-        Tile ferstTile = tiles.get(0);       
+        
+        Tile firstTile = null;
+        do{
+            firstTile = tiles.get(0);
+        }while(firstTile.isJoker());
+        
         ArrayList<Tile.Color> clolorsInSet = new ArrayList<Tile.Color>();
 
         for (Tile tile : tiles) {
-            if(tile.getRank() == ferstTile.getRank()){
+            if(tile.getRank() == firstTile.getRank()){
                 if(!clolorsInSet.contains(tile.getColor())){
                     clolorsInSet.add(tile.getColor());
                     continue;
