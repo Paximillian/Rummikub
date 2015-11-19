@@ -33,6 +33,8 @@ public class Game {
         if(currentPlayerTurn >= players.size()){
             currentPlayerTurn = 0;
         }
+        
+        addTileToPlayer();
     }
     
     public boolean addTileToPlayer()

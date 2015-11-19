@@ -132,13 +132,18 @@ public class GameController {
 
     //Start a new game.
     void startGame() {
-        GameView gameView = generateGameView();
         try{
             gameStateBackup = gameState.clone();
         }
         catch(CloneNotSupportedException e){
             ErrorDisplayer.showError(e.getMessage());
         }
+        
+        gameLoop();
+    }
+
+    private void gameLoop() {
+        GameView gameView = generateGameView();
         
         //While the game is running, we'll print the game state and ask the user to enter an action.
         while(!gameEnded){
