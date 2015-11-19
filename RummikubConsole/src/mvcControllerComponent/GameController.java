@@ -150,15 +150,21 @@ public class GameController {
             gameView = generateGameView();
             gameView.printComponent();
             
-            //Show the action menu;
-            Menu actionMenu = new Menu();
-            Map<String, MenuCommand> menuItems = new HashMap();
-            menuItems.put("Bust a Move", () -> moveCard());
-            menuItems.put("Save As", () -> System.out.print("Not implemented"));
-            menuItems.put("Save", () -> System.out.print("Not implemented"));
-            menuItems.put("Clear Last Play", () -> gameState = gameStateBackup.clone());
-            menuItems.put("Done", () -> endTurn());
-            actionMenu.showMenu(menuItems);
+            if(gameState.getCurrentPlayer().isBot()){
+                //Instead of showing a menu for the bot, we'll request a play and display it step by step
+                moveCard();
+            }
+            else{
+                //Show the action menu;
+                Menu actionMenu = new Menu();
+                Map<String, MenuCommand> menuItems = new HashMap();
+                menuItems.put("Bust a Move", () -> moveCard());
+                menuItems.put("Save As", () -> System.out.print("Not implemented"));
+                menuItems.put("Save", () -> System.out.print("Not implemented"));
+                menuItems.put("Clear Last Play", () -> gameState = gameStateBackup.clone());
+                menuItems.put("Done", () -> endTurn());
+                actionMenu.showMenu(menuItems);
+            }
         }
     }
     
@@ -217,13 +223,14 @@ public class GameController {
 
     public void moveCard() {
         try{
-            //Request input from the view component
-            int fromSetID = InputRequester.RequestInt("ID of set you want to move a card from:");
-            int fromCardID = InputRequester.RequestInt("ID of card in the set that you want to move:");
-            int toSetID = InputRequester.RequestInt("ID of set you want to move a card to:");
-            int toPositionID = InputRequester.RequestInt("ID of position in the set you want to move to:");
-
-            gameState.moveCard(fromSetID, fromCardID, toSetID, toPositionID);
+            MoveInfo moveInfo = gameState.getCurrentPlayer().requestMove(gameState);
+            
+            if(moveInfo != null){
+                gameState.moveCard(moveInfo.fromSetID, moveInfo.fromCardID, moveInfo.toSetID, moveInfo.toPositionID);
+            }
+            else{
+                endTurn();
+            }
         }
         catch(Exception e){
             ErrorDisplayer.showError(e.getMessage());

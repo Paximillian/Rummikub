@@ -69,7 +69,7 @@ public class Sequence {
         return( tiles.size() >= 3 && (isFlush() || isStraight()));         
     }
     
-    private boolean isFlush()
+    public boolean isFlush()
     {
         if(tiles.size() > 4)
             return false;
@@ -98,7 +98,7 @@ public class Sequence {
         return tiles.size();
     }
     
-    private boolean isStraight()
+    public boolean isStraight()
     {
         int prvRank = 0;
         if(tiles.get(0).isJoker() && tiles.get(1).getRank().rankValue() == 1)

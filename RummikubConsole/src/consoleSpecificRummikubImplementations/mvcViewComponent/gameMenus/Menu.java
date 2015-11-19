@@ -30,9 +30,10 @@ public class Menu{
         }
         
         Scanner inputScanner = new Scanner(System.in);
-        int menuChoice = inputScanner.nextInt();
         
         try{
+            int menuChoice = inputScanner.nextInt();
+        
             if(menuChoice < 1 || menuChoice > menuCommands.size()){
                 throw new IndexOutOfBoundsException("Invalid menu choice");
             }

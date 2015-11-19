@@ -5,7 +5,15 @@
  */
 package mvcModelComponent;
 
+import consoleSpecificRummikubImplementations.mvcViewComponent.inputRequestMenus.InputRequester;
+import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 import javax.smartcardio.Card;
 
 /**
@@ -67,5 +75,148 @@ public class Player {
         }
         
         return new Player(this.getName(), this.isBot, clonedHand);
+    }
+
+    public MoveInfo requestMove(Game gameState) {
+        MoveInfo moveInfo = new MoveInfo();
+        if(!isBot){
+            //Request input from the view component
+            moveInfo.fromSetID = InputRequester.RequestInt("ID of set you want to move a card from:");
+            moveInfo.fromCardID = InputRequester.RequestInt("ID of card in the set that you want to move:");
+            moveInfo.toSetID = InputRequester.RequestInt("ID of set you want to move a card to:");
+            moveInfo.toPositionID = InputRequester.RequestInt("ID of position in the set you want to move to:");
+        }
+        else{
+            //AI code
+            Collection<Tile> tiles = (Collection)hand.getTiles();
+            
+            //Start by trying to match a sequence on the board.
+            for(int j = 0; j < gameState.getBoard().getSequences().size(); ++j){
+                Sequence sequence = gameState.getBoard().getSequences().get(j);
+                        
+                if(!sequence.isEmptySequence()){
+                    Tile firstTile = ((List<Tile>)sequence.getTiles()).get(0);
+                    Tile lastTile = ((List<Tile>)sequence.getTiles()).get(((List<Tile>)sequence.getTiles()).size() - 1);
+                    
+                    for(int i = 0; i < hand.size(); ++i){
+                        Tile tile = hand.getTileAt(i);
+                        
+                        //If we can place a tile from the hand left to the first tile of a sequence.
+                        if(tile.isJoker() ||
+                            ((sequence.isStraight() || ((List<Tile>)sequence.getTiles()).size() < 2) && tile.getColor().equals(firstTile.getColor()) && tile.getValue() == firstTile.getValue() - 1) ||
+                            ((sequence.isFlush() || ((List<Tile>)sequence.getTiles()).size() < 2) && !((Collection<Tile>)sequence.getTiles()).stream().anyMatch(tile2 -> tile.getColor().equals(tile2.getColor())) && tile.getValue() == firstTile.getValue())){
+                            moveInfo.fromSetID = 0;
+                            moveInfo.fromCardID = i + 1;
+                            moveInfo.toSetID = j + 1;
+                            moveInfo.toPositionID = 1;
+                            
+                            return moveInfo;
+                        }
+                        
+                        //If we can place a tile from the hand left to the last tile of a sequence.
+                        if(tile.isJoker() ||
+                            ((sequence.isStraight()|| ((List<Tile>)sequence.getTiles()).size() < 2) && tile.getColor().equals(lastTile.getColor()) && tile.getValue() == lastTile.getValue() - 1) ||
+                            ((sequence.isFlush() || ((List<Tile>)sequence.getTiles()).size() < 2) && !((Collection<Tile>)sequence.getTiles()).stream().anyMatch(tile2 -> tile.getColor().equals(tile2.getColor())) && tile.getValue() == firstTile.getValue())){
+                            moveInfo.fromSetID = 0;
+                            moveInfo.fromCardID = i + 1;
+                            moveInfo.toSetID = j + 1;
+                            moveInfo.toPositionID = sequence.size();
+                            
+                            return moveInfo;
+                        }
+                    }
+                }
+            }
+            
+            //Store the hand position of the card.
+            Map<Tile, Integer> tileToHandPos = new TreeMap<>();
+            for(int i = 0; i < ((List)hand.getTiles()).size(); ++i){
+                tileToHandPos.put(hand.getTileAt(i), i + 1);
+            }
+            
+            //Sort by color -> value
+            List<Tile> redTiles = tiles.stream().filter(tile -> tile.getColor() == Tile.Color.RED).sorted((tile1, tile2) -> Integer.compare(tile1.getValue(), tile2.getValue())).collect(Collectors.toList());
+            List<Tile> blueTiles = tiles.stream().filter(tile -> tile.getColor() == Tile.Color.BLUE).sorted((tile1, tile2) -> Integer.compare(tile1.getValue(), tile2.getValue())).collect(Collectors.toList());
+            List<Tile> blackTiles = tiles.stream().filter(tile -> tile.getColor() == Tile.Color.BLACK).sorted((tile1, tile2) -> Integer.compare(tile1.getValue(), tile2.getValue())).collect(Collectors.toList());
+            List<Tile> yellowTiles = tiles.stream().filter(tile -> tile.getColor() == Tile.Color.YELLOW).sorted((tile1, tile2) -> Integer.compare(tile1.getValue(), tile2.getValue())).collect(Collectors.toList());
+            
+            //Check for red straight sequences.
+            for(int i = 0; i < redTiles.size() - 3; ++i){
+                if(redTiles.get(i).getValue() == redTiles.get(i + 1).getValue() - 1 &&
+                    redTiles.get(i + 1).getValue() == redTiles.get(i + 2).getValue() - 1){
+                    moveInfo.fromSetID = 0;
+                    moveInfo.fromCardID = tileToHandPos.get(redTiles.get(i));
+                    
+                    moveInfo.toSetID = 0;
+                    while(!gameState.getBoard().getSequences().get(moveInfo.toSetID).isEmptySequence()){
+                        ++moveInfo.toSetID;
+                    }
+                    ++moveInfo.toSetID;
+                    
+                    moveInfo.toPositionID = 1;
+                    
+                    return moveInfo;
+                }
+            }
+            
+            //Check for blue straight sequences.
+            for(int i = 0; i < blueTiles.size() - 3; ++i){
+                if(blueTiles.get(i).getValue() == blueTiles.get(i + 1).getValue() - 1 &&
+                    blueTiles.get(i + 1).getValue() == blueTiles.get(i + 2).getValue() - 1){
+                    moveInfo.fromSetID = 0;
+                    moveInfo.fromCardID = tileToHandPos.get(blueTiles.get(i));
+                    
+                    moveInfo.toSetID = 0;
+                    while(!gameState.getBoard().getSequences().get(moveInfo.toSetID).isEmptySequence()){
+                        ++moveInfo.toSetID;
+                    }
+                    ++moveInfo.toSetID;
+                    
+                    moveInfo.toPositionID = 1;
+                    
+                    return moveInfo;
+                }
+            }
+            //Check for black straight sequences.
+            for(int i = 0; i < blackTiles.size() - 3; ++i){
+                if(blackTiles.get(i).getValue() == blackTiles.get(i + 1).getValue() - 1  &&
+                    blackTiles.get(i + 1).getValue() == blackTiles.get(i + 2).getValue() - 1){
+                    moveInfo.fromSetID = 0;
+                    moveInfo.fromCardID = tileToHandPos.get(blackTiles.get(i));
+                    
+                    moveInfo.toSetID = 0;
+                    while(!gameState.getBoard().getSequences().get(moveInfo.toSetID).isEmptySequence()){
+                        ++moveInfo.toSetID;
+                    }
+                    ++moveInfo.toSetID;
+                    
+                    moveInfo.toPositionID = 1;
+                    
+                    return moveInfo;
+                }
+            }
+            //Check for yellow straight sequences.
+            for(int i = 0; i < yellowTiles.size() - 3; ++i){
+                if(yellowTiles.get(i).getValue() == yellowTiles.get(i + 1).getValue() - 1  &&
+                    yellowTiles.get(i + 1).getValue() == yellowTiles.get(i + 2).getValue() - 1){
+                    moveInfo.fromSetID = 0;
+                    moveInfo.fromCardID = tileToHandPos.get(yellowTiles.get(i));
+                    
+                    moveInfo.toSetID = 0;
+                    while(!gameState.getBoard().getSequences().get(moveInfo.toSetID).isEmptySequence()){
+                        ++moveInfo.toSetID;
+                    }
+                    ++moveInfo.toSetID;
+                    
+                    moveInfo.toPositionID = 1;
+                    
+                    return moveInfo;
+                }
+            }
+            
+            return null;
+        }
+        
+        return moveInfo;
     }
 }
