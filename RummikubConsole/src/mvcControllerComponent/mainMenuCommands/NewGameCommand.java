@@ -57,7 +57,7 @@ public class NewGameCommand implements MenuCommand {
             }
         }
         catch(IllegalStateException ex){
-            System.out.print(ex.getMessage());
+            System.out.println(ex.getMessage());
         }
     }
     

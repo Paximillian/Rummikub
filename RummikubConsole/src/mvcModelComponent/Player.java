@@ -54,7 +54,7 @@ public class Player {
         if(this.hand.size() <= index)
             return null;
         else
-            return this.hand.removeTailFromSequence(index);
+            return this.hand.removeTileFromSequence(index);
     }
     
     @Override

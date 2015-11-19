@@ -43,7 +43,7 @@ public class Board {
         
         Sequence sequence = this.sequences.get(sequenceIndex);
         
-        return sequence.removeTailFromSequence(tileIndex);          
+        return sequence.removeTileFromSequence(tileIndex);          
     }
     
     public ArrayList<Sequence> getSequences(){

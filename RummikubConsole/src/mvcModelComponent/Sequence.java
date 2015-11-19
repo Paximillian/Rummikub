@@ -37,7 +37,7 @@ public class Sequence {
         this.tiles.add(tile);
     }
     
-    public Tile removeTailFromSequence(int index){
+    public Tile removeTileFromSequence(int index){
         if(index < 0 || index >= tiles.size()){
             throw new IndexOutOfBoundsException("Illegal index");
         }
