@@ -15,17 +15,12 @@ import java.util.Scanner;
 public class InputRequester {
     private static final Scanner inputScanner = new Scanner(System.in);
     
-    public static int RequestInt(String requestMessage){
+    public static int RequestInt(String requestMessage) throws Exception{
         System.out.println(requestMessage);
         
         int inputNumber = 0;
-        try{
-            inputNumber = Integer.parseInt(inputScanner.nextLine());
-        }
-        catch(Exception ex){
-            System.out.print(ex.getMessage());
-            return -1;
-        }
+        
+        inputNumber = Integer.parseInt(inputScanner.nextLine());
         
         return inputNumber;
     }

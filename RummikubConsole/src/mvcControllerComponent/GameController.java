@@ -10,6 +10,7 @@ import consoleSpecificRummikubImplementations.mvcViewComponent.gameMenus.Menu;
 import consoleSpecificRummikubImplementations.mvcViewComponent.gameViewElements.*;
 import consoleSpecificRummikubImplementations.mvcViewComponent.inputRequestMenus.InputRequester;
 import consoleSpecificRummikubImplementations.mvcViewComponent.messagingModule.MessageDisplayer;
+import consoleSpecificRummikubImplementations.mvcViewComponent.messagingModule.Sleeper;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,7 +54,9 @@ public class GameController {
     }
 
     public void endGame() {
+        MessageDisplayer.showMessage("Game over!");
         gameEnded = true;
+        resetGame();
     }
     
     public boolean hasGameEnded(){
@@ -82,7 +85,7 @@ public class GameController {
         }
         
         if(computerPlayerCount < 0 || computerPlayerCount > numberOfPlayers){
-            throw new IllegalArgumentException(String.format("Illegal number of players(Legal range is %d-%d)", MIN_PLAYER_COUNT, MAX_PLAYER_COUNT));
+            throw new IllegalArgumentException(String.format("Illegal number of computer players(Legal range is %d-%d)", 0, numberOfPlayers));
         }
         
         numberOfComputerPlayers = computerPlayerCount;
@@ -179,8 +182,15 @@ public class GameController {
            gameState.applyPenaltyDraw();
         }
         
-        gameState.advancePlayerTurn();
-        gameStateBackup = gameState.clone();
+        //If the game just ended
+        if(gameState.checkGameEnded()){
+            endGame();
+        }
+        else{
+            //If it's still going on, we'll advance to the turn to the next player
+            gameState.advancePlayerTurn();
+            gameStateBackup = gameState.clone();
+        }
     }
 
     private GameView generateGameView() {
@@ -227,6 +237,10 @@ public class GameController {
             
             if(moveInfo != null){
                 gameState.moveCard(moveInfo.fromSetID, moveInfo.fromCardID, moveInfo.toSetID, moveInfo.toPositionID);
+                
+                if(gameState.getCurrentPlayer().isBot()){
+                    Sleeper.Sleep(1500);
+                }
             }
             else{
                 endTurn();

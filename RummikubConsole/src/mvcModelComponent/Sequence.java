@@ -75,8 +75,14 @@ public class Sequence {
             return false;
         
         Tile firstTile = null;
+        int firstNonJokerIndex = 0;
         do{
-            firstTile = tiles.get(0);
+            if(firstNonJokerIndex >= tiles.size()){
+                return true;
+            }
+            
+            firstTile = tiles.get(firstNonJokerIndex);
+            ++firstNonJokerIndex;
         }while(firstTile.isJoker());
         
         ArrayList<Tile.Color> clolorsInSet = new ArrayList<Tile.Color>();

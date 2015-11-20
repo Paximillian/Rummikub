@@ -77,7 +77,7 @@ public class Player {
         return new Player(this.getName(), this.isBot, clonedHand);
     }
 
-    public MoveInfo requestMove(Game gameState) {
+    public MoveInfo requestMove(Game gameState) throws Exception {
         MoveInfo moveInfo = new MoveInfo();
         if(!isBot){
             //Request input from the view component
@@ -85,6 +85,7 @@ public class Player {
             moveInfo.fromCardID = InputRequester.RequestInt("ID of card in the set that you want to move:");
             moveInfo.toSetID = InputRequester.RequestInt("ID of set you want to move a card to:");
             moveInfo.toPositionID = InputRequester.RequestInt("ID of position in the set you want to move to:");
+            
         }
         else{
             //AI code

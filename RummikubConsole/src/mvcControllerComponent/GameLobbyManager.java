@@ -14,13 +14,15 @@ import mvcControllerComponent.mainMenuCommands.*;
  * @author Mor
  */
 public class GameLobbyManager {
+    public static boolean exitGame = false;
+        
     public static void main(String[] args) {
         Menu menu = new Menu();
         
         Map<String, MenuCommand> menuCommands = new HashMap<String, MenuCommand>();
         menuCommands.put("New Game", new NewGameCommand());
         menuCommands.put("Load Game", new LoadGameCommand());
-        menuCommands.put("Exit", new ExitGameCommand());
+        menuCommands.put("Exit", () -> exitGame());
         
         do{
             try{
@@ -35,6 +37,10 @@ public class GameLobbyManager {
                 GameController.getInstance().startGame();
             }
         }
-        while(!GameController.getInstance().hasGameEnded());
+        while(!exitGame);
+    }
+
+    private static void exitGame() {
+        exitGame = true;
     }
 }

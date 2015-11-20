@@ -191,4 +191,8 @@ public class Game {
         
         return clonedGame;
     }
+
+    public boolean checkGameEnded() {
+        return deck.isDeckEmpty();
+    }
 }
