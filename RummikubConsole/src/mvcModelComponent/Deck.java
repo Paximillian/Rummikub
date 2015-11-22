@@ -43,7 +43,23 @@ public class Deck {
     public boolean isDeckEmpty(){
         return tiles.isEmpty();
     }
-    
+    public boolean removeTileFromDeck(Tile tilee)
+    {
+        Tile tileToRemove = null;
+        {
+            for (Tile tile : tiles) {
+                if(tile.getRank() == tilee.getRank() && tile.getColor() == tilee.getColor())
+                {
+                    tileToRemove = tile;
+                    break;
+                }
+            }
+            if(tileToRemove == null)
+                return false;
+            this.tiles.remove(tileToRemove);
+            return true;
+        }
+    }
     @Override
     public Deck clone(){
         Deck clonedDeck = new Deck(tiles);

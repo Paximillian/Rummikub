@@ -218,4 +218,9 @@ public class Game {
     public boolean checkGameEnded() {
         return deck.isDeckEmpty();
     }
+    
+    public boolean removeTileFromDeck(Tile tile)
+    {
+        return this.deck.removeTileFromDeck(tile);
+    }
 }

@@ -147,8 +147,12 @@ public class XmlHandler {
     }
     
         public mvcModelComponent.Game loadGame(String filePath) throws JAXBException, InvalidLoadFileException, SAXException{
-            
-        File file = new File(filePath.endsWith(".xml") ? filePath : filePath + ".xml");                                  
+        
+        File file = new File(filePath.endsWith(".xml") ? filePath : filePath + ".xml"); 
+        if(file == null || !file.exists())
+        {
+            throw new InvalidLoadFileException("fill is corapted or at das not exisit");
+        }
         generated.Rummikub jaxBGame = createJaxBGame(file);
         loadPlayers(jaxBGame);
         loadBoard(jaxBGame);       
@@ -163,7 +167,6 @@ public class XmlHandler {
     File schemaFile = new File("rummikub.xsd");
     SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
     Schema schema = schemaFactory.newSchema(schemaFile);
-
     try{
         JAXBContext context = JAXBContext.newInstance(generated.Rummikub.class);
         Unmarshaller unmarshaller = context.createUnmarshaller();
@@ -176,14 +179,14 @@ public class XmlHandler {
         return loadedGame;
     }
 
-    private void loadPlayers(generated.Rummikub jaxBGame) {
+    private void loadPlayers(generated.Rummikub jaxBGame) throws InvalidLoadFileException {
         
         for (generated.Players.Player loadedPlayer : jaxBGame.getPlayers().getPlayer()) {
             loadPlayer(loadedPlayer);
         }      
     }
 
-    private void loadPlayer(generated.Players.Player loadedPlayer) {
+    private void loadPlayer(generated.Players.Player loadedPlayer) throws InvalidLoadFileException {
         
         String playerName = loadedPlayer.getName();
         boolean isPlayerBot = loadedPlayer.getType() == generated.PlayerType.COMPUTER;
@@ -192,7 +195,7 @@ public class XmlHandler {
         this.game.addNewPlayer(new mvcModelComponent.Player(playerName, isPlayerBot, hand));
     }
 
-    private ArrayList<mvcModelComponent.Tile> loadTiles(List<generated.Tile> loadedTiles) {
+    private ArrayList<mvcModelComponent.Tile> loadTiles(List<generated.Tile> loadedTiles) throws InvalidLoadFileException {
         
         ArrayList<mvcModelComponent.Tile> tiles = new ArrayList<mvcModelComponent.Tile>();
         for (generated.Tile loadedTile : loadedTiles) {
@@ -201,12 +204,17 @@ public class XmlHandler {
         return tiles;
     }
 
-    private Tile loadTile(generated.Tile loadedTile) {
+    private Tile loadTile(generated.Tile loadedTile) throws InvalidLoadFileException {
         
         mvcModelComponent.Tile.Rank rank =mvcModelComponent.Tile.Rank.fromValue(loadedTile.getValue());
         mvcModelComponent.Tile.Color color = loadColor(loadedTile.getColor());
            
-        return new Tile(color, rank);
+        Tile tile = new Tile(color, rank);
+        if(!this.game.removeTileFromDeck(tile))
+        {
+            throw new InvalidLoadFileException("eligal tile illegal");
+        }
+                return tile;
     }
 
     private mvcModelComponent.Tile.Color loadColor(generated.Color color) {
@@ -225,21 +233,30 @@ public class XmlHandler {
         return mvcModelComponent.Tile.Color.YELLOW;
     }
 
-    private void loadBoard(generated.Rummikub jaxBGame) {
+    private void loadBoard(generated.Rummikub jaxBGame) throws InvalidLoadFileException {
         
         for (generated.Board.Sequence loadedSequence: jaxBGame.getBoard().getSequence()) {
             this.game.getBoard().addSequence(new mvcModelComponent.Sequence(loadTiles(loadedSequence.getTile())));                 
         }
+        if(!this.game.getBoard().isBoardLegal()){
+            throw new InvalidLoadFileException("the Board givin has elegal sequence");
+        }
     }
 
-    private void loadCurrentPlayer(generated.Rummikub jaxBGame) {
+    private void loadCurrentPlayer(generated.Rummikub jaxBGame) throws InvalidLoadFileException {
         
+        boolean playerNameSet = false;
         for (mvcModelComponent.Player player : this.game.getPlayers()) {
-            if(player.getName() == jaxBGame.getCurrentPlayer())
+            if(player.getName().equals(jaxBGame.getCurrentPlayer()))
             {
                 this.game.setPlayerTurnTo(player);
+                playerNameSet = true;
                 break;
             }
+        }
+        if(!playerNameSet)
+        {
+            throw new InvalidLoadFileException("invaled carant player givin");
         }
     }
 }
