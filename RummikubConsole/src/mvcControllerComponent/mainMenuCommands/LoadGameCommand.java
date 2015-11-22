@@ -30,9 +30,13 @@ public class LoadGameCommand implements MenuCommand {
             MessageDisplayer.showMessage("Game loaded...");
             GameController.getInstance().startGame();
        }
-       catch(JAXBException | InvalidLoadFileException e)
+       catch(JAXBException  e)
        {
            MessageDisplayer.showMessage("erro game not loaded");
+       }
+       catch(InvalidLoadFileException e)
+       {
+           MessageDisplayer.showMessage("erro game not loaded" + System.lineSeparator() + e.getMessage());
        }
        
     }
