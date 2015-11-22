@@ -12,6 +12,7 @@ import mvcControllerComponent.GameController;
 import mvcControllerComponent.MenuCommand;
 import mvcModelComponent.xmlHandler.InvalidLoadFileException;
 import mvcModelComponent.xmlHandler.XmlHandler;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -20,7 +21,7 @@ import mvcModelComponent.xmlHandler.XmlHandler;
 public class LoadGameCommand implements MenuCommand {
 
     @Override
-    public void execute() {
+    public void execute() throws SAXException {
         XmlHandler xmlHandler = new XmlHandler();
         
         String filePath = InputRequester.RequestString("plase enter afail-path to load the game");

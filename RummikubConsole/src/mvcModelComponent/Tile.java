@@ -163,6 +163,10 @@ public class Tile implements Comparable{
         return this.rank;
     }
     
+    public int getValue(){
+        return this.rank.value;
+    }
+    
     public Color getColor(){
         return this.color;
     }

@@ -7,6 +7,7 @@ package mvcControllerComponent.mainMenuCommands;
 
 import mvcControllerComponent.MenuCommand;
 import consoleSpecificRummikubImplementations.mvcViewComponent.inputRequestMenus.InputRequester;
+import consoleSpecificRummikubImplementations.mvcViewComponent.messagingModule.ErrorDisplayer;
 import mvcControllerComponent.GameController;
 
 /**
@@ -23,20 +24,39 @@ public class NewGameCommand implements MenuCommand {
         try{
             try{
                 //Player count
-                playerCount = InputRequester.RequestInt("How many players are in the game?");
+                try{
+                    playerCount = InputRequester.RequestInt("How many players are in the game?");
+                }
+                catch(Exception e){
+                    ErrorDisplayer.showError("Invalid input " + e.getMessage());
+                }
+                
                 GameController.getInstance().setNumberOfPlayers(playerCount);
 
                 //Computer player count
-                computerPlayerCount = InputRequester.RequestInt("How many computer controlled players are in the game?");
+                try{
+                    computerPlayerCount = InputRequester.RequestInt("How many computer controlled players are in the game?");
+                }
+                catch(Exception e){
+                    ErrorDisplayer.showError("Invalid input " + e.getMessage());
+                }
                 GameController.getInstance().setNumberOfComputerPlayers(computerPlayerCount);
             }
             catch(IllegalArgumentException ex){
-                System.out.print(ex.getMessage());
+                ErrorDisplayer.showError(ex.getMessage());
                 return;
             }
 
             //Game name
-            String nameOfGame = InputRequester.RequestString("What will be the name of the game room?");
+            String nameOfGame = "";
+            try{
+                nameOfGame = InputRequester.RequestString("What will be the name of the game room?");
+            }
+            catch(Exception e){
+                ErrorDisplayer.showError("Invalid input " + e.getMessage());
+                return;
+            }
+            
             GameController.getInstance().setGameName(nameOfGame);
 
             //Get the name of each player
@@ -46,7 +66,7 @@ public class NewGameCommand implements MenuCommand {
                     GameController.getInstance().addPlayer(playerName, false);
                 }
                 catch(IllegalArgumentException e){
-                    System.out.println(e.getMessage());
+                    ErrorDisplayer.showError(e.getMessage());
                     --i;
                 }
             }
@@ -57,7 +77,7 @@ public class NewGameCommand implements MenuCommand {
             }
         }
         catch(IllegalStateException ex){
-            System.out.println(ex.getMessage());
+            ErrorDisplayer.showError(ex.getMessage());
         }
     }
     

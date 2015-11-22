@@ -5,6 +5,7 @@
  */
 package consoleSpecificRummikubImplementations.mvcViewComponent.gameMenus;
 
+import consoleSpecificRummikubImplementations.mvcViewComponent.inputRequestMenus.InputRequester;
 import mvcControllerComponent.MenuCommand;
 import mvcControllerComponent.mainMenuCommands.*;
 import java.util.*;
@@ -15,9 +16,6 @@ import java.util.*;
  */
 public class Menu{
     public void showMenu(Map<String, MenuCommand> menuItems){
-        System.out.print("Choose an action:");
-        System.out.print(System.lineSeparator());
-        
         List<MenuCommand> menuCommands = new ArrayList<MenuCommand>();
         
         int currentCommandID = 1;
@@ -28,11 +26,10 @@ public class Menu{
             
             ++currentCommandID;
         }
-        
-        Scanner inputScanner = new Scanner(System.in);
-        int menuChoice = inputScanner.nextInt();
-        
+                
         try{
+            int menuChoice = InputRequester.RequestInt("Choose an action:");
+            
             if(menuChoice < 1 || menuChoice > menuCommands.size()){
                 throw new IndexOutOfBoundsException("Invalid menu choice");
             }
@@ -40,7 +37,7 @@ public class Menu{
             menuCommands.get(menuChoice - 1).execute();
         }
         catch(Exception ex){
-            System.out.print(ex.getMessage());
+            System.out.println("Invalid input " + ex.getMessage());
         }
     }
 }

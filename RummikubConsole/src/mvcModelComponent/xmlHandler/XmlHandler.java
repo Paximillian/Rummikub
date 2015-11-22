@@ -14,12 +14,16 @@ import generated.Rummikub;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
 import mvcModelComponent.Player;
 import mvcModelComponent.Tile;
+import org.xml.sax.SAXException;
 
 public class XmlHandler {
     
@@ -41,6 +45,7 @@ public class XmlHandler {
         
         
         saveCurrentPlayer(gameToSave);
+        gameToSave.setName(game.getGameName());
         saveBoard(gameToSave);
         savePlayers(gameToSave);
         gameToSave.setName(this.game.getGameName());
@@ -140,7 +145,7 @@ public class XmlHandler {
         return convertedPlayerTails;
     }
     
-        public mvcModelComponent.Game loadGame(String filePath) throws JAXBException, InvalidLoadFileException{
+        public mvcModelComponent.Game loadGame(String filePath) throws JAXBException, InvalidLoadFileException, SAXException{
             
         File file = new File(filePath.endsWith(".xml") ? filePath : filePath + ".xml");                                  
         generated.Rummikub jaxBGame = createJaxBGame(file);
@@ -151,12 +156,23 @@ public class XmlHandler {
         return game;
     }
 
-    private generated.Rummikub createJaxBGame(File file) throws JAXBException {
-        
+    private generated.Rummikub createJaxBGame(File file) throws JAXBException, SAXException, InvalidLoadFileException {
+    
+    generated.Rummikub loadedGame = null;
+    File schemaFile = new File("rummikub.xsd");
+    SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+    Schema schema = schemaFactory.newSchema(schemaFile);
+
+    try{
         JAXBContext context = JAXBContext.newInstance(generated.Rummikub.class);
         Unmarshaller unmarshaller = context.createUnmarshaller();
-        
-        return (generated.Rummikub)unmarshaller.unmarshal(file);
+        unmarshaller.setSchema(schema);
+        loadedGame = (generated.Rummikub)unmarshaller.unmarshal(file);
+    }
+    catch (JAXBException exception){
+        throw new InvalidLoadFileException("fail data did not mach the recyayerd schema");
+    }
+        return loadedGame;
     }
 
     private void loadPlayers(generated.Rummikub jaxBGame) {

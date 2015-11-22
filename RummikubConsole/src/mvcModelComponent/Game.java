@@ -20,7 +20,7 @@ public class Game {
     private final int PENALTY_DRAW_COUNT = 3;
     
     private Deck deck = new Deck();
-    private final Board board = new Board();
+    private Board board = new Board();
     private final ArrayList<Player> players = new ArrayList<Player>();
     
     private String gameName;
@@ -113,6 +113,16 @@ public class Game {
         currentPlayerTurn = players.indexOf(playerToSetTurnFor);
     }
 
+    public void applyPenaltyDraw() {
+        for(int i = 0; i < PENALTY_DRAW_COUNT; ++i){
+            addTileToPlayer();
+        }
+    }
+
+    private void setBoard(Board newBoard) {
+        board = newBoard;
+    }
+
     public void moveCard(int fromSetID, int fromCardID, int toSetID, int toPositionID) throws IllegalArgumentException {
         Sequence sourceCardSet = null;
         Sequence targetCardSet = null;
@@ -179,6 +189,7 @@ public class Game {
     @Override
     public Game clone() throws CloneNotSupportedException{
         Game clonedGame = new Game();
+        
         //Clone the board
         Board clonedBoard = this.getBoard().clone();
         
@@ -197,12 +208,12 @@ public class Game {
         Deck clonedDeck = deck.clone();
         clonedGame.setDeck(clonedDeck);
         
+        clonedGame.setBoard(clonedBoard);
+        
         return clonedGame;
     }
 
-    public void applyPenaltyDraw() {
-        for(int i = 0; i < PENALTY_DRAW_COUNT; ++i){
-            addTileToPlayer();
-        }
+    public boolean checkGameEnded() {
+        return deck.isDeckEmpty();
     }
 }
