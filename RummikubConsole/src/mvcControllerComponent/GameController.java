@@ -33,7 +33,6 @@ public class GameController {
         
     private int numberOfPlayers;
     private int numberOfComputerPlayers;
-    private String gameName;
     
     private Game gameState;
     private Game gameStateBackup;
@@ -99,7 +98,7 @@ public class GameController {
             throw new IllegalStateException("Can't set the name of a game that already started");
         }
         
-        gameName = nameOfGame;
+        gameState.setGameName(nameOfGame);
     }
 
     public void addPlayer(String playerName, boolean isBot) throws IllegalStateException, IllegalArgumentException {
