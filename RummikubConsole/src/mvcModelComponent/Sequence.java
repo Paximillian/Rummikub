@@ -126,4 +126,11 @@ public class Sequence {
     public Iterable<Tile> getTiles() {
         return tiles;
     }
+
+    public void cloneSequence(Sequence sequenceToAdd) {
+        this.tiles.clear();
+        for(int i = 0; i < sequenceToAdd.size(); i++){
+            this.addTileToSequence(sequenceToAdd.getTileAt(i));
+        }
+    }
 }

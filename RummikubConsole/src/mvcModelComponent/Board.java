@@ -18,6 +18,18 @@ public class Board {
             sequences.add(new Sequence(new ArrayList<Tile>()));
     }
     
+    public void addSequence(Sequence sequenceToAdd){
+       Sequence sequenceToRemove;
+        for (Sequence sequence : sequences) {
+            if(sequence.isEmptySequence())
+            {
+                sequence.cloneSequence(sequenceToAdd);
+                break;
+            }
+        }
+        
+    }
+    
     public boolean isBoardLegal()
     {
         for (Sequence sequence : sequences) {

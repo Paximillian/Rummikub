@@ -190,7 +190,9 @@ public class Game {
     public Game clone() throws CloneNotSupportedException{
         Game clonedGame = new Game();
         
-        //Clone the board
+        clonedGame.setGameName(this.getGameName());
+        //Clone the board1
+      
         Board clonedBoard = this.getBoard().clone();
         
         //Clone the players

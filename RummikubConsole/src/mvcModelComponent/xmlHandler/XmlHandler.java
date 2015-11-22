@@ -45,7 +45,6 @@ public class XmlHandler {
         
         
         saveCurrentPlayer(gameToSave);
-        gameToSave.setName(game.getGameName());
         saveBoard(gameToSave);
         savePlayers(gameToSave);
         gameToSave.setName(this.game.getGameName());
@@ -87,7 +86,9 @@ public class XmlHandler {
         
         JAXBContext context = JAXBContext.newInstance(generated.Rummikub.class);
         Marshaller marshaller = context.createMarshaller();
-        marshaller.marshal(gameToSave, new File(saveFileNameAndPath.endsWith(".xml") ? saveFileNameAndPath : saveFileNameAndPath + ".xml"));
+        File file;
+            file = new File(saveFileNameAndPath.endsWith(".xml") ? saveFileNameAndPath : saveFileNameAndPath + ".xml");
+            marshaller.marshal(gameToSave,file );              
     }
 
     private generated.Board.Sequence convertGameSequenceToXMLSequence(mvcModelComponent.Sequence sequence) {
@@ -204,7 +205,7 @@ public class XmlHandler {
         
         mvcModelComponent.Tile.Rank rank =mvcModelComponent.Tile.Rank.fromValue(loadedTile.getValue());
         mvcModelComponent.Tile.Color color = loadColor(loadedTile.getColor());
-        
+           
         return new Tile(color, rank);
     }
 
@@ -227,7 +228,7 @@ public class XmlHandler {
     private void loadBoard(generated.Rummikub jaxBGame) {
         
         for (generated.Board.Sequence loadedSequence: jaxBGame.getBoard().getSequence()) {
-            this.game.getBoard().getSequences().add(new mvcModelComponent.Sequence(loadTiles(loadedSequence.getTile())));
+            this.game.getBoard().addSequence(new mvcModelComponent.Sequence(loadTiles(loadedSequence.getTile())));                 
         }
     }
 
