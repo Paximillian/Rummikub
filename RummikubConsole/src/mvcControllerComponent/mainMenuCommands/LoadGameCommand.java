@@ -24,7 +24,7 @@ public class LoadGameCommand implements MenuCommand {
     public void execute() throws SAXException {
         XmlHandler xmlHandler = new XmlHandler();
         
-        String filePath = InputRequester.RequestString("plase enter afail-path to load the game");
+        String filePath = InputRequester.RequestString("Please enter a file path to load the game");
        try{
             GameController.getInstance().loadGame(xmlHandler.loadGame(filePath));
             MessageDisplayer.showMessage("Game loaded...");
@@ -32,11 +32,11 @@ public class LoadGameCommand implements MenuCommand {
        }
        catch(JAXBException  e)
        {
-           MessageDisplayer.showMessage("erro game not loaded");
+           MessageDisplayer.showMessage("Error game not loaded");
        }
        catch(InvalidLoadFileException e)
        {
-           MessageDisplayer.showMessage("erro game not loaded" + System.lineSeparator() + e.getMessage());
+           MessageDisplayer.showMessage("Error game not loaded" + System.lineSeparator() + e.getMessage());
        }
        
     }

@@ -10,12 +10,8 @@ import consoleSpecificRummikubImplementations.mvcViewComponent.gameMenus.Menu;
 import consoleSpecificRummikubImplementations.mvcViewComponent.gameViewElements.*;
 import consoleSpecificRummikubImplementations.mvcViewComponent.inputRequestMenus.InputRequester;
 import consoleSpecificRummikubImplementations.mvcViewComponent.messagingModule.MessageDisplayer;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import javax.xml.bind.JAXBException;
-import mvcControllerComponent.mainMenuCommands.*;
 import mvcModelComponent.*;
 import mvcModelComponent.xmlHandler.*;
 
@@ -40,6 +36,8 @@ public class GameController {
     private boolean gameStarted = false;
     private boolean gameEnded = false;
     private boolean gameReady = false;
+    
+    private String lastSaveName = "";
     
     public static GameController getInstance(){
         if(instance == null){
@@ -160,7 +158,7 @@ public class GameController {
             Map<String, MenuCommand> menuItems = new HashMap();
             menuItems.put("Bust a Move", () -> moveCard());
             menuItems.put("Save As", () -> saveGameAs());
-            menuItems.put("Save", () -> System.out.print("Not implemented"));
+            menuItems.put("Save", () -> saveGame());
             menuItems.put("Clear Last Play", () -> gameState = gameStateBackup.clone());
             menuItems.put("Done", () -> endTurn());
             actionMenu.showMenu(menuItems);
@@ -236,16 +234,26 @@ public class GameController {
     }
 
     private void saveGameAs() {
-        
-        XmlHandler xmlHandler = new XmlHandler(); 
-        String filePath = InputRequester.RequestString("plase enter afail-path to save the game");
-        if(xmlHandler.saveGame(filePath, this.gameStateBackup))
-            MessageDisplayer.showMessage("game saved");
-        else
-            MessageDisplayer.showMessage("erro game not saved");
-            
-        
-                   
+        lastSaveName = InputRequester.RequestString("plase enter afail-path to save the game");
+        saveGameToLastName();
+    }
 
+    private void saveGame() {
+        if(lastSaveName.equals("")){
+            saveGameAs();
+        }
+        else{
+            saveGameToLastName();
+        }
+    }
+    
+    private void saveGameToLastName(){
+        XmlHandler xmlHandler = new XmlHandler(); 
+        if(xmlHandler.saveGame(lastSaveName, this.gameStateBackup)){
+            MessageDisplayer.showMessage("game saved");
+        }
+        else{
+            MessageDisplayer.showMessage("erro game not saved");
+        }
     }
 }

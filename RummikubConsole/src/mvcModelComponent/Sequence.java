@@ -6,7 +6,6 @@
 package mvcModelComponent;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 
 public class Sequence {

@@ -2,7 +2,6 @@ package consoleSpecificRummikubImplementations.mvcViewComponent.gameViewElements
 
 import java.util.ArrayList;
 import java.util.List;
-import mvcControllerComponent.GameController;
 
 public class GameView implements ViewComponentPrinter {
     private PlayerView currentPlayerView;
