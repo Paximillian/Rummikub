@@ -2,4 +2,5 @@
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
     <system systemId="file:/C:/ramyJava/Rummikub/RummikubConsole/src/mvcModelComponent/xmlFiles/rummikub.xsd" uri="xml-resources/jaxb/rummikubSchema/rummikub.xsd"/>
     <system systemId="file:/C:/ramyJava/Rummikub/RummikubConsole/src/mvcModelComponent/rummikub.xsd" uri="xml-resources/jaxb/jaxB/rummikub.xsd"/>
+    <system systemId="file:/C:/Rummikub/RummikubConsole/src/mvcModelComponent/rummikub.xsd" uri="xml-resources/jaxb/jaxB/rummikub.xsd"/>
 </catalog>
