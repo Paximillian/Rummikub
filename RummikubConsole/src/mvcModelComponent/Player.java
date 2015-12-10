@@ -20,11 +20,29 @@ import java.util.stream.Collectors;
 public class Player {
     private String playerName;
     private boolean isBot;
-    private Sequence hand ;
+    private final Sequence hand ;    
+    private boolean placedFirstSequence ;
+    
+    public boolean isPlacedFirstSequence() {
+        return placedFirstSequence;
+    }
+
+    public void setPlacedFirstSequence(boolean PlacedFirstSequence) {
+        this.placedFirstSequence = PlacedFirstSequence;
+    }
 
     public Player(String newName, boolean isBotStatus, ArrayList<Tile> hand) {
         playerName = newName;
         isBot = isBotStatus;
+        placedFirstSequence = false;
+        
+        this.hand = new Sequence(hand);
+    }
+    
+        public Player(String newName, boolean isBotStatus, ArrayList<Tile> hand, boolean placedFirstSequence) {
+        playerName = newName;
+        isBot = isBotStatus;
+        this.placedFirstSequence = placedFirstSequence;
         
         this.hand = new Sequence(hand);
     }

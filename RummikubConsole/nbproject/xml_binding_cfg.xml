@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <schemas xmlns='http://xml.netbeans.org/schema/JAXBWizConfig' destdir='build/generated-sources/jaxb' projectName='RummikubConsole' version='1.0'>
-	<schema type='-xmlschema' package='' name='rummikubSchema'>
+	<schema type='-xmlschema' package='' name='jaxB'>
 		<xjc-options>
 		</xjc-options>
 		<schema-sources>
-			<schema-source location='xml-resources/jaxb/rummikubSchema/rummikub.xsd' origLocation='src/mvcModelComponent/xmlFiles/rummikub.xsd'/>
+			<schema-source location='xml-resources/jaxb/jaxB/rummikub.xsd' origLocation='src/mvcModelComponent/rummikub.xsd'/>
 		</schema-sources>
 		<bindings>
 		</bindings>

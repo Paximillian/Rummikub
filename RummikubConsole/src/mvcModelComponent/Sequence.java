@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class Sequence {
     
-    private  ArrayList<Tile> tiles;
+    private final  ArrayList<Tile> tiles;
     
     public Sequence(ArrayList<Tile> tiles)
     {

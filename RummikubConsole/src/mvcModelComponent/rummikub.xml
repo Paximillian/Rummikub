@@ -2,7 +2,7 @@
 <rummikub xsi:noNamespaceSchemaLocation="rummikub.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     current_player="paul" name="game1">
     <players>
-        <player type="HUMAN" name="john">
+        <player type="HUMAN" name="john" placed_first_sequence="true">
             <tiles>
                 <tile color="YELLOW"    value="1"></tile>
                 <tile color="BLACK"     value="10"></tile>
@@ -17,7 +17,7 @@
                 <tile color="BLUE"      value="4"></tile>
             </tiles>
         </player>
-        <player type="COMPUTER" name="paul">
+        <player type="COMPUTER" name="paul" placed_first_sequence="false">
             <tiles>
                 <tile color="BLUE"      value="4"></tile>
                 <tile color="BLACK"     value="5"></tile>

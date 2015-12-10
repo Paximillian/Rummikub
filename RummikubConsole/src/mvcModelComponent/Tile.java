@@ -86,7 +86,7 @@ public class Tile implements Comparable{
         ELEVEN(11),
         TWELVE(12),
         THIRTEEN(13),
-        JOKER(14);
+        JOKER(0);
         
         private final int value;
         
@@ -137,7 +137,7 @@ public class Tile implements Comparable{
                 case 13:
                     result = Rank.THIRTEEN;
                     break;
-                case 14:
+                case 0:
                     result = Rank.JOKER;
                     break;
             }
@@ -151,7 +151,7 @@ public class Tile implements Comparable{
         
         @Override
         public String toString(){
-            return value == 14 ? "J" : Integer.toString(value);
+            return value == 0 ? "J" : Integer.toString(value);
         }
     }
     

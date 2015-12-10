@@ -131,6 +131,7 @@ public class XmlHandler {
         convertedPlayer.setName(player.getName());
         convertedPlayer.setType(player.isBot() ? generated.PlayerType.COMPUTER : generated.PlayerType.HUMAN );
         convertedPlayer.setTiles(convertGamePlayerTailsToXMLPlayerTails(player.getHand().getTiles()));
+        convertedPlayer.setPlacedFirstSequence(player.isPlacedFirstSequence());
         
         return convertedPlayer;
         
@@ -191,8 +192,8 @@ public class XmlHandler {
         String playerName = loadedPlayer.getName();
         boolean isPlayerBot = loadedPlayer.getType() == generated.PlayerType.COMPUTER;
         ArrayList<mvcModelComponent.Tile> hand = loadTiles(loadedPlayer.getTiles().getTile());       
-        
-        this.game.addNewPlayer(new mvcModelComponent.Player(playerName, isPlayerBot, hand));
+        boolean PlacedFirstSequence = loadedPlayer.isPlacedFirstSequence();
+        this.game.addNewPlayer(new mvcModelComponent.Player(playerName, isPlayerBot, hand,PlacedFirstSequence));
     }
 
     private ArrayList<mvcModelComponent.Tile> loadTiles(List<generated.Tile> loadedTiles) throws InvalidLoadFileException {
@@ -208,7 +209,12 @@ public class XmlHandler {
         
         mvcModelComponent.Tile.Rank rank =mvcModelComponent.Tile.Rank.fromValue(loadedTile.getValue());
         mvcModelComponent.Tile.Color color = loadColor(loadedTile.getColor());
-           
+        
+        if(rank.rankValue() == 0)
+        {
+            color = mvcModelComponent.Tile.Color.RED;
+        }      
+        
         Tile tile = new Tile(color, rank);
         if(!this.game.removeTileFromDeck(tile))
         {
