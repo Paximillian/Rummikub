@@ -13,3 +13,6 @@ hs_err_pid*
 /RummikubConsole/nbproject/private/
 /RummikubConsole/build/
 /RummikubConsole/dist/
+/RummikubGUI/nbproject/private/
+/RummikubGUI/build/
+/RummikubGUI/dist/
