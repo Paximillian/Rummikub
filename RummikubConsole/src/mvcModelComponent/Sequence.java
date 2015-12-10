@@ -27,6 +27,10 @@ public class Sequence {
         this.tiles = tiles;
     }
     
+    public Sequence(){
+        this.tiles = new ArrayList<Tile>();
+    }
+    
     public void addTileToSequence(Tile tile, int index)
     {
         if(index < 0){
@@ -141,5 +145,9 @@ public class Sequence {
         for(int i = 0; i < sequenceToAdd.size(); i++){
             this.addTileToSequence(sequenceToAdd.getTileAt(i));
         }
+    }
+
+    public void clear() {
+        tiles.clear();
     }
 }
