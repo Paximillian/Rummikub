@@ -153,15 +153,22 @@ public class GameController {
             gameView = generateGameView();
             gameView.printComponent();
             
-            //Show the action menu;
-            Menu actionMenu = new Menu();
-            Map<String, MenuCommand> menuItems = new HashMap();
-            menuItems.put("Bust a Move", () -> moveCard());
-            menuItems.put("Save As", () -> saveGameAs());
-            menuItems.put("Save", () -> saveGame());
-            menuItems.put("Clear Last Play", () -> gameState = gameStateBackup.clone());
-            menuItems.put("Done", () -> endTurn());
-            actionMenu.showMenu(menuItems);
+            if(gameState.getCurrentPlayer().isBot()){
+                moveCard();
+            }
+            else{
+                //Show the action menu;
+                Menu actionMenu = new Menu();
+                Map<String, MenuCommand> menuItems = new HashMap();
+                menuItems.put("Bust a Move", () -> moveCard());
+                menuItems.put("Save As", () -> saveGameAs());
+                menuItems.put("Save", () -> saveGame());
+                menuItems.put("Clear Last Play", () -> gameState = gameStateBackup.clone());
+                menuItems.put("Done", () -> endTurn());
+                actionMenu.showMenu(menuItems);
+            }
+            
+            gameEnded = gameState.checkGameEnded();
         }
     }
     
@@ -220,13 +227,15 @@ public class GameController {
 
     public void moveCard() {
         try{
-            //Request input from the view component
-            int fromSetID = InputRequester.RequestInt("ID of set you want to move a card from:");
-            int fromCardID = InputRequester.RequestInt("ID of card in the set that you want to move:");
-            int toSetID = InputRequester.RequestInt("ID of set you want to move a card to:");
-            int toPositionID = InputRequester.RequestInt("ID of position in the set you want to move to:");
-
-            gameState.moveCard(fromSetID, fromCardID, toSetID, toPositionID);
+            MoveInfo moveInfo = gameState.getCurrentPlayer().requestMove(gameState);
+            
+            if(moveInfo != null){
+                gameState.moveCard(moveInfo.fromSetID, moveInfo.fromCardID, moveInfo.toSetID, moveInfo.toPositionID);
+                Thread.sleep(1000);
+            }
+            else{
+                endTurn();
+            }
         }
         catch(Exception e){
             ErrorDisplayer.showError(e.getMessage());
@@ -234,7 +243,7 @@ public class GameController {
     }
 
     private void saveGameAs() {
-        lastSaveName = InputRequester.RequestString("plase enter afail-path to save the game");
+        lastSaveName = InputRequester.RequestString("Please enter a full to save the game");
         saveGameToLastName();
     }
 
@@ -253,7 +262,7 @@ public class GameController {
             MessageDisplayer.showMessage("game saved");
         }
         else{
-            MessageDisplayer.showMessage("erro game not saved");
+            MessageDisplayer.showMessage("error game not saved");
         }
     }
 }
