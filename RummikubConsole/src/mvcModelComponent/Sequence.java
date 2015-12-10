@@ -10,11 +10,15 @@ import java.util.ArrayList;
 
 public class Sequence {
     
-    private final  ArrayList<Tile> tiles;
+    private final ArrayList<Tile> tiles;
     
     public Sequence(ArrayList<Tile> tiles)
     {
         this.tiles = tiles;
+    }
+    
+    public Sequence(){
+        this.tiles = new ArrayList<Tile>();
     }
     
     public void addTileToSequence(Tile tile, int index)
@@ -131,5 +135,9 @@ public class Sequence {
         for(int i = 0; i < sequenceToAdd.size(); i++){
             this.addTileToSequence(sequenceToAdd.getTileAt(i));
         }
+    }
+
+    public void clear() {
+        tiles.clear();
     }
 }

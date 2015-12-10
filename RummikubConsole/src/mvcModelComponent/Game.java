@@ -49,6 +49,8 @@ public class Game {
         return players.get(currentPlayerTurn);
     }
     public void advancePlayerTurn(){
+        getCurrentPlayer().clearCardsPlayedThisTurn();
+        
         ++currentPlayerTurn;
         
         if(currentPlayerTurn >= players.size()){
@@ -98,7 +100,7 @@ public class Game {
     }
 
     public boolean isLegalGameState() {
-        return board.isBoardLegal();
+        return board.isBoardLegal() && getCurrentPlayer().isTurnLegalForPlayer();
     }
 
     private void setDeck(Deck newDeck) {
@@ -184,6 +186,8 @@ public class Game {
         
         targetCardSet.addTileToSequence(movedCard, toPositionID - 1);
         sourceCardSet.removeTileAt(fromCardID - 1);
+        
+        getCurrentPlayer().addToCardsPlayedThisTurn(movedCard);
     }
     
     @Override

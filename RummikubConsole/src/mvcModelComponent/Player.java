@@ -23,6 +23,8 @@ public class Player {
     private final Sequence hand ;    
     private boolean placedFirstSequence ;
     
+    private final Sequence cardsPlayedThisTurn = new Sequence();
+    
     public boolean isPlacedFirstSequence() {
         return placedFirstSequence;
     }
@@ -78,6 +80,10 @@ public class Player {
             return null;
         else
             return this.hand.removeTileFromSequence(index);
+    }
+
+    public boolean isTurnLegalForPlayer() {
+        return placedFirstSequence = isPlacedFirstSequence() || cardsPlayedThisTurn.isSumOfFirstSequenceSufficient();
     }
     
     @Override
@@ -234,5 +240,13 @@ public class Player {
         }
         
         return moveInfo;
+    }
+
+    public void addToCardsPlayedThisTurn(Tile movedCard) {
+        cardsPlayedThisTurn.addTileToSequence(movedCard);
+    }
+    
+    public void clearCardsPlayedThisTurn(){
+        cardsPlayedThisTurn.clear();
     }
 }
