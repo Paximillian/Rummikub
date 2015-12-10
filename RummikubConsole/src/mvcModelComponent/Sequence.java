@@ -11,7 +11,17 @@ import java.util.ArrayList;
 public class Sequence {
     
     private final  ArrayList<Tile> tiles;
+    private final int FIRST_SEQUENCE_SUM = 30;
     
+    public boolean isSumOfFirstSequenceSufficient()
+    {
+        int sum = 0;
+        
+        for (Tile tile : tiles) {
+            sum = tile.isJoker() ? 13 : tile.getRank().rankValue();         
+        }
+        return sum >= FIRST_SEQUENCE_SUM;
+    }
     public Sequence(ArrayList<Tile> tiles)
     {
         this.tiles = tiles;
