@@ -17,6 +17,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import mvcControllerComponent.GameController;
+import mvcViewComponent.gui.messagingModule.ErrorDisplayer;
 
 /**
  * FXML Controller class
@@ -45,9 +46,7 @@ public class GameSceneController implements Initializable {
             GameController.getInstance().endTurn();
         } 
         catch (CloneNotSupportedException ex) {
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setContentText(String.format("A cloning error has occured, please contact the developers and tell them to: 'Fix it, you lazy fucks!'%sThank you!", System.lineSeparator()));
-            alert.showAndWait();
+            ErrorDisplayer.showError(String.format("A cloning error has occured, please contact the developers and tell them to: 'Fix it, you lazy fucks!'%sThank you!", System.lineSeparator()));
         }
     }
     
@@ -57,9 +56,7 @@ public class GameSceneController implements Initializable {
             GameController.getInstance().clearLastPlay();
         } 
         catch (CloneNotSupportedException ex) {
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setContentText(String.format("A cloning error has occured, please contact the developers and tell them to: 'Fix it, you lazy fucks!'%sThank you!", System.lineSeparator()));
-            alert.showAndWait();
+            ErrorDisplayer.showError(String.format("A cloning error has occured, please contact the developers and tell them to: 'Fix it, you lazy fucks!'%sThank you!", System.lineSeparator()));
         }
     }
     

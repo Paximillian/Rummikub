@@ -6,8 +6,7 @@
 package mvcControllerComponent.mainMenuCommands;
 
 import mvcControllerComponent.MenuCommand;
-import mvcViewComponent.console.inputRequestMenus.InputRequester;
-import mvcViewComponent.console.messagingModule.ErrorDisplayer;
+import mvcViewComponent.gui.messagingModule.ErrorDisplayer;
 import mvcControllerComponent.GameController;
 
 /**
@@ -25,7 +24,7 @@ public class NewGameCommand implements MenuCommand {
             try{
                 //Player count
                 try{
-                    playerCount = InputRequester.RequestInt("How many players are in the game?");
+                    //playerCount = InputRequester.RequestInt("How many players are in the game?");
                 }
                 catch(Exception e){
                     ErrorDisplayer.showError("Invalid input " + e.getMessage());
@@ -35,7 +34,7 @@ public class NewGameCommand implements MenuCommand {
 
                 //Computer player count
                 try{
-                    computerPlayerCount = InputRequester.RequestInt("How many computer controlled players are in the game?");
+                    //computerPlayerCount = InputRequester.RequestInt("How many computer controlled players are in the game?");
                 }
                 catch(Exception e){
                     ErrorDisplayer.showError("Invalid input " + e.getMessage());
@@ -50,7 +49,7 @@ public class NewGameCommand implements MenuCommand {
             //Game name
             String nameOfGame = "";
             try{
-                nameOfGame = InputRequester.RequestString("What will be the name of the game room?");
+                //nameOfGame = InputRequester.RequestString("What will be the name of the game room?");
             }
             catch(Exception e){
                 ErrorDisplayer.showError("Invalid input " + e.getMessage());
@@ -62,8 +61,8 @@ public class NewGameCommand implements MenuCommand {
             //Get the name of each player
             for(int i = 1; i <= playerCount - computerPlayerCount; ++i){
                 try{
-                    String playerName = InputRequester.RequestString(String.format("Name of player %d?", i));
-                    GameController.getInstance().addPlayer(playerName, false);
+                    //String playerName = InputRequester.RequestString(String.format("Name of player %d?", i));
+                    //GameController.getInstance().addPlayer(playerName, false);
                 }
                 catch(IllegalArgumentException e){
                     ErrorDisplayer.showError(e.getMessage());

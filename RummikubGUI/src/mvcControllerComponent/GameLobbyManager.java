@@ -5,7 +5,6 @@
  */
 package mvcControllerComponent;
 
-import mvcViewComponent.console.gameMenus.Menu;
 import java.util.*;
 import mvcControllerComponent.mainMenuCommands.*;
 
@@ -17,7 +16,7 @@ public class GameLobbyManager {
     public static boolean exitGame = false;
         
     public static void main(String[] args) {
-        Menu menu = new Menu();
+        //Menu menu = new Menu();
         
         Map<String, MenuCommand> menuCommands = new HashMap<String, MenuCommand>();
         menuCommands.put("New Game", new NewGameCommand());
@@ -26,7 +25,7 @@ public class GameLobbyManager {
         
         do{
             try{
-                menu.showMenu(menuCommands);
+                //menu.showMenu(menuCommands);
             }
             catch(InputMismatchException e){
                 System.out.println(e.getMessage());

@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mvcViewComponent.console.messagingModule;
+package mvcViewComponent.gui.messagingModule;
+
+import javafx.scene.control.Alert;
 
 /**
  *
@@ -11,6 +13,8 @@ package mvcViewComponent.console.messagingModule;
  */
 public class ErrorDisplayer {
     public static void showError(String errorMessage){
-        System.out.println(errorMessage);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setContentText(String.format(errorMessage));
+        alert.showAndWait();
     }
 }

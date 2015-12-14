@@ -7,8 +7,7 @@ package mvcControllerComponent.mainMenuCommands;
 
 import java.io.File;
 import javafx.stage.FileChooser;
-import mvcViewComponent.console.inputRequestMenus.InputRequester;
-import mvcViewComponent.console.messagingModule.MessageDisplayer;
+import mvcViewComponent.gui.messagingModule.MessageDisplayer;
 import javax.xml.bind.JAXBException;
 import mvcControllerComponent.GameController;
 import mvcControllerComponent.MenuCommand;

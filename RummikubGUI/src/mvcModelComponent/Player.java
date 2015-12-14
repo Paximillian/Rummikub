@@ -5,7 +5,6 @@
  */
 package mvcModelComponent;
 
-import mvcViewComponent.console.inputRequestMenus.InputRequester;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -100,15 +99,7 @@ public class Player {
 
     public MoveInfo requestMove(Game gameState) throws Exception {
         MoveInfo moveInfo = new MoveInfo();
-        if(!isBot){
-            //Request input from the view component
-            moveInfo.fromSetID = InputRequester.RequestInt("ID of set you want to move a card from:");
-            moveInfo.fromCardID = InputRequester.RequestInt("ID of card in the set that you want to move:");
-            moveInfo.toSetID = InputRequester.RequestInt("ID of set you want to move a card to:");
-            moveInfo.toPositionID = InputRequester.RequestInt("ID of position in the set you want to move to:");
-            
-        }
-        else{
+        if(isBot){
             //AI code
             Collection<Tile> tiles = (Collection)hand.getTiles();
             

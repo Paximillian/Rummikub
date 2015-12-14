@@ -5,17 +5,17 @@
  */
 package mvcControllerComponent;
 
+import java.io.File;
 import mvcViewComponent.console.gameViewElements.BoardView;
 import mvcViewComponent.console.gameViewElements.PlayerView;
 import mvcViewComponent.console.gameViewElements.CardView;
 import mvcViewComponent.console.gameViewElements.GameView;
 import mvcViewComponent.console.gameViewElements.CardSetView;
-import mvcViewComponent.console.messagingModule.ErrorDisplayer;
-import mvcViewComponent.console.gameMenus.Menu;
-import mvcViewComponent.console.inputRequestMenus.InputRequester;
-import mvcViewComponent.console.messagingModule.MessageDisplayer;
+import mvcViewComponent.gui.messagingModule.ErrorDisplayer;
+import mvcViewComponent.gui.messagingModule.MessageDisplayer;
 import java.util.HashMap;
 import java.util.Map;
+import javafx.stage.FileChooser;
 import mvcModelComponent.*;
 import mvcModelComponent.xmlHandler.*;
 
@@ -162,14 +162,14 @@ public class GameController {
             }
             else{
                 //Show the action menu;
-                Menu actionMenu = new Menu();
+                //Menu actionMenu = new Menu();
                 Map<String, MenuCommand> menuItems = new HashMap();
                 menuItems.put("Bust a Move", () -> moveCard());
                 menuItems.put("Save As", () -> saveGameAs());
                 menuItems.put("Save", () -> saveGame());
                 menuItems.put("Clear Last Play", () -> clearLastPlay());
                 menuItems.put("Done", () -> endTurn());
-                actionMenu.showMenu(menuItems);
+                //actionMenu.showMenu(menuItems);
             }
             
             gameEnded = gameState.checkGameEnded();
@@ -247,7 +247,11 @@ public class GameController {
     }
 
     public void saveGameAs() {
-        lastSaveName = InputRequester.RequestString("Please enter a full to save the game");
+        FileChooser fileChooser = new FileChooser();       
+        File file = fileChooser.showOpenDialog(null);
+        String filePath = file.getAbsolutePath();  
+        
+        lastSaveName = filePath;
         saveGameToLastName();
     }
 
