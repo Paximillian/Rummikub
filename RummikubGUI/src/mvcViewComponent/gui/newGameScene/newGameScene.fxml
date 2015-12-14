@@ -7,8 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="mvcViewComponent.gui.newGameScene.NewGameSceneController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mvcViewComponent.gui.newGameScene.NewGameSceneController">
    <children>
       <ScrollPane prefHeight="400.0" prefWidth="600.0">
          <content>
@@ -22,7 +21,7 @@
                                 <content>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="335.0" prefWidth="564.0">
                                        <children>
-                                          <Pane id="player1cavas" layoutX="12.0" layoutY="19.0" prefHeight="77.0" prefWidth="313.0">
+                                          <Pane id="player1cavas" layoutX="65.0" layoutY="16.0" prefHeight="77.0" prefWidth="313.0">
                                              <children>
                                                 <Label id="player1NameLabol" layoutX="14.0" layoutY="43.0" prefHeight="17.0" prefWidth="39.0" text="Name" />
                                                 <TextField id="player1NameTextField" layoutX="53.0" layoutY="39.0" prefHeight="25.0" prefWidth="131.0" promptText="enter player name" />
@@ -30,30 +29,31 @@
                                                 <Label id="player1Label" layoutX="14.0" layoutY="6.0" prefHeight="27.0" prefWidth="55.0" text="Player 1" />
                                              </children>
                                           </Pane>
-                                          <Pane id="player1cavas" layoutX="12.0" layoutY="96.0" prefHeight="77.0" prefWidth="313.0">
+                                          <Pane id="player2cavas" layoutX="65.0" layoutY="93.0" prefHeight="77.0" prefWidth="313.0">
                                              <children>
-                                                <Label id="player1NameLabol" layoutX="14.0" layoutY="43.0" prefHeight="17.0" prefWidth="39.0" text="Name" />
-                                                <TextField id="player1NameTextField" layoutX="53.0" layoutY="39.0" prefHeight="25.0" prefWidth="131.0" promptText="enter player name" />
-                                                <CheckBox id="player1AiPlayerChoiceBox" layoutX="234.0" layoutY="43.0" mnemonicParsing="false" text="Ai Player" />
-                                                <Label id="player1Label" layoutX="14.0" layoutY="6.0" prefHeight="27.0" prefWidth="55.0" text="Player 1" />
+                                                <Label id="player2NameLabol" layoutX="14.0" layoutY="43.0" prefHeight="17.0" prefWidth="39.0" text="Name" />
+                                                <TextField id="player2NameTextField" layoutX="53.0" layoutY="39.0" prefHeight="25.0" prefWidth="131.0" promptText="enter player name" />
+                                                <CheckBox id="player2AiPlayerChoiceBox" layoutX="234.0" layoutY="43.0" mnemonicParsing="false" text="Ai Player" />
+                                                <Label id="player2Label" layoutX="14.0" layoutY="6.0" prefHeight="27.0" prefWidth="55.0" text="Player 2" />
                                              </children>
                                           </Pane>
-                                          <Pane id="player1cavas" layoutX="12.0" layoutY="168.0" prefHeight="77.0" prefWidth="313.0">
+                                          <Pane id="player3cavas" layoutX="65.0" layoutY="165.0" prefHeight="77.0" prefWidth="313.0">
                                              <children>
-                                                <Label id="player1NameLabol" layoutX="14.0" layoutY="43.0" prefHeight="17.0" prefWidth="39.0" text="Name" />
-                                                <TextField id="player1NameTextField" layoutX="53.0" layoutY="39.0" prefHeight="25.0" prefWidth="131.0" promptText="enter player name" />
-                                                <CheckBox id="player1AiPlayerChoiceBox" layoutX="234.0" layoutY="43.0" mnemonicParsing="false" text="Ai Player" />
-                                                <Label id="player1Label" layoutX="14.0" layoutY="6.0" prefHeight="27.0" prefWidth="55.0" text="Player 1" />
+                                                <Label id="player3NameLabol" layoutX="14.0" layoutY="43.0" prefHeight="17.0" prefWidth="39.0" text="Name" />
+                                                <TextField id="player3NameTextField" layoutX="53.0" layoutY="39.0" prefHeight="25.0" prefWidth="131.0" promptText="enter player name" />
+                                                <CheckBox id="player3AiPlayerChoiceBox" layoutX="234.0" layoutY="43.0" mnemonicParsing="false" text="Ai Player" />
+                                                <Label id="player3Label" layoutX="14.0" layoutY="6.0" prefHeight="27.0" prefWidth="55.0" text="Player 3" />
                                              </children>
                                           </Pane>
-                                          <Pane id="player1cavas" layoutX="12.0" layoutY="245.0" prefHeight="77.0" prefWidth="313.0">
+                                          <Pane id="player1cavas" layoutX="65.0" layoutY="242.0" prefHeight="77.0" prefWidth="313.0">
                                              <children>
-                                                <Label id="player1NameLabol" layoutX="14.0" layoutY="43.0" prefHeight="17.0" prefWidth="39.0" text="Name" />
-                                                <TextField id="player1NameTextField" layoutX="53.0" layoutY="39.0" prefHeight="25.0" prefWidth="131.0" promptText="enter player name" />
-                                                <CheckBox id="player1AiPlayerChoiceBox" layoutX="234.0" layoutY="43.0" mnemonicParsing="false" text="Ai Player" />
-                                                <Label id="player1Label" layoutX="14.0" layoutY="6.0" prefHeight="27.0" prefWidth="55.0" text="Player 1" />
+                                                <Label id="player4NameLabol" layoutX="14.0" layoutY="43.0" prefHeight="17.0" prefWidth="39.0" text="Name" />
+                                                <TextField id="player4NameTextField" layoutX="53.0" layoutY="39.0" prefHeight="25.0" prefWidth="131.0" promptText="enter player name" />
+                                                <CheckBox id="player4AiPlayerChoiceBox" layoutX="234.0" layoutY="43.0" mnemonicParsing="false" text="Ai Player" />
+                                                <Label id="player1Label" layoutX="14.0" layoutY="6.0" prefHeight="27.0" prefWidth="55.0" text="Player 4" />
                                              </children>
                                           </Pane>
+                                          <CheckBox id="Active" layoutX="14.0" layoutY="26.0" mnemonicParsing="false" text="Active" />
                                        </children>
                                     </AnchorPane>
                                 </content>
