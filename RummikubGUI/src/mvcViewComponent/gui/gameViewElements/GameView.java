@@ -1,9 +1,10 @@
-package mvcViewComponent.console.gameViewElements;
+package mvcViewComponent.gui.gameViewElements;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.control.SplitPane;
 
-public class GameView implements ViewComponentPrinter {
+public class GameView extends SplitPane implements ViewComponentPrinter {
     private PlayerView currentPlayerView;
     private final List<PlayerView> players = new ArrayList<PlayerView>();
     

@@ -3,21 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mvcViewComponent.console.gameViewElements;
+package mvcViewComponent.gui.gameViewElements;
+
+import javafx.scene.layout.AnchorPane;
 
 /**
  *
  * @author Mor
  */
-public class PlayerView implements ViewComponentPrinter{
+public class PlayerView extends AnchorPane implements ViewComponentPrinter{
     private final CardSetView hand;
     private String name;
     private boolean isBot;
     
-    public PlayerView(String playerName, boolean isABot){
+    public PlayerView(){
         hand = new CardSetView();
-        name = playerName;
-        isBot = isABot;
     }
     
     public void addCardToHand(CardView card){
@@ -42,5 +42,13 @@ public class PlayerView implements ViewComponentPrinter{
 
     public boolean isBot() {
         return isBot;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setIsBot(boolean isABot) {
+        this.isBot = isABot;
     }
 }

@@ -6,11 +6,11 @@
 package mvcControllerComponent;
 
 import java.io.File;
-import mvcViewComponent.console.gameViewElements.BoardView;
-import mvcViewComponent.console.gameViewElements.PlayerView;
-import mvcViewComponent.console.gameViewElements.CardView;
-import mvcViewComponent.console.gameViewElements.GameView;
-import mvcViewComponent.console.gameViewElements.CardSetView;
+import mvcViewComponent.gui.gameViewElements.BoardView;
+import mvcViewComponent.gui.gameViewElements.PlayerView;
+import mvcViewComponent.gui.gameViewElements.CardView;
+import mvcViewComponent.gui.gameViewElements.GameView;
+import mvcViewComponent.gui.gameViewElements.CardSetView;
 import mvcViewComponent.gui.messagingModule.ErrorDisplayer;
 import mvcViewComponent.gui.messagingModule.MessageDisplayer;
 import java.util.HashMap;
@@ -196,7 +196,9 @@ public class GameController {
         
         //Add the players
         for(Player player : gameState.getPlayers()){
-            PlayerView playerView = new PlayerView(player.getName(), player.isBot());
+            PlayerView playerView = new PlayerView();
+            playerView.setName(player.getName());
+            playerView.setIsBot(player.isBot());
             
             //Add the players' cards
             for(Tile card : player.getHand().getTiles()){

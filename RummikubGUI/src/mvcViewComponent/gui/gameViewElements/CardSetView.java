@@ -3,15 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mvcViewComponent.console.gameViewElements;
+package mvcViewComponent.gui.gameViewElements;
 
 import java.util.*;
+import javafx.scene.layout.HBox;
 
 /**
  *
  * @author Mor
  */
-public class CardSetView implements ViewComponentPrinter{
+public class CardSetView extends HBox implements ViewComponentPrinter{
 
     private final List<CardView> cardsInSet;
 

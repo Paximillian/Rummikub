@@ -3,15 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mvcViewComponent.console.gameViewElements;
+package mvcViewComponent.gui.gameViewElements;
 
 import java.util.*;
+import javafx.scene.layout.AnchorPane;
 
 /**
  *
  * @author Mor
  */
-public class BoardView implements ViewComponentPrinter{
+public class BoardView extends AnchorPane implements ViewComponentPrinter{
 
     private final List<CardSetView> publicCardSets;
 

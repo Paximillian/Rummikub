@@ -1,4 +1,6 @@
-package mvcViewComponent.console.gameViewElements;
+package mvcViewComponent.gui.gameViewElements;
+
+import javafx.fxml.FXML;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -11,5 +13,6 @@ package mvcViewComponent.console.gameViewElements;
  * @author Mor
  */
 public interface ViewComponentPrinter {
+    @FXML
     public void printComponent();
 }
