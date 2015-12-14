@@ -6,6 +6,39 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mvcViewComponent.gui.gameScene.GameSceneController">
-    
-</AnchorPane>
+<SplitPane dividerPositions="0.6231155778894473" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="599.0" prefWidth="685.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="389.0" prefWidth="683.0">
+         <children>
+            <ScrollPane layoutX="-1.0" layoutY="-2.0" prefHeight="390.0" prefWidth="683.0" vbarPolicy="ALWAYS">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+              </content>
+            </ScrollPane>
+         </children></AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="246.0" prefWidth="683.0">
+         <children>
+            <SplitPane dividerPositions="0.29797979797979796" layoutX="-1.0" layoutY="-2.0" prefHeight="222.0" prefWidth="685.0">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="226.0" prefWidth="201.0">
+                     <children>
+                        <Button id="btnFinishTurn" layoutX="40.0" layoutY="14.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="129.0" text="Finish Turn" />
+                        <Button id="btnSaveGame" layoutX="40.0" layoutY="109.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="129.0" text="Save Game" />
+                        <Button id="btnSaveGameAs" layoutX="40.0" layoutY="158.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="129.0" text="Save Game As" />
+                        <Button id="btnClearLastPlay" layoutX="40.0" layoutY="61.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="129.0" text="Clear Last Play" />
+                     </children>
+                  </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="237.0" prefWidth="476.0">
+                     <children>
+                        <ScrollPane hbarPolicy="ALWAYS" layoutX="3.0" layoutY="-1.0" prefHeight="220.0" prefWidth="476.0" vbarPolicy="NEVER">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="0.0" />
+                          </content>
+                        </ScrollPane>
+                     </children>
+                  </AnchorPane>
+              </items>
+            </SplitPane>
+         </children></AnchorPane>
+  </items>
+</SplitPane>
