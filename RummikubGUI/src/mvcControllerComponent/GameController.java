@@ -167,7 +167,7 @@ public class GameController {
                 menuItems.put("Bust a Move", () -> moveCard());
                 menuItems.put("Save As", () -> saveGameAs());
                 menuItems.put("Save", () -> saveGame());
-                menuItems.put("Clear Last Play", () -> gameState = gameStateBackup.clone());
+                menuItems.put("Clear Last Play", () -> clearLastPlay());
                 menuItems.put("Done", () -> endTurn());
                 actionMenu.showMenu(menuItems);
             }
@@ -183,7 +183,7 @@ public class GameController {
         }
         else{
            MessageDisplayer.showMessage("Invalid board state! Penalty given, advancing.");
-           gameState = gameStateBackup.clone();
+           clearLastPlay();
            gameState.applyPenaltyDraw();
         }
         
@@ -246,12 +246,12 @@ public class GameController {
         }
     }
 
-    private void saveGameAs() {
+    public void saveGameAs() {
         lastSaveName = InputRequester.RequestString("Please enter a full to save the game");
         saveGameToLastName();
     }
 
-    private void saveGame() {
+    public void saveGame() {
         if(lastSaveName.equals("")){
             saveGameAs();
         }
@@ -268,5 +268,9 @@ public class GameController {
         else{
             MessageDisplayer.showMessage("error game not saved");
         }
+    }
+
+    public void clearLastPlay() throws CloneNotSupportedException {
+        gameState = gameStateBackup.clone();
     }
 }
