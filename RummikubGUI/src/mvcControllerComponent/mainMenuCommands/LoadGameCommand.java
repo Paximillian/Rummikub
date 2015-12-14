@@ -5,6 +5,8 @@
  */
 package mvcControllerComponent.mainMenuCommands;
 
+import java.io.File;
+import javafx.stage.FileChooser;
 import mvcViewComponent.console.inputRequestMenus.InputRequester;
 import mvcViewComponent.console.messagingModule.MessageDisplayer;
 import javax.xml.bind.JAXBException;
@@ -24,7 +26,9 @@ public class LoadGameCommand implements MenuCommand {
     public void execute() throws SAXException {
         XmlHandler xmlHandler = new XmlHandler();
         
-        String filePath = InputRequester.RequestString("Please enter a file path to load the game");
+        FileChooser fileChooser = new FileChooser();       
+        File file = fileChooser.showOpenDialog(null);
+        String filePath = file.getAbsolutePath();      
        try{
             GameController.getInstance().loadGame(xmlHandler.loadGame(filePath));
             MessageDisplayer.showMessage("Game loaded...");
