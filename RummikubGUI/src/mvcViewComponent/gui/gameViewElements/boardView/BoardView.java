@@ -3,10 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mvcViewComponent.gui.gameViewElements;
+package mvcViewComponent.gui.gameViewElements.boardView;
 
+import java.io.IOException;
 import java.util.*;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
+import mvcViewComponent.gui.gameViewElements.cardSetView.CardSetView;
+import mvcViewComponent.gui.gameViewElements.ViewComponentPrinter;
+import mvcViewComponent.gui.messagingModule.ErrorDisplayer;
 
 /**
  *
@@ -18,6 +23,16 @@ public class BoardView extends AnchorPane implements ViewComponentPrinter{
 
     public BoardView() {
         this.publicCardSets = new ArrayList<CardSetView>(){};
+        
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("BoardView.fxml"));
+        fxmlLoader.setRoot(this);
+        
+        try{
+            fxmlLoader.load();
+        }
+        catch(IOException ex){
+            ErrorDisplayer.showError(ex.getMessage());
+        }
     }
     
     public void addCardSet(CardSetView cardSet){

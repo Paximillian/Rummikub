@@ -3,10 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mvcViewComponent.gui.gameViewElements;
+package mvcViewComponent.gui.gameViewElements.cardSetView;
 
+import java.io.IOException;
 import java.util.*;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.HBox;
+import mvcViewComponent.gui.gameViewElements.cardView.CardView;
+import mvcViewComponent.gui.gameViewElements.ViewComponentPrinter;
+import mvcViewComponent.gui.messagingModule.ErrorDisplayer;
 
 /**
  *
@@ -18,6 +23,16 @@ public class CardSetView extends HBox implements ViewComponentPrinter{
 
     public CardSetView() {
         this.cardsInSet = new ArrayList<CardView>(){};
+        
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CardSetView.fxml"));
+        fxmlLoader.setRoot(this);
+        
+        try{
+            fxmlLoader.load();
+        }
+        catch(IOException ex){
+            ErrorDisplayer.showError(ex.getMessage());
+        }
     }
         
     public void addCard(CardView cardToAdd){

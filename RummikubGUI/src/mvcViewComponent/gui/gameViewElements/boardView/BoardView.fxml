@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import mvcViewComponent.gui.gameViewElements.cardSetView.*?>
+
+<fx:root type="javafx.scene.layout.AnchorPane" xmlns:fx="http://javafx.com/fxml">
+    <ScrollPane layoutX="-1.0" layoutY="-2.0" prefHeight="369.0" prefWidth="683.0" vbarPolicy="ALWAYS" AnchorPane.leftAnchor="5.0"  AnchorPane.rightAnchor="5.0" >
+        <VBox fx:id="paneBoard" prefHeight="362.0" prefWidth="665.0">
+           <children>
+              <CardSetView fx:id="paneSequence00" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
+              <CardSetView fx:id="paneSequence01" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
+              <CardSetView fx:id="paneSequence02" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
+              <CardSetView fx:id="paneSequence03" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
+              <CardSetView fx:id="paneSequence04" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
+              <CardSetView fx:id="paneSequence05" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
+              <CardSetView fx:id="paneSequence06" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
+              <CardSetView fx:id="paneSequence07" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
+              <CardSetView fx:id="paneSequence08" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
+              <CardSetView fx:id="paneSequence09" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
+              <CardSetView fx:id="paneSequence10" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
+              <CardSetView fx:id="paneSequence11" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
+              <CardSetView fx:id="paneSequence12" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
+              <CardSetView fx:id="paneSequence13" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
+              <CardSetView fx:id="paneSequence14" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
+              <CardSetView fx:id="paneSequence15" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
+              <CardSetView fx:id="paneSequence16" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
+              <CardSetView fx:id="paneSequence17" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
+              <CardSetView fx:id="paneSequence18" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
+              <CardSetView fx:id="paneSequence19" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
+              <CardSetView fx:id="paneSequence20" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
+              <CardSetView fx:id="paneSequence21" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
+              <CardSetView fx:id="paneSequence22" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
+              <CardSetView fx:id="paneSequence23" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
+              <CardSetView fx:id="paneSequence24" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
+              <CardSetView fx:id="paneSequence25" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
+              <CardSetView fx:id="paneSequence26" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
+              <CardSetView fx:id="paneSequence27" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
+              <CardSetView fx:id="paneSequence28" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
+              <CardSetView fx:id="paneSequence29" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
+
+             <fx:define>
+                 <ArrayList fx:id="labelList" >
+                     <fx:reference source="paneSequence00"/>
+                     <fx:reference source="paneSequence01"/>
+                     <fx:reference source="paneSequence02"/>
+                     <fx:reference source="paneSequence03"/>
+                     <fx:reference source="paneSequence04"/>
+                     <fx:reference source="paneSequence05"/>
+                     <fx:reference source="paneSequence06"/>
+                     <fx:reference source="paneSequence07"/>
+                     <fx:reference source="paneSequence08"/>
+                     <fx:reference source="paneSequence09"/>
+                     <fx:reference source="paneSequence10"/>
+                     <fx:reference source="paneSequence11"/>
+                     <fx:reference source="paneSequence12"/>
+                     <fx:reference source="paneSequence13"/>
+                     <fx:reference source="paneSequence14"/>
+                     <fx:reference source="paneSequence15"/>
+                     <fx:reference source="paneSequence16"/>
+                     <fx:reference source="paneSequence17"/>
+                     <fx:reference source="paneSequence18"/>
+                     <fx:reference source="paneSequence19"/>
+                     <fx:reference source="paneSequence20"/>
+                     <fx:reference source="paneSequence21"/>
+                     <fx:reference source="paneSequence22"/>
+                     <fx:reference source="paneSequence23"/>
+                     <fx:reference source="paneSequence24"/>
+                     <fx:reference source="paneSequence25"/>
+                     <fx:reference source="paneSequence26"/>
+                     <fx:reference source="paneSequence27"/>
+                     <fx:reference source="paneSequence28"/>
+                     <fx:reference source="paneSequence29"/>
+                 </ArrayList>
+             </fx:define>
+           </children>
+        </VBox>
+    </ScrollPane>
+</fx:root>

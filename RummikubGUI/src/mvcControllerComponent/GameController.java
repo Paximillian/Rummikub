@@ -6,11 +6,11 @@
 package mvcControllerComponent;
 
 import java.io.File;
-import mvcViewComponent.gui.gameViewElements.BoardView;
-import mvcViewComponent.gui.gameViewElements.PlayerView;
-import mvcViewComponent.gui.gameViewElements.CardView;
-import mvcViewComponent.gui.gameViewElements.GameView;
-import mvcViewComponent.gui.gameViewElements.CardSetView;
+import mvcViewComponent.gui.gameViewElements.boardView.BoardView;
+import mvcViewComponent.gui.gameViewElements.playerView.PlayerView;
+import mvcViewComponent.gui.gameViewElements.cardView.CardView;
+import mvcViewComponent.gui.gameViewElements.gameView.GameView;
+import mvcViewComponent.gui.gameViewElements.cardSetView.CardSetView;
 import mvcViewComponent.gui.messagingModule.ErrorDisplayer;
 import mvcViewComponent.gui.messagingModule.MessageDisplayer;
 import java.util.HashMap;

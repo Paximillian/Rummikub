@@ -6,74 +6,16 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import java.util.ArrayList?>
-<?import mvcViewComponent.gui.gameViewElements.*?>
+<?import mvcViewComponent.gui.gameViewElements.gameView.*?>
 
-<GameView dividerPositions="0.6231155778894473" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="599.0" prefWidth="685.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mvcViewComponent.gui.gameScene.GameSceneController">
-  <items>
-    <BoardView minHeight="0.0" minWidth="0.0" prefHeight="389.0" prefWidth="683.0">
+<VBox minHeight="600" minWidth="800" maxHeight="Infinity" AnchorPane.bottomAnchor="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mvcViewComponent.gui.gameScene.GameSceneController"> 
+    <GameView VBox.vgrow="ALWAYS" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="599.0" prefWidth="685.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+    <HBox VBox.vgrow="NEVER" minHeight="0.0" minWidth="0.0" maxHeight="41.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.leftAnchor="5.0" >
          <children>
-            <ScrollPane id="paneBoard" layoutX="-1.0" layoutY="-2.0" prefHeight="369.0" prefWidth="683.0" vbarPolicy="ALWAYS">
-               <content>
-                  <VBox fx:id="paneBoard" prefHeight="362.0" prefWidth="665.0">
-                     <children>
-                        <CardSetView fx:id="paneSequence00" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
-                        <CardSetView fx:id="paneSequence01" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
-                        <CardSetView fx:id="paneSequence02" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
-                        <CardSetView fx:id="paneSequence03" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
-                        <CardSetView fx:id="paneSequence04" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
-                        <CardSetView fx:id="paneSequence05" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
-                        <CardSetView fx:id="paneSequence06" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
-                        <CardSetView fx:id="paneSequence07" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
-                        <CardSetView fx:id="paneSequence08" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
-                        <CardSetView fx:id="paneSequence09" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
-                        <CardSetView fx:id="paneSequence10" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
-                        <CardSetView fx:id="paneSequence11" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
-                        <CardSetView fx:id="paneSequence12" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
-                        <CardSetView fx:id="paneSequence13" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
-                        <CardSetView fx:id="paneSequence14" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
-                        <CardSetView fx:id="paneSequence15" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
-                        <CardSetView fx:id="paneSequence16" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
-                        <CardSetView fx:id="paneSequence17" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
-                        <CardSetView fx:id="paneSequence18" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
-                        <CardSetView fx:id="paneSequence19" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
-                        <CardSetView fx:id="paneSequence20" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
-                        <CardSetView fx:id="paneSequence21" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
-                        <CardSetView fx:id="paneSequence22" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
-                        <CardSetView fx:id="paneSequence23" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
-                        <CardSetView fx:id="paneSequence24" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
-                        <CardSetView fx:id="paneSequence25" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
-                        <CardSetView fx:id="paneSequence26" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
-                        <CardSetView fx:id="paneSequence27" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
-                        <CardSetView fx:id="paneSequence28" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
-                        <CardSetView fx:id="paneSequence29" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
-                     </children>
-                  </VBox>
-               </content>
-            </ScrollPane>
-         </children></BoardView>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="246.0" prefWidth="683.0">
-         <children>
-            <SplitPane dividerPositions="0.29797979797979796" layoutX="-1.0" layoutY="-2.0" prefHeight="222.0" prefWidth="685.0">
-              <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="226.0" prefWidth="201.0">
-                     <children>
-                        <Button id="btnFinishTurn" fx:id="btnEndTurn" defaultButton="true" layoutX="40.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleButtonActionEndTurn" prefHeight="41.0" prefWidth="129.0" text="End Turn" />
-                        <Button id="btnSaveGame" fx:id="btnSaveGame" layoutX="40.0" layoutY="109.0" mnemonicParsing="false" onAction="#handleButtonActionSaveGame" prefHeight="41.0" prefWidth="129.0" text="Save Game" />
-                        <Button id="btnSaveGameAs" fx:id="btnSaveGameAs" layoutX="40.0" layoutY="158.0" mnemonicParsing="false" onAction="#handleButtonActionSaveGameAs" prefHeight="41.0" prefWidth="129.0" text="Save Game As" />
-                        <Button id="btnClearLastPlay" fx:id="btnClearLastPlay" cancelButton="true" layoutX="40.0" layoutY="61.0" mnemonicParsing="false" onAction="#handleButtonActionClearLastPlay" prefHeight="41.0" prefWidth="129.0" text="Clear Last Play" />
-                     </children>
-                </AnchorPane>
-                <PlayerView minHeight="0.0" minWidth="0.0" prefHeight="237.0" prefWidth="476.0">
-                     <children>
-                        <ScrollPane hbarPolicy="ALWAYS" layoutX="3.0" layoutY="-1.0" prefHeight="220.0" prefWidth="476.0" vbarPolicy="NEVER">
-                           <content>
-                              <CardSetView id="paneHand" fx:id="paneHand" prefHeight="205.0" prefWidth="467.0" />
-                           </content>
-                        </ScrollPane>
-                     </children>
-                </PlayerView>
-              </items>
-            </SplitPane>
-         </children></AnchorPane>
-  </items>
-</GameView>
+            <Button id="btnFinishTurn" HBox.hgrow="ALWAYS" maxWidth="Infinity" fx:id="btnEndTurn" defaultButton="true" mnemonicParsing="false" onAction="#handleButtonActionEndTurn" prefHeight="41.0" text="End Turn" />
+            <Button id="btnClearLastPlay" HBox.hgrow="ALWAYS" maxWidth="Infinity" fx:id="btnClearLastPlay" cancelButton="true" mnemonicParsing="false" onAction="#handleButtonActionClearLastPlay" prefHeight="41.0" text="Clear Last Play" />
+            <Button id="btnSaveGame" HBox.hgrow="ALWAYS" maxWidth="Infinity" fx:id="btnSaveGame" mnemonicParsing="false" onAction="#handleButtonActionSaveGame" prefHeight="41.0" text="Save Game" />
+            <Button id="btnSaveGameAs" HBox.hgrow="ALWAYS" maxWidth="Infinity" fx:id="btnSaveGameAs" mnemonicParsing="false" onAction="#handleButtonActionSaveGameAs" prefHeight="41.0" text="Save Game As" />
+         </children>
+    </HBox>
+</VBox>

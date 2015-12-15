@@ -7,8 +7,8 @@
  */
 package mvcModelComponent;
 
-import mvcViewComponent.gui.gameViewElements.CardSetView;
-import mvcViewComponent.gui.gameViewElements.CardView;
+import mvcViewComponent.gui.gameViewElements.cardSetView.CardSetView;
+import mvcViewComponent.gui.gameViewElements.cardView.CardView;
 import java.util.ArrayList;
 import java.util.List;
 
