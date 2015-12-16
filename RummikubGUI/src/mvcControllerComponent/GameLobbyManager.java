@@ -18,7 +18,7 @@ public class GameLobbyManager {
     public static void main(String[] args) {
         //Menu menu = new Menu();
         
-        Map<String, MenuCommand> menuCommands = new HashMap<String, MenuCommand>();
+        /*Map<String, MenuCommand> menuCommands = new HashMap<String, MenuCommand>();
         menuCommands.put("New Game", new NewGameCommand());
         menuCommands.put("Load Game", new LoadGameCommand());
         menuCommands.put("Exit", () -> exitGame());
@@ -33,10 +33,10 @@ public class GameLobbyManager {
             
             //If all the details have been validated, we can start a new game.
             if(GameController.getInstance().getGameReady()){
-                GameController.getInstance().startGame();
+                //GameController.getInstance().startGame();
             }
         }
-        while(!exitGame);
+        while(!exitGame);*/
     }
 
     private static void exitGame() {

@@ -6,7 +6,9 @@
 package mvcControllerComponent.mainMenuCommands;
 
 import java.io.File;
+import java.io.IOException;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import mvcViewComponent.gui.messagingModule.MessageDisplayer;
 import javax.xml.bind.JAXBException;
 import mvcControllerComponent.GameController;
@@ -22,7 +24,7 @@ import org.xml.sax.SAXException;
 public class LoadGameCommand implements MenuCommand {
 
     @Override
-    public void execute() throws SAXException {
+    public void execute(Stage stageToLoadInto) throws SAXException, IOException {
         XmlHandler xmlHandler = new XmlHandler();
         
         FileChooser fileChooser = new FileChooser();       
@@ -31,7 +33,7 @@ public class LoadGameCommand implements MenuCommand {
        try{
             GameController.getInstance().loadGame(xmlHandler.loadGame(filePath));
             MessageDisplayer.showMessage("Game loaded...");
-            GameController.getInstance().startGame();
+            GameController.getInstance().startGame(stageToLoadInto);
        }
        catch(JAXBException  e)
        {

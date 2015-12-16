@@ -21,18 +21,7 @@ import mvcControllerComponent.GameController;
 public class NewGameCommand implements MenuCommand {
 
     @Override
-    public void execute() throws IOException {
-        
-        Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("newGameScene.fxml"));
-        
-        Scene scene = new Scene(root);
-        
-        stage.setScene(scene);
-        stage.show();
-        
-        //----------------------------------------shmok------------------------
-        /*
+    public void execute(Stage stageToLoadInto) {
         int playerCount = 0;
         int computerPlayerCount = 0;
         
@@ -94,7 +83,6 @@ public class NewGameCommand implements MenuCommand {
         catch(IllegalStateException ex){
             ErrorDisplayer.showError(ex.getMessage());
         }
-                */
     }
     
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import mvcViewComponent.gui.gameViewElements.cardSetView.*?>
+
+<fx:root type="javafx.scene.layout.VBox" xmlns:fx="http://javafx.com/fxml" fx:controller="mvcViewComponent.gui.gameViewElements.playerView.PlayerView" >
+    <Label fx:id="labelName" text="asd" />
+    <Label text=" is a bot? "/> 
+    <CheckBox fx:id="cbIsBot" disable="true"/>
+    <ScrollPane hbarPolicy="ALWAYS" layoutX="3.0" layoutY="-1.0" prefHeight="220.0" prefWidth="476.0" vbarPolicy="NEVER">
+       <content>
+          <CardSetView fx:id="paneHand" prefHeight="205.0" prefWidth="467.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+       </content>
+    </ScrollPane>
+</fx:root>
