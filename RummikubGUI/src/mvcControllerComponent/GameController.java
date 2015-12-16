@@ -26,7 +26,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import mvcModelComponent.*;
 import mvcModelComponent.xmlHandler.*;
-import mvcViewComponent.gui.gameScene.GameSceneController;
 import mvcViewComponent.gui.gameScene.GameSceneView;
 
 /**

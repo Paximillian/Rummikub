@@ -21,7 +21,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import mvcControllerComponent.GameController;
 import mvcControllerComponent.mainMenuCommands.LoadGameCommand;
-import mvcViewComponent.gui.gameScene.GameSceneController;
 import org.xml.sax.SAXException;
 
 /**
