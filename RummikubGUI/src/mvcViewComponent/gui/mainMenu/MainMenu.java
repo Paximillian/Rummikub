@@ -7,25 +7,32 @@ package mvcViewComponent.gui.mainMenu;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import mvcViewComponent.gui.sceneController.ScreensController;
 
 /**
  *
  * @author Mor
  */
 public class MainMenu extends Application {
-       
+     
+    private static final String MAIN_SCREEN = "main";
+    private static final String MAIN_SCREEN_FXML = "MainMenuFXML.fxml";
+    
     @Override
     public void start(Stage stage) throws Exception {
         
-        Parent root = FXMLLoader.load(getClass().getResource("MainMenuFXML.fxml"));
+       ScreensController  mainContainer = new ScreensController(); 
+       mainContainer.loadScreen(MainMenu.MAIN_SCREEN, MainMenu.MAIN_SCREEN_FXML); 
         
-        Scene scene = new Scene(root);
-        
-        stage.setScene(scene);
-        stage.show();
+       Group root = new Group(); 
+       root.getChildren().addAll(mainContainer); 
+       Scene scene = new Scene(root); 
+       stage.setScene(scene); 
+       stage.show();
     }
 
     /**

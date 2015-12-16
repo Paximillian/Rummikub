@@ -16,13 +16,17 @@ import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
 import mvcControllerComponent.mainMenuCommands.LoadGameCommand;
 import mvcControllerComponent.mainMenuCommands.NewGameCommand;
+import mvcViewComponent.gui.sceneController.ControlledScreen;
+import mvcViewComponent.gui.sceneController.ScreensController;
 import org.xml.sax.SAXException;
 
 /**
  *
  * @author Mor
  */
-public class MainMenuController implements Initializable {
+public class MainMenuController implements Initializable, ControlledScreen {
+    
+    ScreensController myController;
     
     @FXML
     private Label label;
@@ -30,26 +34,28 @@ public class MainMenuController implements Initializable {
     @FXML
     private void handleMenuButtonLoadAction(ActionEvent event) throws SAXException {
         
-        try{
-        new LoadGameCommand().execute();
-        }
-        catch (SAXException ex) {
-            label.setText(ex.getMessage());
-        }
-                
-
-        
+//        try{
+//        new LoadGameCommand().execute();
+//        }
+//        catch (SAXException ex) {
+//            label.setText(ex.getMessage());
+//        }     
     }
     
     @FXML
     private void handleMenuButtonPlayAction(ActionEvent event) throws IOException
     {
-        new NewGameCommand().execute();
+        //new NewGameCommand().execute();
     }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+
+    @Override
+     public void setScreenParent(ScreensController screenParent){ 
+        myController = screenParent; 
+     } 
     
 }
