@@ -6,6 +6,7 @@
 package mvcViewComponent.gui.mainMenu;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -14,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
 import mvcControllerComponent.mainMenuCommands.LoadGameCommand;
+import mvcControllerComponent.mainMenuCommands.NewGameCommand;
 import org.xml.sax.SAXException;
 
 /**
@@ -40,10 +42,9 @@ public class MainMenuController implements Initializable {
     }
     
     @FXML
-    private void handleMenuButtonPlayAction(ActionEvent event)
+    private void handleMenuButtonPlayAction(ActionEvent event) throws IOException
     {
-        System.out.println("You clicked MenuButtonPlay!");
-        label.setText("You clicked MenuButtonPlay");
+        new NewGameCommand().execute();
     }
     
     @Override

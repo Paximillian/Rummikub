@@ -5,6 +5,11 @@
  */
 package mvcControllerComponent.mainMenuCommands;
 
+import java.io.IOException;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import mvcControllerComponent.MenuCommand;
 import mvcViewComponent.gui.messagingModule.ErrorDisplayer;
 import mvcControllerComponent.GameController;
@@ -16,7 +21,18 @@ import mvcControllerComponent.GameController;
 public class NewGameCommand implements MenuCommand {
 
     @Override
-    public void execute() {
+    public void execute() throws IOException {
+        
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("newGameScene.fxml"));
+        
+        Scene scene = new Scene(root);
+        
+        stage.setScene(scene);
+        stage.show();
+        
+        //----------------------------------------shmok------------------------
+        /*
         int playerCount = 0;
         int computerPlayerCount = 0;
         
@@ -78,6 +94,7 @@ public class NewGameCommand implements MenuCommand {
         catch(IllegalStateException ex){
             ErrorDisplayer.showError(ex.getMessage());
         }
+                */
     }
     
 }
