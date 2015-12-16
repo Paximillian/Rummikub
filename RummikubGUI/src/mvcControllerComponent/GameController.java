@@ -6,6 +6,8 @@
 package mvcControllerComponent;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import mvcViewComponent.gui.gameViewElements.boardView.BoardView;
 import mvcViewComponent.gui.gameViewElements.playerView.PlayerView;
 import mvcViewComponent.gui.gameViewElements.cardView.CardView;
@@ -15,9 +17,17 @@ import mvcViewComponent.gui.messagingModule.ErrorDisplayer;
 import mvcViewComponent.gui.messagingModule.MessageDisplayer;
 import java.util.HashMap;
 import java.util.Map;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import static javafx.scene.input.DataFormat.URL;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import mvcModelComponent.*;
 import mvcModelComponent.xmlHandler.*;
+import mvcViewComponent.gui.gameScene.GameSceneController;
+import mvcViewComponent.gui.gameScene.GameSceneView;
 
 /**
  *
@@ -36,6 +46,8 @@ public class GameController {
     
     private Game gameState;
     private Game gameStateBackup;
+    
+    private Stage gameStage = null;
     
     private boolean gameStarted = false;
     private boolean gameEnded = false;
@@ -138,7 +150,7 @@ public class GameController {
     }
 
     //Start a new game.
-    public void startGame() {
+    public void startGame(Stage stageToLoadInto) throws IOException {
         try{
             gameStateBackup = gameState.clone();
         }
@@ -146,7 +158,7 @@ public class GameController {
             ErrorDisplayer.showError(e.getMessage());
         }
         
-        gameLoop();
+        openGameScene(stageToLoadInto);
     }
 
     private void gameLoop() {
@@ -155,7 +167,7 @@ public class GameController {
         //While the game is running, we'll print the game state and ask the user to enter an action.
         while(!gameEnded){
             gameView = generateGameView();
-            gameView.printComponent();
+            //gameView.printComponent();
             
             if(gameState.getCurrentPlayer().isBot()){
                 moveCard();
@@ -163,12 +175,12 @@ public class GameController {
             else{
                 //Show the action menu;
                 //Menu actionMenu = new Menu();
-                Map<String, MenuCommand> menuItems = new HashMap();
+                /*Map<String, MenuCommand> menuItems = new HashMap();
                 menuItems.put("Bust a Move", () -> moveCard());
                 menuItems.put("Save As", () -> saveGameAs());
                 menuItems.put("Save", () -> saveGame());
                 menuItems.put("Clear Last Play", () -> clearLastPlay());
-                menuItems.put("Done", () -> endTurn());
+                menuItems.put("Done", () -> endTurn());*/
                 //actionMenu.showMenu(menuItems);
             }
             
@@ -198,11 +210,12 @@ public class GameController {
         for(Player player : gameState.getPlayers()){
             PlayerView playerView = new PlayerView();
             playerView.setName(player.getName());
-            playerView.setIsBot(player.isBot());
+            //playerView.setIsBot(player.isBot());
             
             //Add the players' cards
             for(Tile card : player.getHand().getTiles()){
-                CardView cardView = new CardView(card.toString());
+                CardView cardView = new CardView();
+                cardView.setCardValue(lastSaveName);
                 
                 playerView.addCardToHand(cardView);
             }
@@ -220,7 +233,10 @@ public class GameController {
             CardSetView cardSet = new CardSetView();
             
             for(Tile tile : sequence.getTiles()){
-                cardSet.addCard(new CardView(tile.toString()));
+                CardView card = new CardView();
+                card.setCardValue(tile.toString());
+                
+                cardSet.addCard(card);
             }
             
             boardView.addCardSet(cardSet);
@@ -278,5 +294,32 @@ public class GameController {
 
     public void clearLastPlay() throws CloneNotSupportedException {
         gameState = gameStateBackup.clone();
+    }
+
+    private void openGameScene(Stage stage) throws IOException {
+        //Get the stage we want to modify and the root of the scene we want to load. ;
+        Parent root = new GameSceneView();
+        
+        //Open the new scene.
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setMinHeight(400);
+        stage.setMinWidth(800);
+        
+        gameStage = stage;
+        
+        updateGameState();
+        
+        gameStage.show();
+    }
+    
+    public void updateGameState(){
+        GameSceneView gameSceneView = new GameSceneView();
+        gameSceneView.setGameView(generateGameView());
+        gameStage.getScene().setRoot(gameSceneView);
+        
+        if(gameState.getCurrentPlayer().isBot()){
+            moveCard();
+        }
     }
 }

@@ -5,6 +5,7 @@
  */
 package mvcControllerComponent.mainMenuCommands;
 
+import javafx.stage.Stage;
 import mvcControllerComponent.MenuCommand;
 import mvcViewComponent.gui.messagingModule.ErrorDisplayer;
 import mvcControllerComponent.GameController;
@@ -16,7 +17,7 @@ import mvcControllerComponent.GameController;
 public class NewGameCommand implements MenuCommand {
 
     @Override
-    public void execute() {
+    public void execute(Stage stageToLoadInto) {
         int playerCount = 0;
         int computerPlayerCount = 0;
         

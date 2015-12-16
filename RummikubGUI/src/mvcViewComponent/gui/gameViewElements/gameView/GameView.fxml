@@ -8,7 +8,7 @@
 <?import mvcViewComponent.gui.gameViewElements.boardView.*?>
 <?import mvcViewComponent.gui.gameViewElements.playerView.*?>
 
-<fx:root type="javafx.scene.layout.VBox" id="AnchorPane" SplitPane.resizableWithParent="true" xmlns:fx="http://javafx.com/fxml/1">
-    <BoardView minHeight="0.0" minWidth="0.0" prefHeight="389.0" prefWidth="683.0" VBox.vgrow="ALWAYS" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+<fx:root type="javafx.scene.layout.VBox" id="AnchorPane" SplitPane.resizableWithParent="true" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mvcViewComponent.gui.gameViewElements.gameView.GameView" >
+    <BoardView fx:id="boardView" minHeight="0.0" minWidth="0.0" prefHeight="389.0" prefWidth="683.0" VBox.vgrow="ALWAYS" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
     <PlayerView fx:id="currentPlayerView" minHeight="0.0" minWidth="0.0" prefHeight="237.0" prefWidth="476.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
 </fx:root>

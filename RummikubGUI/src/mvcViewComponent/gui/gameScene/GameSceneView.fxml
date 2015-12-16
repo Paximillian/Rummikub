@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.util.ArrayList?>
+<?import mvcViewComponent.gui.gameViewElements.gameView.*?>
+
+<fx:root type="javafx.scene.layout.VBox" minHeight="600.0" minWidth="800.0" maxHeight="Infinity" AnchorPane.bottomAnchor="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mvcViewComponent.gui.gameScene.GameSceneController"> 
+    <children>
+        <GameView fx:id="gameView" VBox.vgrow="ALWAYS" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="599.0" prefWidth="685.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+        <HBox VBox.vgrow="NEVER" minHeight="0.0" minWidth="0.0" maxHeight="41.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.leftAnchor="5.0" >
+             <children>
+                <Button id="btnFinishTurn" HBox.hgrow="ALWAYS" maxWidth="Infinity" fx:id="btnEndTurn" defaultButton="true" mnemonicParsing="false" onAction="#handleButtonActionEndTurn" prefHeight="41.0" text="End Turn" />
+                <Button id="btnClearLastPlay" HBox.hgrow="ALWAYS" maxWidth="Infinity" fx:id="btnClearLastPlay" cancelButton="true" mnemonicParsing="false" onAction="#handleButtonActionClearLastPlay" prefHeight="41.0" text="Clear Last Play" />
+                <Button id="btnSaveGame" HBox.hgrow="ALWAYS" maxWidth="Infinity" fx:id="btnSaveGame" mnemonicParsing="false" onAction="#handleButtonActionSaveGame" prefHeight="41.0" text="Save Game" />
+                <Button id="btnSaveGameAs" HBox.hgrow="ALWAYS" maxWidth="Infinity" fx:id="btnSaveGameAs" mnemonicParsing="false" onAction="#handleButtonActionSaveGameAs" prefHeight="41.0" text="Save Game As" />
+             </children>
+        </HBox>
+    </children>
+</fx:root>

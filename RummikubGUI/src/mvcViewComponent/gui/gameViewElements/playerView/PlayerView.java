@@ -8,30 +8,37 @@ package mvcViewComponent.gui.gameViewElements.playerView;
 import mvcViewComponent.gui.gameViewElements.cardView.CardView;
 import mvcViewComponent.gui.gameViewElements.cardSetView.CardSetView;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import mvcViewComponent.gui.gameViewElements.ViewComponentPrinter;
 import mvcViewComponent.gui.messagingModule.ErrorDisplayer;
 
 /**
  *
  * @author Mor
  */
-public class PlayerView extends VBox implements ViewComponentPrinter{
+public class PlayerView extends VBox implements Initializable{
     
-    @FXML private final CardSetView paneHand = new CardSetView();
+    @FXML private CardSetView paneHand;
     
     @FXML private Label labelName;
     @FXML private CheckBox cbIsBot;
     
+    private StringProperty name;
+    
     public PlayerView(){
+        name = new SimpleStringProperty();
+        //labelName.textProperty().bindBidirectional(name);
         
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PlayerView.fxml"));
         fxmlLoader.setRoot(this);
@@ -47,14 +54,6 @@ public class PlayerView extends VBox implements ViewComponentPrinter{
     public void addCardToHand(CardView card){
         paneHand.addCard(card);
     }
-    
-    @Override
-    public void printComponent() {
-        System.out.print(getName());
-        System.out.print(String.format("Hand:%s", System.lineSeparator()));
-        
-        paneHand.printComponent();
-    }
 
     public CardSetView getHand() {
         return paneHand;
@@ -65,7 +64,7 @@ public class PlayerView extends VBox implements ViewComponentPrinter{
     }
 
     public StringProperty nameProperty(){
-        return labelName.textProperty();
+        return name;
     }
     
     public BooleanProperty isBotProperty(){
@@ -82,5 +81,10 @@ public class PlayerView extends VBox implements ViewComponentPrinter{
 
     public void setIsBot(boolean isABot) {
         isBotProperty().set(getIsBot());
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        
     }
 }

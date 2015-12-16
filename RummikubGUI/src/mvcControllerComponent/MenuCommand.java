@@ -5,10 +5,12 @@
  */
 package mvcControllerComponent;
 
+import javafx.stage.Stage;
+
 /**
  *
  * @author Mor
  */
 public interface MenuCommand {
-    public void execute() throws Exception;
+    public void execute(Stage stageToLoadInto) throws Exception;
 }

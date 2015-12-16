@@ -6,26 +6,29 @@
 package mvcViewComponent.gui.gameViewElements.cardSetView;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.*;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.input.DragEvent;
 import javafx.scene.layout.HBox;
 import mvcViewComponent.gui.gameViewElements.cardView.CardView;
-import mvcViewComponent.gui.gameViewElements.ViewComponentPrinter;
 import mvcViewComponent.gui.messagingModule.ErrorDisplayer;
 
 /**
  *
  * @author Mor
  */
-public class CardSetView extends HBox implements ViewComponentPrinter{
+public class CardSetView extends HBox implements Initializable{
 
-    private final List<CardView> cardsInSet;
+    private List<CardView> cardsInSet;
 
     public CardSetView() {
-        this.cardsInSet = new ArrayList<CardView>(){};
         
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CardSetView.fxml"));
         fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
         
         try{
             fxmlLoader.load();
@@ -39,22 +42,6 @@ public class CardSetView extends HBox implements ViewComponentPrinter{
         cardsInSet.add(cardToAdd);
     }
     
-    @Override
-    public void printComponent() {
-        int currentCardId = 1;
-        
-        //Printing all cards in the set and their ID for IO purpose.
-        for(CardView card : cardsInSet){
-            System.out.print(String.format(" %d%s", currentCardId, "-"));
-            card.printComponent();
-            
-            ++currentCardId;
-        }
-        
-        System.out.print(String.format(" %d%s", currentCardId, "-[]"));
-        ++currentCardId;
-    }
-
     public int size() {
         return cardsInSet.size();
     }
@@ -62,4 +49,19 @@ public class CardSetView extends HBox implements ViewComponentPrinter{
     public Iterable<CardView> getCards() {
         return cardsInSet;
     }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+   
+    }
+    
+    @FXML
+    private void handleOnDragStart(DragEvent event) {
+        System.out.println("Dropped");
+    }    
+    
+    @FXML
+    private void handleOnDragEnd(DragEvent event) {
+        System.out.println("Left");
+    }  
 }

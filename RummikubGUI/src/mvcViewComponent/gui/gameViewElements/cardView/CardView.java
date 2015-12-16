@@ -6,23 +6,29 @@
 package mvcViewComponent.gui.gameViewElements.cardView;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import mvcViewComponent.gui.gameViewElements.ViewComponentPrinter;
 import mvcViewComponent.gui.messagingModule.ErrorDisplayer;
 
 /**
  *
  * @author Mor
  */
-public class CardView extends Label implements ViewComponentPrinter{
+public class CardView extends Label implements Initializable{
     @FXML
     private Label labelCardValue;
     
-    public CardView(String cardValue){
-        setCardValue(cardValue);
+    private StringProperty cardValue;
+    
+    public CardView(){
+        cardValue = new SimpleStringProperty();
+        labelCardValue.textProperty().bindBidirectional(cardValue);
         
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CardView.fxml"));
         fxmlLoader.setRoot(this);
@@ -48,10 +54,7 @@ public class CardView extends Label implements ViewComponentPrinter{
     }
     
     @Override
-    public void printComponent() {
-        String color = getCardValue().substring(0, 3);
-        String value = getCardValue().substring(3);
-                
-        this.setText(String.format("%s%s%s", "|", color + value, "|"));
+    public void initialize(URL location, ResourceBundle resources) {
+    
     }
 }
