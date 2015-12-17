@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.Pane;
 import mvcViewComponent.gui.sceneController.ControlledScreen;
 import mvcViewComponent.gui.sceneController.ScreensController;
 
@@ -21,10 +22,7 @@ import mvcViewComponent.gui.sceneController.ScreensController;
  */
 public class NewGameSceneController implements Initializable , ControlledScreen {
 
-    private ScreensController myController;
-    /**
-     * Initializes the controller class.
-     */
+   
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -32,13 +30,41 @@ public class NewGameSceneController implements Initializable , ControlledScreen 
 
     @Override
     public void setScreenParent(ScreensController screenParent) {
-        myController = screenParent; 
-    }
-    
-    @FXML
-    private void onActionNumberOfPlayers2Button(ActionEvent event) throws IOException
-    {
         
     }
     
+    @FXML private Pane player3canvas;
+    @FXML private Pane player4canvas;
+    @FXML
+    private void onActionNumberOfPlayers2Button(ActionEvent event) throws IOException
+    {
+        player3canvas.setDisable(true);
+        player4canvas.setDisable(true);
+    }
+    
+    @FXML
+    private void onActionNumberOfPlayers3Button(ActionEvent event) throws IOException
+    {
+        player3canvas.setDisable(false);
+        player4canvas.setDisable(true);
+    }
+    
+    @FXML
+    private void onActionNumberOfPlayers4Button(ActionEvent event) throws IOException
+    {
+        player3canvas.setDisable(false);
+        player4canvas.setDisable(false);
+    }
+    
+    @FXML
+    private void onActionBackButton(ActionEvent event) throws IOException  
+    {
+        ScreensController.getInstance().setScreen(ScreensController.MAIN_SCENE);
+    }
+    
+    @FXML
+    private void onActionRedyButton(ActionEvent event) throws IOException    
+    {
+        
+    }
 }

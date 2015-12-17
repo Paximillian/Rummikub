@@ -19,7 +19,7 @@
             <Label id="player3Label" layoutX="-2.0" layoutY="1.0" prefHeight="27.0" prefWidth="55.0" text="Player 3" textFill="#f3ff13" />
          </children>
       </Pane>
-      <Pane id="player3cavas" disable="true" layoutX="15.0" layoutY="444.0" prefHeight="55.0" prefWidth="313.0">
+      <Pane id="player3cavas" fx:id="player4canvas" disable="true" layoutX="15.0" layoutY="444.0" prefHeight="55.0" prefWidth="313.0">
          <children>
             <Label id="player4NameLabol" layoutY="33.0" prefHeight="17.0" prefWidth="39.0" text="Name" />
             <TextField id="player4NameTextField" layoutX="47.0" layoutY="29.0" prefHeight="17.0" prefWidth="131.0" promptText="enter player name" />
@@ -48,16 +48,16 @@
          <children>
             <Label id="numberOfPlayersLabel" layoutX="1.0" layoutY="54.0" prefHeight="17.0" prefWidth="107.0" text="Number of players" />
             <Button id="gameSize2PlayerButton" layoutX="126.0" layoutY="50.0" mnemonicParsing="false" onAction="#onActionNumberOfPlayers2Button" prefHeight="17.0" prefWidth="16.0" text="2" textFill="#4ae408" />
-            <Button id="gameSize3PlayerButton" layoutX="168.0" layoutY="50.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="23.0" text="3" textFill="#0916d3" />
-            <Button id="gameSize4PlayerButton" layoutX="208.0" layoutY="50.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="23.0" text="4" textFill="#dd0606" />
+            <Button id="gameSize3PlayerButton" layoutX="168.0" layoutY="50.0" mnemonicParsing="false" onAction="#onActionNumberOfPlayers3Button" prefHeight="25.0" prefWidth="23.0" text="3" textFill="#0916d3" />
+            <Button id="gameSize4PlayerButton" layoutX="208.0" layoutY="50.0" mnemonicParsing="false" onAction="#onActionNumberOfPlayers4Button" prefHeight="25.0" prefWidth="23.0" text="4" textFill="#dd0606" />
             <Label id="gameNameLabel" layoutX="1.0" layoutY="14.0" prefHeight="17.0" prefWidth="75.0" text="Game Name" />
             <TextField id="gameNameTextField" layoutX="84.0" layoutY="10.0" promptText="enter game name" />
          </children>
       </Pane>
       <Pane layoutX="14.0" layoutY="48.0" prefHeight="75.0" prefWidth="292.0">
          <children>
-            <Button layoutX="158.0" layoutY="10.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="107.0" text="REDY" />
-            <Button layoutX="23.0" layoutY="10.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="107.0" text="BACK" />
+            <Button layoutX="158.0" layoutY="10.0" mnemonicParsing="false" onAction="#onActionRedyButton" prefHeight="55.0" prefWidth="107.0" text="REDY" />
+            <Button layoutX="23.0" layoutY="10.0" mnemonicParsing="false" onAction="#onActionBackButton" prefHeight="55.0" prefWidth="107.0" text="BACK" />
          </children>
       </Pane>
    </children>

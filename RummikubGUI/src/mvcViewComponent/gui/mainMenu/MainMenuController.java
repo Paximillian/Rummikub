@@ -44,7 +44,7 @@ public class MainMenuController implements Initializable, ControlledScreen {
     private void handleMenuButtonPlayAction(ActionEvent event) throws IOException
     {
         ScreensController.getInstance().setScreen(ScreensController.NEW_GAME_SCENE);
-        //new NewGameCommand().execute();
+        
     }
     
     @Override
