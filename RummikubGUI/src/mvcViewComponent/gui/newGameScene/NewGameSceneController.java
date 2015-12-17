@@ -5,8 +5,11 @@
  */
 package mvcViewComponent.gui.newGameScene;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import mvcViewComponent.gui.sceneController.ControlledScreen;
 import mvcViewComponent.gui.sceneController.ScreensController;
@@ -30,6 +33,12 @@ public class NewGameSceneController implements Initializable , ControlledScreen 
     @Override
     public void setScreenParent(ScreensController screenParent) {
         myController = screenParent; 
+    }
+    
+    @FXML
+    private void onActionNumberOfPlayers2Button(ActionEvent event) throws IOException
+    {
+        
     }
     
 }

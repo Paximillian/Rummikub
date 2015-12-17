@@ -9,9 +9,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="newGameScene" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mvcViewComponent.gui.newGameScene.NewGameSceneController">
+<AnchorPane id="newGameScene" prefHeight="537.0" prefWidth="629.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mvcViewComponent.gui.newGameScene.NewGameSceneController">
    <children>
-      <Pane id="player3cavas" layoutX="18.0" layoutY="265.0" prefHeight="55.0" prefWidth="313.0">
+      <Pane id="player3canvas" fx:id="player3canvas" disable="true" layoutX="15.0" layoutY="389.0" prefHeight="55.0" prefWidth="313.0">
          <children>
             <Label id="player3NameLabol" layoutY="33.0" prefHeight="17.0" prefWidth="39.0" text="Name" />
             <TextField id="player3NameTextField" layoutX="47.0" layoutY="29.0" prefHeight="17.0" prefWidth="131.0" promptText="enter player name" />
@@ -19,7 +19,7 @@
             <Label id="player3Label" layoutX="-2.0" layoutY="1.0" prefHeight="27.0" prefWidth="55.0" text="Player 3" textFill="#f3ff13" />
          </children>
       </Pane>
-      <Pane id="player3cavas" layoutX="18.0" layoutY="320.0" prefHeight="55.0" prefWidth="313.0">
+      <Pane id="player3cavas" disable="true" layoutX="15.0" layoutY="444.0" prefHeight="55.0" prefWidth="313.0">
          <children>
             <Label id="player4NameLabol" layoutY="33.0" prefHeight="17.0" prefWidth="39.0" text="Name" />
             <TextField id="player4NameTextField" layoutX="47.0" layoutY="29.0" prefHeight="17.0" prefWidth="131.0" promptText="enter player name" />
@@ -27,7 +27,7 @@
             <Label id="player4Label" layoutX="-2.0" layoutY="1.0" prefHeight="27.0" prefWidth="55.0" text="Player 4" textFill="#cd1799" />
          </children>
       </Pane>
-      <Pane id="player2cavas" layoutX="18.0" layoutY="210.0" prefHeight="55.0" prefWidth="313.0">
+      <Pane id="player2cavas" layoutX="15.0" layoutY="334.0" prefHeight="55.0" prefWidth="313.0">
          <children>
             <Label id="player2NameLabol" layoutX="-2.0" layoutY="33.0" prefHeight="17.0" prefWidth="39.0" text="Name" />
             <TextField id="player2NameTextField" layoutX="45.0" layoutY="29.0" prefHeight="17.0" prefWidth="131.0" promptText="enter player name" />
@@ -35,7 +35,7 @@
             <Label id="player2Label" layoutX="-2.0" layoutY="1.0" prefHeight="27.0" prefWidth="55.0" text="Player 2" textFill="#102ad7" />
          </children>
       </Pane>
-      <Pane id="player1cavas" layoutX="18.0" layoutY="155.0" prefHeight="55.0" prefWidth="313.0">
+      <Pane id="player1cavas" layoutX="15.0" layoutY="279.0" prefHeight="55.0" prefWidth="313.0">
          <children>
             <Label id="player1NameLabol" layoutY="33.0" prefHeight="17.0" prefWidth="39.0" text="Name" />
             <TextField id="player1NameTextField" layoutX="47.0" layoutY="29.0" prefHeight="17.0" prefWidth="131.0" promptText="enter player name" />
@@ -44,11 +44,21 @@
          </children>
       </Pane>
       <Label id="newGameSetingLabel" contentDisplay="CENTER" layoutX="244.0" prefHeight="48.0" prefWidth="113.0" text="New Game Seting" textAlignment="CENTER" textFill="#11d918" />
-      <Label id="numberOfPlayersLabel" layoutX="14.0" layoutY="99.0" prefHeight="17.0" prefWidth="107.0" text="Number of players" />
-      <Button id="gameSize2PlayerButton" layoutX="139.0" layoutY="95.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="16.0" text="2" textFill="#4ae408" />
-      <Button id="gameSize3PlayerButton" layoutX="181.0" layoutY="95.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="23.0" text="3" textFill="#0916d3" />
-      <Button id="gameSize4PlayerButton" layoutX="221.0" layoutY="95.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="23.0" text="4" textFill="#dd0606" />
-      <Label id="gameNameLabel" layoutX="14.0" layoutY="59.0" prefHeight="17.0" prefWidth="75.0" text="Game Name" />
-      <TextField id="gameNameTextField" layoutX="97.0" layoutY="55.0" promptText="enter game name" />
+      <Pane layoutX="14.0" layoutY="164.0" prefHeight="75.0" prefWidth="313.0">
+         <children>
+            <Label id="numberOfPlayersLabel" layoutX="1.0" layoutY="54.0" prefHeight="17.0" prefWidth="107.0" text="Number of players" />
+            <Button id="gameSize2PlayerButton" layoutX="126.0" layoutY="50.0" mnemonicParsing="false" onAction="#onActionNumberOfPlayers2Button" prefHeight="17.0" prefWidth="16.0" text="2" textFill="#4ae408" />
+            <Button id="gameSize3PlayerButton" layoutX="168.0" layoutY="50.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="23.0" text="3" textFill="#0916d3" />
+            <Button id="gameSize4PlayerButton" layoutX="208.0" layoutY="50.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="23.0" text="4" textFill="#dd0606" />
+            <Label id="gameNameLabel" layoutX="1.0" layoutY="14.0" prefHeight="17.0" prefWidth="75.0" text="Game Name" />
+            <TextField id="gameNameTextField" layoutX="84.0" layoutY="10.0" promptText="enter game name" />
+         </children>
+      </Pane>
+      <Pane layoutX="14.0" layoutY="48.0" prefHeight="75.0" prefWidth="292.0">
+         <children>
+            <Button layoutX="158.0" layoutY="10.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="107.0" text="REDY" />
+            <Button layoutX="23.0" layoutY="10.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="107.0" text="BACK" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>
