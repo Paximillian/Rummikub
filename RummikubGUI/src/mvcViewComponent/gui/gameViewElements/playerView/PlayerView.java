@@ -39,16 +39,6 @@ public class PlayerView extends VBox implements Initializable{
     public PlayerView(){
         name = new SimpleStringProperty();
         //labelName.textProperty().bindBidirectional(name);
-        
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PlayerView.fxml"));
-        fxmlLoader.setRoot(this);
-        
-        try{
-            fxmlLoader.load();
-        }
-        catch(IOException ex){
-            ErrorDisplayer.showError(ex.getMessage());
-        }
     }
     
     public void addCardToHand(CardView card){

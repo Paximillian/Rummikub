@@ -29,16 +29,6 @@ public class CardView extends Label implements Initializable{
     public CardView(){
         cardValue = new SimpleStringProperty();
         labelCardValue.textProperty().bindBidirectional(cardValue);
-        
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CardView.fxml"));
-        fxmlLoader.setRoot(this);
-        
-        try{
-            fxmlLoader.load();
-        }
-        catch(IOException ex){
-            ErrorDisplayer.showError(ex.getMessage());
-        }
     }
     
     public StringProperty cardValueProperty(){

@@ -29,62 +29,80 @@ public class ScreensController extends StackPane {
     public static final String MAIN_SCENE_FXML = "/mvcViewComponent/gui/mainMenu/MainMenuFXML.fxml";
     public static final String NEW_GAME_SCENE = "newGameScene";
     public static final String NEW_GAME_SCENE_FXML = "/mvcViewComponent/gui/newGameScene/newGameScene.fxml";
+    public static final String GAME_SCENE = "GameScene";
+    public static final String GAME_SCENE_FXML = "/mvcViewComponent/gui/gameScene/GameSceneView.fxml";
     
-   private HashMap<String, Node> screens = new HashMap<>();
+    private static ScreensController instance;
+    public static ScreensController getInstance(){
+        if(instance == null){
+            instance = new ScreensController();
+        }
+        
+        return instance;
+    }
     
-   public void addScreen(String name, Node screen) { 
-       screens.put(name, screen); 
-   }
-   
-   public boolean loadScreen(String name, String resource) {
-     try { 
-         //"/mvcViewComponent/gui/mainMenu/MainMenuFXML.fxml"
-       URL url = getClass().getResource(resource);
-       FXMLLoader myLoader = new FXMLLoader(url);
-       Parent loadScreen = (Parent) myLoader.load(); 
-       ControlledScreen myScreenControler = 
-              ((ControlledScreen) myLoader.getController());
-       myScreenControler.setScreenParent(this); 
-       addScreen(name, loadScreen); 
-       return true; 
-     }catch(Exception e) { 
-       System.out.println(e.getMessage()); 
-       return false; 
-     } 
-   } 
-   
-    public boolean setScreen(final String name) { 
+    private HashMap<String, Node> screens = new HashMap<>();
 
-        if(screens.get(name) != null) { //screen loaded 
-            final DoubleProperty opacity = opacityProperty(); 
+    private ScreensController(){
 
-       //Is there is more than one screen 
-       if(!getChildren().isEmpty()){                
-          //remove displayed screen 
-            getChildren().remove(0); 
-          //add new screen 
-            getChildren().add(0, screens.get(name)); 
-       } else { 
-         //no one else been displayed, then just show          
-         getChildren().add(screens.get(name));         
-       } 
-       return true; 
-     } else { 
-         System.out.println("screen hasn't been loaded!\n");
+    }
+
+    public void addScreen(String name, Node screen) { 
+        screens.put(name, screen); 
+    }
+
+    public boolean loadScreen(String name, String resource) {
+      try { 
+         URL url = getClass().getResource(resource);
+         FXMLLoader myLoader = new FXMLLoader(url);
+         Parent loadScreen = (Parent) myLoader.load(); 
+         ControlledScreen myScreenControler = ((ControlledScreen) myLoader.getController());
+         myScreenControler.setScreenParent(this); 
+         addScreen(name, loadScreen); 
+         return true; 
+      }
+      catch(Exception e) { 
+         System.out.println(e.getMessage()); 
          return false; 
-   } 
-   }
-    
-    
+      } 
+    } 
 
-   public boolean unloadScreen(String name) { 
-     if(screens.remove(name) == null) { 
-       System.out.println("Screen didn't exist"); 
-       return false; 
-     } else { 
-       return true; 
-     } 
-   } 
+     public boolean setScreen(final String name) { 
+
+         if(screens.get(name) != null) { //screen loaded 
+             final DoubleProperty opacity = opacityProperty(); 
+
+             //Is there is more than one screen 
+             if(!getChildren().isEmpty()){                
+                //remove displayed screen 
+                  getChildren().remove(0); 
+                //add new screen 
+                  getChildren().add(0, screens.get(name)); 
+             } 
+             else { 
+               //no one else been displayed, then just show          
+               getChildren().add(screens.get(name));         
+             }
+
+             return true; 
+         } 
+         else { 
+               System.out.println("screen hasn't been loaded!\n");
+               return false; 
+         } 
+    }
+
+
+
+    public boolean unloadScreen(String name) { 
+        if(screens.remove(name) == null) { 
+            System.out.println("Screen didn't exist"); 
+            return false; 
+        } 
+        else { 
+            return true; 
+        } 
+    } 
    
    
 }

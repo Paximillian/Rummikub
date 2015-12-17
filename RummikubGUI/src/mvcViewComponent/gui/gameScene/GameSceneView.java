@@ -20,26 +20,20 @@ import mvcViewComponent.gui.gameViewElements.boardView.BoardView;
 import mvcViewComponent.gui.gameViewElements.gameView.GameView;
 import mvcViewComponent.gui.gameViewElements.playerView.PlayerView;
 import mvcViewComponent.gui.messagingModule.ErrorDisplayer;
+import mvcViewComponent.gui.sceneController.ControlledScreen;
+import mvcViewComponent.gui.sceneController.ScreensController;
 
 /**
  *
  * @author Mor
  */
-public class GameSceneView extends VBox implements Initializable {
+public class GameSceneView extends VBox implements Initializable, ControlledScreen {
+    
+    private ScreensController myController;
     
     @FXML private GameView gameView;
     
     public GameSceneView(){
-        
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("GameSceneView.fxml"));
-        fxmlLoader.setRoot(this);
-        
-        try{
-            fxmlLoader.load();
-        }
-        catch(IOException ex){
-            ErrorDisplayer.showError(ex.getMessage());
-        }
     }
     
     public void setGameView(GameView targetGameView) {
@@ -82,6 +76,10 @@ public class GameSceneView extends VBox implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    @Override
+     public void setScreenParent(ScreensController screenParent){ 
+        myController = screenParent; 
+     } 
 }

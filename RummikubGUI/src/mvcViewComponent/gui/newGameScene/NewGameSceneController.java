@@ -18,7 +18,7 @@ import mvcViewComponent.gui.sceneController.ScreensController;
  */
 public class NewGameSceneController implements Initializable , ControlledScreen {
 
-    ScreensController myController;
+    private ScreensController myController;
     /**
      * Initializes the controller class.
      */

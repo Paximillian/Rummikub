@@ -22,14 +22,14 @@ public class MainMenu extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         
-       ScreensController  mainContainer = new ScreensController(); 
-       mainContainer.loadScreen(ScreensController.MAIN_SCENE, ScreensController.MAIN_SCENE_FXML); 
-       mainContainer.loadScreen(ScreensController.NEW_GAME_SCENE, ScreensController.NEW_GAME_SCENE_FXML); 
+       ScreensController.getInstance().loadScreen(ScreensController.MAIN_SCENE, ScreensController.MAIN_SCENE_FXML); 
+       ScreensController.getInstance().loadScreen(ScreensController.NEW_GAME_SCENE, ScreensController.NEW_GAME_SCENE_FXML); 
+       ScreensController.getInstance().loadScreen(ScreensController.GAME_SCENE, ScreensController.GAME_SCENE_FXML); 
        Group root = new Group(); 
-       root.getChildren().addAll(mainContainer); 
+       root.getChildren().addAll(ScreensController.getInstance()); 
        Scene scene = new Scene(root); 
        stage.setScene(scene); 
-       mainContainer.setScreen(ScreensController.MAIN_SCENE);
+       ScreensController.getInstance().setScreen(ScreensController.MAIN_SCENE);
        stage.show();
     }
 

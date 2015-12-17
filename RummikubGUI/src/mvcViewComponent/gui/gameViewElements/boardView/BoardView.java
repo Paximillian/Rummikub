@@ -24,16 +24,6 @@ public class BoardView extends AnchorPane implements Initializable{
     private List<CardSetView> publicCardSets;
 
     public BoardView() {
-        
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("BoardView.fxml"));
-        fxmlLoader.setRoot(this);
-        
-        try{
-            fxmlLoader.load();
-        }
-        catch(IOException ex){
-            ErrorDisplayer.showError(ex.getMessage());
-        }
     }
     
     public void addCardSet(CardSetView cardSet){
