@@ -33,7 +33,7 @@ public class MainMenuController implements Initializable, ControlledScreen {
     
     @FXML
     private void handleMenuButtonLoadAction(ActionEvent event) throws SAXException {
-        
+        myController.setScreen(ScreensController.NEW_GAME_SCENE);
 //        try{
 //        new LoadGameCommand().execute();
 //        }

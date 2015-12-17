@@ -25,6 +25,11 @@ import javafx.scene.layout.StackPane;
  */
 public class ScreensController extends StackPane {
     
+    public static final String MAIN_SCENE = "main";
+    public static final String MAIN_SCENE_FXML = "/mvcViewComponent/gui/mainMenu/MainMenuFXML.fxml";
+    public static final String NEW_GAME_SCENE = "newGameScene";
+    public static final String NEW_GAME_SCENE_FXML = "/mvcViewComponent/gui/newGameScene/newGameScene.fxml";
+    
    private HashMap<String, Node> screens = new HashMap<>();
     
    public void addScreen(String name, Node screen) { 
@@ -34,7 +39,7 @@ public class ScreensController extends StackPane {
    public boolean loadScreen(String name, String resource) {
      try { 
          //"/mvcViewComponent/gui/mainMenu/MainMenuFXML.fxml"
-       URL url = getClass().getResource("/mvcViewComponent/gui/mainMenu/MainMenuFXML.fxml");
+       URL url = getClass().getResource(resource);
        FXMLLoader myLoader = new FXMLLoader(url);
        Parent loadScreen = (Parent) myLoader.load(); 
        ControlledScreen myScreenControler = 

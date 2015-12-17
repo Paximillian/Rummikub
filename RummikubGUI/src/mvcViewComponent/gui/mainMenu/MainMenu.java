@@ -18,20 +18,18 @@ import mvcViewComponent.gui.sceneController.ScreensController;
  * @author Mor
  */
 public class MainMenu extends Application {
-     
-    private static final String MAIN_SCREEN = "main";
-    private static final String MAIN_SCREEN_FXML = "MainMenuFXML.fxml";
-    
+         
     @Override
     public void start(Stage stage) throws Exception {
         
        ScreensController  mainContainer = new ScreensController(); 
-       mainContainer.loadScreen(MainMenu.MAIN_SCREEN, MainMenu.MAIN_SCREEN_FXML); 
-        
+       mainContainer.loadScreen(ScreensController.MAIN_SCENE, ScreensController.MAIN_SCENE_FXML); 
+       mainContainer.loadScreen(ScreensController.NEW_GAME_SCENE, ScreensController.NEW_GAME_SCENE_FXML); 
        Group root = new Group(); 
        root.getChildren().addAll(mainContainer); 
        Scene scene = new Scene(root); 
        stage.setScene(scene); 
+       mainContainer.setScreen(ScreensController.MAIN_SCENE);
        stage.show();
     }
 
