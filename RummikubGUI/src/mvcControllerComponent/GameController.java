@@ -45,9 +45,7 @@ public class GameController {
     
     private Game gameState;
     private Game gameStateBackup;
-    
-    private Stage gameStage = null;
-    
+        
     private boolean gameStarted = false;
     private boolean gameEnded = false;
     private boolean gameReady = false;
@@ -149,7 +147,7 @@ public class GameController {
     }
 
     //Start a new game.
-    public void startGame(Stage stageToLoadInto) throws IOException {
+    public void startGame() throws IOException {
         try{
             gameStateBackup = gameState.clone();
         }
@@ -157,7 +155,7 @@ public class GameController {
             ErrorDisplayer.showError(e.getMessage());
         }
         
-        openGameScene(stageToLoadInto);
+        
     }
 
     private void gameLoop() {
@@ -293,32 +291,5 @@ public class GameController {
 
     public void clearLastPlay() throws CloneNotSupportedException {
         gameState = gameStateBackup.clone();
-    }
-
-    private void openGameScene(Stage stage) throws IOException {
-        //Get the stage we want to modify and the root of the scene we want to load. ;
-        Parent root = new GameSceneView();
-        
-        //Open the new scene.
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setMinHeight(400);
-        stage.setMinWidth(800);
-        
-        gameStage = stage;
-        
-        updateGameState();
-        
-        gameStage.show();
-    }
-    
-    public void updateGameState(){
-        GameSceneView gameSceneView = new GameSceneView();
-        gameSceneView.setGameView(generateGameView());
-        gameStage.getScene().setRoot(gameSceneView);
-        
-        if(gameState.getCurrentPlayer().isBot()){
-            moveCard();
-        }
     }
 }

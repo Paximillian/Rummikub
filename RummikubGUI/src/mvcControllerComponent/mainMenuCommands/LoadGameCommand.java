@@ -15,6 +15,7 @@ import mvcControllerComponent.GameController;
 import mvcControllerComponent.MenuCommand;
 import mvcModelComponent.xmlHandler.InvalidLoadFileException;
 import mvcModelComponent.xmlHandler.XmlHandler;
+import mvcViewComponent.gui.sceneController.ScreensController;
 import org.xml.sax.SAXException;
 
 /**
@@ -24,7 +25,7 @@ import org.xml.sax.SAXException;
 public class LoadGameCommand implements MenuCommand {
 
     @Override
-    public void execute(Stage stageToLoadInto) throws SAXException, IOException {
+    public void execute() throws SAXException, IOException {
         XmlHandler xmlHandler = new XmlHandler();
         
         FileChooser fileChooser = new FileChooser();       
@@ -33,7 +34,7 @@ public class LoadGameCommand implements MenuCommand {
        try{
             GameController.getInstance().loadGame(xmlHandler.loadGame(filePath));
             MessageDisplayer.showMessage("Game loaded...");
-            GameController.getInstance().startGame(stageToLoadInto);
+            GameController.getInstance().startGame();
        }
        catch(JAXBException  e)
        {

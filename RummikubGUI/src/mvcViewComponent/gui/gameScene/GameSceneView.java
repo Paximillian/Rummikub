@@ -28,9 +28,7 @@ import mvcViewComponent.gui.sceneController.ScreensController;
  * @author Mor
  */
 public class GameSceneView extends VBox implements Initializable, ControlledScreen {
-    
-    private ScreensController myController;
-    
+        
     @FXML private GameView gameView;
     
     public GameSceneView(){
@@ -80,6 +78,5 @@ public class GameSceneView extends VBox implements Initializable, ControlledScre
     
     @Override
      public void setScreenParent(ScreensController screenParent){ 
-        myController = screenParent; 
      } 
 }

@@ -25,15 +25,13 @@ import org.xml.sax.SAXException;
  * @author Mor
  */
 public class MainMenuController implements Initializable, ControlledScreen {
-    
-    private ScreensController myController;
-    
+        
     @FXML
     private Label label;
     
     @FXML
     private void handleMenuButtonLoadAction(ActionEvent event) throws SAXException {
-        myController.setScreen(ScreensController.GAME_SCENE);
+        ScreensController.getInstance().setScreen(ScreensController.GAME_SCENE);
 //        try{
 //        new LoadGameCommand().execute();
 //        }
@@ -45,7 +43,7 @@ public class MainMenuController implements Initializable, ControlledScreen {
     @FXML
     private void handleMenuButtonPlayAction(ActionEvent event) throws IOException
     {
-        myController.setScreen(ScreensController.NEW_GAME_SCENE);
+        ScreensController.getInstance().setScreen(ScreensController.NEW_GAME_SCENE);
         //new NewGameCommand().execute();
     }
     
@@ -56,7 +54,6 @@ public class MainMenuController implements Initializable, ControlledScreen {
 
     @Override
      public void setScreenParent(ScreensController screenParent){ 
-        myController = screenParent; 
      } 
     
 }

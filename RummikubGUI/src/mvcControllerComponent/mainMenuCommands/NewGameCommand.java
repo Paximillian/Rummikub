@@ -21,7 +21,7 @@ import mvcControllerComponent.GameController;
 public class NewGameCommand implements MenuCommand {
 
     @Override
-    public void execute(Stage stageToLoadInto) {
+    public void execute() {
         int playerCount = 0;
         int computerPlayerCount = 0;
         
