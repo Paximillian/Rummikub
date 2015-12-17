@@ -8,9 +8,13 @@ package mvcViewComponent.gui.newGameScene;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.property.ObjectProperty;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TextField;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.layout.Pane;
 import mvcViewComponent.gui.sceneController.ControlledScreen;
 import mvcViewComponent.gui.sceneController.ScreensController;
@@ -22,10 +26,13 @@ import mvcViewComponent.gui.sceneController.ScreensController;
  */
 public class NewGameSceneController implements Initializable , ControlledScreen {
 
-   
+    @FXML private TextField player1NameTextField;
+    @FXML private TextField player2NameTextField;
+    @FXML private TextField player3NameTextField;
+    @FXML private TextField player4NameTextField;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        player1NameTextField.textProperty().bind(null);
     }    
 
     @Override
@@ -40,6 +47,7 @@ public class NewGameSceneController implements Initializable , ControlledScreen 
     {
         player3canvas.setDisable(true);
         player4canvas.setDisable(true);
+        
     }
     
     @FXML
@@ -62,9 +70,12 @@ public class NewGameSceneController implements Initializable , ControlledScreen 
         ScreensController.getInstance().setScreen(ScreensController.MAIN_SCENE);
     }
     
+    
     @FXML
     private void onActionRedyButton(ActionEvent event) throws IOException    
     {
-        
+        //isGAmeRedyToStart();
     }
+
+   
 }
