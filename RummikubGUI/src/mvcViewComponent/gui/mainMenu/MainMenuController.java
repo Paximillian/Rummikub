@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import mvcControllerComponent.GameController;
 import mvcControllerComponent.mainMenuCommands.LoadGameCommand;
@@ -27,8 +28,8 @@ import org.xml.sax.SAXException;
  */
 public class MainMenuController implements Initializable, ControlledScreen {
         
-    @FXML
-    private Label label;
+    @FXML private Label label;
+    @FXML Pane mainMnuePane;
     
     @FXML
     private void handleMenuButtonLoadAction(ActionEvent event) throws SAXException, IOException {
@@ -49,7 +50,7 @@ public class MainMenuController implements Initializable, ControlledScreen {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        //mainMnuePane.getChildren().
     }    
 
     @Override

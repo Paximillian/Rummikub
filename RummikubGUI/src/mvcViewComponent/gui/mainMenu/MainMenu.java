@@ -27,7 +27,8 @@ public class MainMenu extends Application {
        ScreensController.getInstance().loadScreen(ScreensController.GAME_SCENE, ScreensController.GAME_SCENE_FXML); 
        Group root = new Group(); 
        root.getChildren().addAll(ScreensController.getInstance()); 
-       Scene scene = new Scene(root); 
+       Scene scene = new Scene(root, 800, 650); 
+       
        stage.setScene(scene); 
        ScreensController.getInstance().setScreen(ScreensController.MAIN_SCENE);
        stage.show();
