@@ -33,9 +33,7 @@ public class PlayerView extends VBox implements Initializable{
     
     @FXML private Label labelName;
     @FXML private CheckBox cbIsBot;
-    
-    private StringProperty name;
-    
+        
     public PlayerView(){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("PlayerView.fxml"));
@@ -57,32 +55,28 @@ public class PlayerView extends VBox implements Initializable{
     }
     
     public String getName(){
-        return nameProperty().get();
+        return labelName.getText();
     }
-
-    public StringProperty nameProperty(){
-        return name;
-    }
-    
-    public BooleanProperty isBotProperty(){
-        return cbIsBot.selectedProperty();
-    }
-    
+        
     public boolean getIsBot() {
-        return isBotProperty().get();
+        return cbIsBot.isSelected();
     }
 
-    public void setName(String name) {
-        nameProperty().set(name);
+    public void setName(String nameToSet) {
+        labelName.setText(nameToSet);
     }
 
     public void setIsBot(boolean isABot) {
-        isBotProperty().set(getIsBot());
+        cbIsBot.setSelected(isABot);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        name = new SimpleStringProperty();
-        labelName.textProperty().bindBidirectional(name);
+    }
+
+    public void setHand(CardSetView hand) {
+        for(CardView card : hand.getCards()){
+            paneHand.addCard(card);
+        }
     }
 }

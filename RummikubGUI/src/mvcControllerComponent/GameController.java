@@ -212,12 +212,12 @@ public class GameController {
         for(Player player : gameState.getPlayers()){
             PlayerView playerView = new PlayerView();
             playerView.setName(player.getName());
-            //playerView.setIsBot(player.isBot());
+            playerView.setIsBot(player.isBot());
             
             //Add the players' cards
             for(Tile card : player.getHand().getTiles()){
                 CardView cardView = new CardView();
-                cardView.setCardValue(lastSaveName);
+                cardView.setCardValue(card.toString());
                 
                 playerView.addCardToHand(cardView);
             }

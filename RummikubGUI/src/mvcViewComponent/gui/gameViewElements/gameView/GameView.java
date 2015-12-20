@@ -51,7 +51,9 @@ public class GameView extends VBox implements Initializable {
     }
 
     public void setCurrentPlayer(PlayerView playerView) {
-        currentPlayerView = playerView;
+        currentPlayerView.setName(playerView.getName());
+        currentPlayerView.setIsBot(playerView.getIsBot());
+        currentPlayerView.setHand(playerView.getHand());
     }
 
     @Override

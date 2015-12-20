@@ -39,7 +39,9 @@ public class CardSetView extends HBox implements Initializable{
     }
         
     public void addCard(CardView cardToAdd){
+        cardToAdd.setPrefSize(160, this.getHeight());
         cardsInSet.add(cardToAdd);
+        this.getChildren().add(cardToAdd);
     }
     
     public int size() {

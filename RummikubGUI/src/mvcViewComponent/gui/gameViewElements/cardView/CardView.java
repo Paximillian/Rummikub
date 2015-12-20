@@ -14,17 +14,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import mvcViewComponent.gui.messagingModule.ErrorDisplayer;
 
 /**
  *
  * @author Mor
  */
-public class CardView extends Label implements Initializable{
+public class CardView extends AnchorPane implements Initializable{
     @FXML private Label labelCardValue;
-    
-    private StringProperty cardValue;
-    
+        
     public CardView(){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("CardView.fxml"));
@@ -35,21 +34,14 @@ public class CardView extends Label implements Initializable{
         catch (IOException ex) {
             ErrorDisplayer.showError(ex.getMessage());
         }
+    }
         
-        cardValue = new SimpleStringProperty();
-        labelCardValue.textProperty().bindBidirectional(cardValue);
-    }
-    
-    public StringProperty cardValueProperty(){
-        return labelCardValue.textProperty();
-    }
-    
     public void setCardValue(String value){
-        cardValueProperty().set(value);
+        labelCardValue.setText(value);
     }
     
     public String getCardValue(){
-        return cardValueProperty().get();
+        return labelCardValue.getText();
     }
     
     @Override

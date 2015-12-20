@@ -6,6 +6,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root type="javafx.scene.control.Label" xmlns:fx="http://javafx.com/fxml" >
-    <Label id="labelCardValue" fx:id="labelCardValue" text="card" />
+<fx:root type="javafx.scene.layout.AnchorPane" xmlns:fx="http://javafx.com/fxml">
+    <Label id="labelCardValue" fx:id="labelCardValue" text="card" alignment="CENTER" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" AnchorPane.leftAnchor="5.0" styleClass="card" stylesheets="@CardView.css"/>
 </fx:root>
