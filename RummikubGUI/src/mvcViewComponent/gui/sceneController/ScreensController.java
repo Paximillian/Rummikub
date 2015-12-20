@@ -67,29 +67,33 @@ public class ScreensController extends StackPane {
       } 
     } 
 
-     public boolean setScreen(final String name) { 
+    public Node getScreen(final String name){
+        return screens.get(name);
+    }
+    
+    public boolean setScreen(final String name) { 
 
-         if(screens.get(name) != null) { //screen loaded 
-             final DoubleProperty opacity = opacityProperty(); 
+        if(screens.get(name) != null) { //screen loaded 
+            final DoubleProperty opacity = opacityProperty(); 
 
-             //Is there is more than one screen 
-             if(!getChildren().isEmpty()){                
+            //Is there is more than one screen 
+            if(!getChildren().isEmpty()){                
                 //remove displayed screen 
-                  getChildren().remove(0); 
+                getChildren().remove(0); 
                 //add new screen 
-                  getChildren().add(0, screens.get(name)); 
-             } 
-             else { 
+                getChildren().add(0, screens.get(name)); 
+            } 
+            else { 
                //no one else been displayed, then just show          
                getChildren().add(screens.get(name));         
-             }
+            }
 
-             return true; 
-         } 
-         else { 
-               System.out.println("screen hasn't been loaded!\n");
-               return false; 
-         } 
+            return true; 
+        } 
+        else { 
+            System.out.println("screen hasn't been loaded!\n");
+            return false; 
+        } 
     }
 
 

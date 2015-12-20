@@ -7,8 +7,8 @@
 <?import javafx.scene.layout.*?>
 <?import mvcViewComponent.gui.gameViewElements.cardSetView.*?>
 
-<fx:root type="javafx.scene.layout.VBox" xmlns:fx="http://javafx.com/fxml" fx:controller="mvcViewComponent.gui.gameViewElements.playerView.PlayerView" >
-    <Label fx:id="labelName" text="asd" />
+<fx:root type="javafx.scene.layout.VBox" xmlns:fx="http://javafx.com/fxml" >
+    <Label fx:id="labelName"/>
     <Label text=" is a bot? "/> 
     <CheckBox fx:id="cbIsBot" disable="true"/>
     <ScrollPane hbarPolicy="ALWAYS" layoutX="3.0" layoutY="-1.0" prefHeight="220.0" prefWidth="476.0" vbarPolicy="NEVER">

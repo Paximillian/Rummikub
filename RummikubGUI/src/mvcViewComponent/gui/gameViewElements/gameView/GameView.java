@@ -20,7 +20,18 @@ public class GameView extends VBox implements Initializable {
     
     @FXML private BoardView boardView;
         
-    public GameView(){        
+    public GameView(){   
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("GameView.fxml"));
+            loader.setController(this);
+            loader.setRoot(this);
+            loader.load();
+        } 
+        catch (IOException ex) {
+            ErrorDisplayer.showError(ex.getMessage());
+        }  
+        
+        players = new ArrayList<PlayerView>();
     }
 
     public void addPlayer(PlayerView playerView) {

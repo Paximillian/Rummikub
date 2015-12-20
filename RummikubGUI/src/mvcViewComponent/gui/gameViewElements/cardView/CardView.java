@@ -21,12 +21,21 @@ import mvcViewComponent.gui.messagingModule.ErrorDisplayer;
  * @author Mor
  */
 public class CardView extends Label implements Initializable{
-    @FXML
-    private Label labelCardValue;
+    @FXML private Label labelCardValue;
     
     private StringProperty cardValue;
     
     public CardView(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("CardView.fxml"));
+            loader.setController(this);
+            loader.setRoot(this);
+            loader.load();
+        } 
+        catch (IOException ex) {
+            ErrorDisplayer.showError(ex.getMessage());
+        }
+        
         cardValue = new SimpleStringProperty();
         labelCardValue.textProperty().bindBidirectional(cardValue);
     }

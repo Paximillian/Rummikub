@@ -18,15 +18,18 @@ import mvcViewComponent.gui.messagingModule.MessageDisplayer;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import static javafx.scene.input.DataFormat.URL;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import mvcModelComponent.*;
 import mvcModelComponent.xmlHandler.*;
 import mvcViewComponent.gui.gameScene.GameSceneView;
+import mvcViewComponent.gui.sceneController.ScreensController;
 
 /**
  *
@@ -155,7 +158,9 @@ public class GameController {
             ErrorDisplayer.showError(e.getMessage());
         }
         
-        
+        VBox vbox = (VBox)ScreensController.getInstance().getScreen(ScreensController.GAME_SCENE);
+        vbox.getChildren().set(0, generateGameView());
+        ScreensController.getInstance().setScreen(ScreensController.GAME_SCENE);
     }
 
     private void gameLoop() {

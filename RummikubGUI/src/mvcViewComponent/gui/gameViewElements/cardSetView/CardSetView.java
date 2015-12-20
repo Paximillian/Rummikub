@@ -25,6 +25,17 @@ public class CardSetView extends HBox implements Initializable{
     private List<CardView> cardsInSet;
 
     public CardSetView() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("CardSetView.fxml"));
+            loader.setController(this);
+            loader.setRoot(this);
+            loader.load();
+        } 
+        catch (IOException ex) {
+            ErrorDisplayer.showError(ex.getMessage());
+        }
+        
+        cardsInSet = new ArrayList<CardView>();
     }
         
     public void addCard(CardView cardToAdd){

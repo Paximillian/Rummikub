@@ -6,6 +6,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root type="javafx.scene.layout.HBox" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="mvcViewComponent.gui.gameViewElements.cardSetView.CardSetView" >
+<fx:root type="javafx.scene.layout.HBox" minHeight="100.0" style="-fx-border-width: 1; -fx-border-style: solid;" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" >
     <Label text="Sequence" />
 </fx:root>

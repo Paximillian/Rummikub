@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
+import mvcControllerComponent.GameController;
 import mvcControllerComponent.mainMenuCommands.LoadGameCommand;
 import mvcControllerComponent.mainMenuCommands.NewGameCommand;
 import mvcViewComponent.gui.sceneController.ControlledScreen;
@@ -30,14 +31,13 @@ public class MainMenuController implements Initializable, ControlledScreen {
     private Label label;
     
     @FXML
-    private void handleMenuButtonLoadAction(ActionEvent event) throws SAXException {
-        ScreensController.getInstance().setScreen(ScreensController.GAME_SCENE);
-//        try{
-//        new LoadGameCommand().execute();
-//        }
-//        catch (SAXException ex) {
-//            label.setText(ex.getMessage());
-//        }     
+    private void handleMenuButtonLoadAction(ActionEvent event) throws SAXException, IOException {
+        GameController.getInstance().setGameName("a");
+        GameController.getInstance().setNumberOfPlayers(2);
+        GameController.getInstance().setNumberOfComputerPlayers(1);
+        GameController.getInstance().addPlayer("1", true);
+        GameController.getInstance().addPlayer("2", false);
+        GameController.getInstance().startGame();
     }
     
     @FXML

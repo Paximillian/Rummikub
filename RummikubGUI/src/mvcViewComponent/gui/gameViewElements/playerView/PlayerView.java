@@ -37,8 +37,15 @@ public class PlayerView extends VBox implements Initializable{
     private StringProperty name;
     
     public PlayerView(){
-        name = new SimpleStringProperty();
-        //labelName.textProperty().bindBidirectional(name);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("PlayerView.fxml"));
+            loader.setController(this);
+            loader.setRoot(this);
+            loader.load();
+        } 
+        catch (IOException ex) {
+            ErrorDisplayer.showError(ex.getMessage());
+        }
     }
     
     public void addCardToHand(CardView card){
@@ -75,6 +82,7 @@ public class PlayerView extends VBox implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        
+        name = new SimpleStringProperty();
+        labelName.textProperty().bindBidirectional(name);
     }
 }
