@@ -35,7 +35,12 @@ public class GameSceneView extends VBox implements Initializable, ControlledScre
     }
     
     public void setGameView(GameView targetGameView) {
-        gameView = targetGameView;
+        gameView.setBoard(targetGameView.getBoard());
+        gameView.setCurrentPlayer(targetGameView.getCurrentPlayer());
+        
+        for(PlayerView player : targetGameView.getPlayers()){
+            gameView.addPlayer(player);
+        }
     }
     
     public GameView getGameView(){

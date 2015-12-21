@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.VBox;
+import mvcViewComponent.gui.gameViewElements.cardSetView.CardSetView;
 import mvcViewComponent.gui.gameViewElements.playerView.PlayerView;
 import mvcViewComponent.gui.messagingModule.ErrorDisplayer;
 
@@ -47,7 +48,9 @@ public class GameView extends VBox implements Initializable {
     }
     
     public void setBoard(BoardView board){
-        boardView = board;
+        for(CardSetView cardSet : board.getCardSets()){
+            boardView.addCardSet(cardSet);
+        }
     }
 
     public void setCurrentPlayer(PlayerView playerView) {
@@ -58,5 +61,9 @@ public class GameView extends VBox implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+    }
+
+    public PlayerView getCurrentPlayer() {
+        return currentPlayerView;
     }
 }

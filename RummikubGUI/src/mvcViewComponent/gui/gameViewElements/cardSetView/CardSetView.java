@@ -11,7 +11,11 @@ import java.util.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Bounds;
+import javafx.scene.Node;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import mvcViewComponent.gui.gameViewElements.cardView.CardView;
 import mvcViewComponent.gui.messagingModule.ErrorDisplayer;
@@ -39,9 +43,22 @@ public class CardSetView extends HBox implements Initializable{
     }
         
     public void addCard(CardView cardToAdd){
+        cardToAdd.setCardSetRelevance(this);
         cardToAdd.setPrefSize(160, this.getHeight());
         cardsInSet.add(cardToAdd);
         this.getChildren().add(cardToAdd);
+    }
+    
+    public void addCard(CardView cardToAdd, int index){
+        cardToAdd.setCardSetRelevance(this);
+        cardToAdd.setPrefSize(160, this.getHeight());
+        cardsInSet.add(Math.min(cardsInSet.size(), index), cardToAdd);
+        this.getChildren().add(Math.min(getChildren().size(), index), cardToAdd);
+    }
+
+    public void removeCard(CardView cardToRemove) {
+        cardsInSet.remove(cardToRemove);
+        this.getChildren().remove(cardToRemove);
     }
     
     public int size() {
@@ -54,16 +71,64 @@ public class CardSetView extends HBox implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-   
+        setUpDropActions();
     }
-    
-    @FXML
-    private void handleOnDragStart(DragEvent event) {
-        System.out.println("Dropped");
-    }    
-    
-    @FXML
-    private void handleOnDragEnd(DragEvent event) {
-        System.out.println("Left");
-    }  
+
+    private void setUpDropActions() {
+        this.setOnDragOver((event) -> {
+            if (event.getDragboard().hasString()) {
+                event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+            }
+            
+            event.consume();
+        });
+
+        this.setOnDragEntered((event) -> {
+            if (event.getDragboard().hasString()) {
+                this.setStyle("-fx-border-color: green; -fx-border-width: 5");
+            }
+            
+            event.consume();
+        });
+
+        this.setOnDragExited((event) -> {
+            this.setStyle("-fx-border-color: black; -fx-border-width: 1");
+            event.consume();
+        });
+
+        this.setOnDragDropped((event) -> {
+            Dragboard dragboard = event.getDragboard();
+            boolean success = false;
+                        
+            if (dragboard.hasString()) {
+                //Find out where we need to drop the card at;
+                double newCardX = event.getSceneX();
+                int index = 0;
+                
+                for(Node child : getChildren()){
+                    double thisCardX = child.localToScene(child.getBoundsInLocal()).getMinX();
+                    
+                    //If we dropped it left to the leftmost card that didn't already fail checking, we'll place it here
+                    if(newCardX < thisCardX){
+                        break;
+                    }
+                    
+                    ++index;
+                }
+                
+                CardView card = new CardView();
+                
+                String val = dragboard.getString();
+                card.setCardValue(val);
+                
+                this.addCard(card, index);
+                CardView.setDraggedCard(null);
+                
+                success = true;
+            }
+            
+            event.setDropCompleted(success);
+            event.consume();
+        });
+    }
 }

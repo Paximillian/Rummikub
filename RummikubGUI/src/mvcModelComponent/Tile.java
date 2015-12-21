@@ -24,7 +24,14 @@ public class Tile implements Comparable{
     public Tile(String stringRepresentation)
     {
         color = Color.fromValue(stringRepresentation.substring(0, 3));
-        rank = Rank.fromValue(Integer.parseInt(stringRepresentation.substring(3)));
+        String val = stringRepresentation.substring(3);
+        
+        if(val.toLowerCase().equals("j")){
+            rank = Rank.JOKER;
+        }
+        else{
+            rank = Rank.fromValue(Integer.parseInt(val));
+        }
     }
     
     @Override
@@ -156,7 +163,7 @@ public class Tile implements Comparable{
     }
     
     public boolean isJoker(){      
-        return this.rank == Tile.Rank.JOKER;
+        return this.rank.equals(Tile.Rank.JOKER);
     }
     
     public Rank getRank(){

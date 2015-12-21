@@ -7,11 +7,9 @@
 <?import javafx.scene.layout.*?>
 <?import mvcViewComponent.gui.gameViewElements.cardSetView.*?>
 
-<fx:root type="javafx.scene.layout.AnchorPane" xmlns:fx="http://javafx.com/fxml" >
-    <ScrollPane layoutX="-1.0" layoutY="-2.0" prefHeight="369.0" prefWidth="683.0" vbarPolicy="ALWAYS" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" >
-        <VBox fx:id="paneBoard" prefHeight="362.0" prefWidth="665.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
-           <children>
-           </children>
-        </VBox>
-    </ScrollPane>
+<fx:root type="javafx.scene.control.ScrollPane" xmlns:fx="http://javafx.com/fxml" vbarPolicy="ALWAYS" >
+    <VBox fx:id="paneBoard" prefHeight="362.0" prefWidth="665.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
+       <children>
+       </children>
+    </VBox>
 </fx:root>
