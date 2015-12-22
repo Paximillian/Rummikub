@@ -163,18 +163,18 @@ public class GameController {
         gameSceneView = (VBox)ScreensController.getInstance().getScreen(ScreensController.GAME_SCENE);
         gameSceneView.getChildren().set(0, generateGameView());
         ScreensController.getInstance().setScreen(ScreensController.GAME_SCENE);
+        
+        startTurn();
     }
     
     //When a turn ends we check the validity of all the changes, if they're legal, we'll set the new state.
     public void endTurn() throws CloneNotSupportedException{        
         if(gameState.isLegalGameState()){
-           MessageDisplayer.showMessage("Valid turn, advancing.");
            if(gameState.getCurrentPlayer().getCardsPlayedThisTurn().size() > 0){
                gameState.getCurrentPlayer().setPlacedFirstSequence(true);
            }
         }
         else{
-           MessageDisplayer.showMessage("Invalid board state! Penalty given, advancing.");
            clearLastPlay();
            gameState.applyPenaltyDraw();
         }
@@ -182,10 +182,14 @@ public class GameController {
         gameState.advancePlayerTurn();
         gameStateBackup = gameState.clone();
         
-        gameSceneView.getChildren().set(0, generateGameView());
+        updateGameView();
         
+        //If the game ended, move to the main menu
         if(hasGameEnded()){
             ScreensController.getInstance().setScreen(ScreensController.MAIN_SCENE);
+        }
+        else{
+            startTurn();
         }
     }
 
@@ -261,10 +265,13 @@ public class GameController {
     public void saveGameAs() {
         FileChooser fileChooser = new FileChooser();       
         File file = fileChooser.showSaveDialog(null);
-        String filePath = file.getAbsolutePath();  
         
-        lastSaveName = filePath;
-        new Thread (() -> saveGameToLastName()).start();
+        if(file != null){
+            String filePath = file.getAbsolutePath();  
+
+            lastSaveName = filePath;
+            new Thread (() -> saveGameToLastName()).start();
+        }
          
     }
 
@@ -279,7 +286,13 @@ public class GameController {
     
     private void saveGameToLastName(){
         XmlHandler xmlHandler = new XmlHandler(); 
-        if(!xmlHandler.saveGame(lastSaveName, this.gameStateBackup)){
+        
+        try{
+            if(!xmlHandler.saveGame(lastSaveName, this.gameStateBackup)){
+                saveGameAs();
+            }
+        }
+        catch(Exception e){
             saveGameAs();
         }
     }
@@ -291,6 +304,14 @@ public class GameController {
     }
 
     private void updateGameView() {
+        //new Thread(() -> gameSceneView.getChildren().set(0, generateGameView())).start();
         gameSceneView.getChildren().set(0, generateGameView());
+    }
+
+    private void startTurn() {
+        //If it hasn't and this turn is that of a bot player, request their move.
+        while(gameState.getCurrentPlayer().isBot()){
+            aiMoveCard();
+        }
     }
 }

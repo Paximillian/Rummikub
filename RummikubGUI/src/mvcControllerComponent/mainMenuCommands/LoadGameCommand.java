@@ -31,14 +31,17 @@ public class LoadGameCommand implements MenuCommand {
              
         FileChooser fileChooser = new FileChooser();       
         File file = fileChooser.showOpenDialog(null);
-        String filePath = file.getAbsolutePath();  
-        new Thread (() ->{
-            try {
-                loadGame(filePath);
-            } catch (IOException | SAXException ex) {
-                MessageDisplayer.showMessage("Error game not loaded");
-            }
-        }).start();     
+        
+        if(file != null){
+            String filePath = file.getAbsolutePath();  
+            new Thread (() ->{
+                try {
+                    loadGame(filePath);
+                } catch (IOException | SAXException ex) {
+                    MessageDisplayer.showMessage("Error game not loaded");
+                }
+            }).start();   
+        }
     }
 
     private void loadGame(String filePath) throws IOException, SAXException {
