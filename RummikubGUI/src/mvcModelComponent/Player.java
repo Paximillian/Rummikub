@@ -82,7 +82,7 @@ public class Player {
     }
 
     public boolean isTurnLegalForPlayer() {
-        return placedFirstSequence = isPlacedFirstSequence() || cardsPlayedThisTurn.isSumOfFirstSequenceSufficient();
+        return placedFirstSequence = isPlacedFirstSequence() || cardsPlayedThisTurn.size() == 0 || cardsPlayedThisTurn.isSumOfFirstSequenceSufficient();
     }
     
     @Override

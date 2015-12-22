@@ -22,6 +22,8 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import mvcControllerComponent.GameController;
+import mvcModelComponent.MoveInfo;
 import mvcModelComponent.Tile;
 import mvcViewComponent.gui.gameViewElements.cardSetView.CardSetView;
 import mvcViewComponent.gui.messagingModule.ErrorDisplayer;
@@ -37,6 +39,7 @@ public class CardView extends AnchorPane implements Initializable{
     private CardSetView cardSetRelevance = null;
     
     private static CardView draggedCard = null;
+    private static int indexDraggedFrom;
     
         
     public CardView(){
@@ -54,7 +57,13 @@ public class CardView extends AnchorPane implements Initializable{
     public void setCardValue(String value){
         Tile tile = new Tile(value);
         cardValue = value;
-        this.getStyleClass().add(tile.getColor().name().toLowerCase());
+        
+        if(tile.getRank() == Tile.Rank.JOKER){
+            this.getStyleClass().add("joker");
+        }
+        else{
+            this.getStyleClass().add(tile.getColor().name().toLowerCase());
+        }
         labelCardValue.setText(value.substring(3));
     }
     
@@ -68,6 +77,10 @@ public class CardView extends AnchorPane implements Initializable{
     
     public static CardView getDraggedCard(){
         return draggedCard;
+    }
+    
+    public static int getIndexOfDraggedCard(){
+        return indexDraggedFrom;
     }
     
     public static void setDraggedCard(CardView card){
@@ -93,6 +106,7 @@ public class CardView extends AnchorPane implements Initializable{
             dragboard.setContent(cpContent);
             dragboard.setDragView(snapshot, snapshot.getWidth() / 2, snapshot.getHeight() / 2);
             
+            indexDraggedFrom = cardSetRelevance.getCards().indexOf(this);
             cardSetRelevance.removeCard(this);
             draggedCard = this;
 

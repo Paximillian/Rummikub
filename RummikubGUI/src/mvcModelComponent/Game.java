@@ -183,7 +183,7 @@ public class Game {
                 ++fromCardID;
             }
         }
-        
+                
         targetCardSet.addTileToSequence(movedCard, toPositionID - 1);
         sourceCardSet.removeTileAt(fromCardID - 1);
         

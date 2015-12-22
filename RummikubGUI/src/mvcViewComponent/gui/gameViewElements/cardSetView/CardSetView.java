@@ -13,10 +13,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
+import mvcControllerComponent.GameController;
+import mvcModelComponent.MoveInfo;
 import mvcViewComponent.gui.gameViewElements.cardView.CardView;
 import mvcViewComponent.gui.messagingModule.ErrorDisplayer;
 
@@ -27,6 +30,7 @@ import mvcViewComponent.gui.messagingModule.ErrorDisplayer;
 public class CardSetView extends HBox implements Initializable{
 
     private List<CardView> cardsInSet;
+    private int cardSetIndex;
 
     public CardSetView() {
         try {
@@ -56,6 +60,14 @@ public class CardSetView extends HBox implements Initializable{
         this.getChildren().add(Math.min(getChildren().size(), index), cardToAdd);
     }
 
+    public void setCardSetIndex(int i){
+        cardSetIndex = i;
+    }
+    
+    public int getCardSetIndex(){
+        return cardSetIndex;
+    }
+    
     public void removeCard(CardView cardToRemove) {
         cardsInSet.remove(cardToRemove);
         this.getChildren().remove(cardToRemove);
@@ -65,7 +77,7 @@ public class CardSetView extends HBox implements Initializable{
         return cardsInSet.size();
     }
 
-    public Iterable<CardView> getCards() {
+    public List<CardView> getCards() {
         return cardsInSet;
     }
 
@@ -99,32 +111,46 @@ public class CardSetView extends HBox implements Initializable{
         this.setOnDragDropped((event) -> {
             Dragboard dragboard = event.getDragboard();
             boolean success = false;
-                        
-            if (dragboard.hasString()) {
-                //Find out where we need to drop the card at;
-                double newCardX = event.getSceneX();
-                int index = 0;
-                
-                for(Node child : getChildren()){
-                    double thisCardX = child.localToScene(child.getBoundsInLocal()).getMinX();
-                    
-                    //If we dropped it left to the leftmost card that didn't already fail checking, we'll place it here
-                    if(newCardX < thisCardX){
-                        break;
+            
+            //We can move in any way we want except for from a set on the board to our hand
+            if(!(cardSetIndex == 0 && CardView.getDraggedCard().getCardSetRelevance().getCardSetIndex() != 0)){            
+                if (dragboard.hasString()) {
+                    //Find out where we need to drop the card at;
+                    double newCardX = event.getSceneX();
+                    int index = 1;
+
+                    for(Node child : getChildren()){
+                        if(!(child instanceof Label)){
+                            double thisCardX = child.localToScene(child.getBoundsInLocal()).getMinX();
+                            double cardWidth = child.localToScene(child.getBoundsInLocal()).getMaxX() - thisCardX;
+                            thisCardX += cardWidth / 2;
+
+                            //If we dropped it left to the leftmost card that didn't already fail checking, we'll place it here
+                            if(newCardX < thisCardX){
+                                break;
+                            }
+
+                            ++index;
+                        }
                     }
+
+                    MoveInfo moveInfo = new MoveInfo();
+                    moveInfo.fromCardID = CardView.getIndexOfDraggedCard();
+                    moveInfo.fromSetID = CardView.getDraggedCard().getCardSetRelevance().getCardSetIndex();
+                    moveInfo.toSetID = getCardSetIndex();
+                    moveInfo.toPositionID = index;
+                    GameController.getInstance().moveCard(moveInfo);
                     
-                    ++index;
+                    CardView card = new CardView();
+
+                    String val = dragboard.getString();
+                    card.setCardValue(val);
+
+                    this.addCard(card, index);
+                    CardView.setDraggedCard(null);
+                    
+                    success = true;
                 }
-                
-                CardView card = new CardView();
-                
-                String val = dragboard.getString();
-                card.setCardValue(val);
-                
-                this.addCard(card, index);
-                CardView.setDraggedCard(null);
-                
-                success = true;
             }
             
             event.setDropCompleted(success);

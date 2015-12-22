@@ -11,6 +11,9 @@
 .yellow{
     -fx-background-color: yellow;
 }
+.joker{
+    -fx-background-color: lightseagreen;
+}
 
 .card{
     -fx-border-width: 1; 

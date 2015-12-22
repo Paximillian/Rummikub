@@ -55,6 +55,8 @@ public class GameController {
     
     private String lastSaveName = "";
     
+    private VBox gameSceneView;
+        
     public static GameController getInstance(){
         if(instance == null){
             instance = new GameController();
@@ -158,36 +160,9 @@ public class GameController {
             ErrorDisplayer.showError(e.getMessage());
         }
         
-        VBox vbox = (VBox)ScreensController.getInstance().getScreen(ScreensController.GAME_SCENE);
-        vbox.getChildren().set(0, generateGameView());
+        gameSceneView = (VBox)ScreensController.getInstance().getScreen(ScreensController.GAME_SCENE);
+        gameSceneView.getChildren().set(0, generateGameView());
         ScreensController.getInstance().setScreen(ScreensController.GAME_SCENE);
-    }
-
-    private void gameLoop() {
-        GameView gameView = generateGameView();
-        
-        //While the game is running, we'll print the game state and ask the user to enter an action.
-        while(!gameEnded){
-            gameView = generateGameView();
-            //gameView.printComponent();
-            
-            if(gameState.getCurrentPlayer().isBot()){
-                moveCard();
-            }
-            else{
-                //Show the action menu;
-                //Menu actionMenu = new Menu();
-                /*Map<String, MenuCommand> menuItems = new HashMap();
-                menuItems.put("Bust a Move", () -> moveCard());
-                menuItems.put("Save As", () -> saveGameAs());
-                menuItems.put("Save", () -> saveGame());
-                menuItems.put("Clear Last Play", () -> clearLastPlay());
-                menuItems.put("Done", () -> endTurn());*/
-                //actionMenu.showMenu(menuItems);
-            }
-            
-            gameEnded = gameState.checkGameEnded();
-        }
     }
     
     //When a turn ends we check the validity of all the changes, if they're legal, we'll set the new state.
@@ -231,8 +206,11 @@ public class GameController {
         }
             
         BoardView boardView = new BoardView();
+        
+        int i = 1;
         for(Sequence sequence : gameState.getBoard().getSequences()){
             CardSetView cardSet = new CardSetView();
+            cardSet.setCardSetIndex(i);
             
             for(Tile tile : sequence.getTiles()){
                 CardView card = new CardView();
@@ -242,6 +220,8 @@ public class GameController {
             }
             
             boardView.addCardSet(cardSet);
+            
+            ++i;
         }
         
         newGameView.setBoard(boardView);
@@ -249,13 +229,16 @@ public class GameController {
         return newGameView;
     }
 
-    public void moveCard() {
+    public void moveCard(MoveInfo moveInfo){
+        gameState.moveCard(moveInfo.fromSetID, moveInfo.fromCardID, moveInfo.toSetID, moveInfo.toPositionID);
+    }
+    
+    public void aiMoveCard() {
         try{
             MoveInfo moveInfo = gameState.getCurrentPlayer().requestMove(gameState);
             
             if(moveInfo != null){
-                gameState.moveCard(moveInfo.fromSetID, moveInfo.fromCardID, moveInfo.toSetID, moveInfo.toPositionID);
-                Thread.sleep(1000);
+                moveCard(moveInfo);
             }
             else{
                 endTurn();
@@ -296,5 +279,7 @@ public class GameController {
 
     public void clearLastPlay() throws CloneNotSupportedException {
         gameState = gameStateBackup.clone();
+        
+        gameSceneView.getChildren().set(0, generateGameView());
     }
 }
