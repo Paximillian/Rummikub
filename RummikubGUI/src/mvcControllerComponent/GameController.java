@@ -78,7 +78,7 @@ public class GameController {
     }
     
     public boolean hasGameEnded(){
-        return gameEnded;
+        return gameEnded = gameState.checkGameEnded();
     }
     
     boolean getGameReady() {
@@ -169,6 +169,9 @@ public class GameController {
     public void endTurn() throws CloneNotSupportedException{        
         if(gameState.isLegalGameState()){
            MessageDisplayer.showMessage("Valid turn, advancing.");
+           if(gameState.getCurrentPlayer().getCardsPlayedThisTurn().size() > 0){
+               gameState.getCurrentPlayer().setPlacedFirstSequence(true);
+           }
         }
         else{
            MessageDisplayer.showMessage("Invalid board state! Penalty given, advancing.");
@@ -178,6 +181,12 @@ public class GameController {
         
         gameState.advancePlayerTurn();
         gameStateBackup = gameState.clone();
+        
+        gameSceneView.getChildren().set(0, generateGameView());
+        
+        if(hasGameEnded()){
+            ScreensController.getInstance().setScreen(ScreensController.MAIN_SCENE);
+        }
     }
 
     private GameView generateGameView() {
@@ -280,6 +289,10 @@ public class GameController {
     public void clearLastPlay() throws CloneNotSupportedException {
         gameState = gameStateBackup.clone();
         
+        updateGameView();
+    }
+
+    private void updateGameView() {
         gameSceneView.getChildren().set(0, generateGameView());
     }
 }

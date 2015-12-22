@@ -40,7 +40,7 @@ public class Player {
         this.hand = new Sequence(hand);
     }
     
-        public Player(String newName, boolean isBotStatus, ArrayList<Tile> hand, boolean placedFirstSequence) {
+    public Player(String newName, boolean isBotStatus, ArrayList<Tile> hand, boolean placedFirstSequence) {
         playerName = newName;
         isBot = isBotStatus;
         this.placedFirstSequence = placedFirstSequence;
@@ -234,7 +234,13 @@ public class Player {
     }
 
     public void addToCardsPlayedThisTurn(Tile movedCard) {
-        cardsPlayedThisTurn.addTileToSequence(movedCard);
+        if(!((List<Tile>)cardsPlayedThisTurn.getTiles()).contains(movedCard)){
+            cardsPlayedThisTurn.addTileToSequence(movedCard);
+        }
+    }
+    
+    public Sequence getCardsPlayedThisTurn(){
+        return cardsPlayedThisTurn;
     }
     
     public void clearCardsPlayedThisTurn(){

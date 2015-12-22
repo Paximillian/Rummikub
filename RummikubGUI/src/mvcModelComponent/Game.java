@@ -19,6 +19,8 @@ import java.util.List;
 public class Game {
     private final int PENALTY_DRAW_COUNT = 3;
     
+    private int currentPlayerTurn = 0;
+    
     private Deck deck = new Deck();
     private Board board = new Board();
     private final ArrayList<Player> players = new ArrayList<Player>();
@@ -44,10 +46,10 @@ public class Game {
     }
 
     
-    private int currentPlayerTurn = 0;
     public Player getCurrentPlayer(){
         return players.get(currentPlayerTurn);
     }
+    
     public void advancePlayerTurn(){
         getCurrentPlayer().clearCardsPlayedThisTurn();
         
@@ -132,12 +134,12 @@ public class Game {
         //Checking if set ID is valid.
         if(fromSetID < 0 || fromSetID > board.getSequences().size() 
             || toSetID < 0 || toSetID > board.getSequences().size()){
-            throw new IllegalArgumentException("Illegal source set ID");
+            return;
         }
         
         //Can't place a card TO the hand.
         if(toSetID == 0){
-            throw new IllegalArgumentException("Can't move a card to your hand.");
+            return;
         }
         //Getting the target set's reference
         else{
@@ -146,14 +148,14 @@ public class Game {
         
         //Checking if card ID is out of range.
         if(fromCardID < 0){
-            throw new IllegalArgumentException("Illegal source card ID");
+            return;
         }
             
         //Getting the source set's reference
         if(fromSetID == 0){
             //Checking if the source card position is out of range.
             if(fromCardID > getCurrentPlayer().getHand().size()){
-                throw new IllegalArgumentException("Illegal source card ID");
+                return;
             }
             
             sourceCardSet = getCurrentPlayer().getHand();
@@ -161,7 +163,7 @@ public class Game {
         else{
             //Checking if the source card position is out of range.
             if(fromCardID > board.getSequences().get(fromSetID - 1).size()){
-                throw new IllegalArgumentException("Illegal source card ID");
+                return;
             }
             
             sourceCardSet = board.getSequences().get(fromSetID - 1);
@@ -169,7 +171,7 @@ public class Game {
         
         //Checking if the target card position is out of range.
         if(toPositionID > board.getSequences().get(toSetID - 1).size() + 1 || toPositionID < 0){
-            throw new IllegalArgumentException("Illegal target position ID");
+            return;
         }
         else{
             targetCardSet = board.getSequences().get(toSetID - 1);
@@ -183,8 +185,14 @@ public class Game {
                 ++fromCardID;
             }
         }
-                
-        targetCardSet.addTileToSequence(movedCard, toPositionID - 1);
+        
+        if(toPositionID >= targetCardSet.size()){
+            targetCardSet.addTileToSequence(movedCard);
+        }
+        else{       
+            targetCardSet.addTileToSequence(movedCard, toPositionID - 1);
+        }
+        
         sourceCardSet.removeTileAt(fromCardID - 1);
         
         getCurrentPlayer().addToCardsPlayedThisTurn(movedCard);
@@ -220,7 +228,15 @@ public class Game {
     }
 
     public boolean checkGameEnded() {
-        return deck.isDeckEmpty();
+        boolean playerFinishedHand = false;
+        
+        for(Player player : getPlayers()){
+            if(player.getHand().size() == 0){
+                playerFinishedHand = true;
+            }
+        }
+        
+        return deck.isDeckEmpty() || playerFinishedHand;
     }
     
     public boolean removeTileFromDeck(Tile tile)

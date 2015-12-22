@@ -135,7 +135,7 @@ public class CardSetView extends HBox implements Initializable{
                     }
 
                     MoveInfo moveInfo = new MoveInfo();
-                    moveInfo.fromCardID = CardView.getIndexOfDraggedCard();
+                    moveInfo.fromCardID = CardView.getIndexOfDraggedCard() + 1;
                     moveInfo.fromSetID = CardView.getDraggedCard().getCardSetRelevance().getCardSetIndex();
                     moveInfo.toSetID = getCardSetIndex();
                     moveInfo.toPositionID = index;

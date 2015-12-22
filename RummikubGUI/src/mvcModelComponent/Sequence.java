@@ -18,7 +18,7 @@ public class Sequence {
         int sum = 0;
         
         for (Tile tile : tiles) {
-            sum = tile.isJoker() ? 13 : tile.getRank().rankValue();         
+            sum += tile.isJoker() ? 13 : tile.getRank().rankValue();         
         }
         return sum >= FIRST_SEQUENCE_SUM;
     }
