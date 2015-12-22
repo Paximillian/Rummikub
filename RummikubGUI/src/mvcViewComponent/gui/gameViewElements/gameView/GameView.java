@@ -10,12 +10,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.SplitPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import mvcViewComponent.gui.gameViewElements.cardSetView.CardSetView;
 import mvcViewComponent.gui.gameViewElements.playerView.PlayerView;
 import mvcViewComponent.gui.messagingModule.ErrorDisplayer;
 
-public class GameView extends VBox implements Initializable {
+public class GameView extends AnchorPane implements Initializable {
     @FXML private PlayerView currentPlayerView;
     private List<PlayerView> players;
     

@@ -21,7 +21,7 @@ import mvcViewComponent.gui.messagingModule.ErrorDisplayer;
  *
  * @author Mor
  */
-public class BoardView extends ScrollPane implements Initializable{
+public class BoardView extends AnchorPane implements Initializable{
 
     @FXML private VBox paneBoard;
     private final List<CardSetView> publicCardSets;

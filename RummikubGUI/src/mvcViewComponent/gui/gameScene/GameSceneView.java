@@ -14,12 +14,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import mvcControllerComponent.GameController;
 import mvcViewComponent.gui.gameViewElements.boardView.BoardView;
 import mvcViewComponent.gui.gameViewElements.gameView.GameView;
 import mvcViewComponent.gui.gameViewElements.playerView.PlayerView;
 import mvcViewComponent.gui.messagingModule.ErrorDisplayer;
+import mvcViewComponent.gui.messagingModule.MessageDisplayer;
 import mvcViewComponent.gui.sceneController.ControlledScreen;
 import mvcViewComponent.gui.sceneController.ScreensController;
 
@@ -27,7 +30,7 @@ import mvcViewComponent.gui.sceneController.ScreensController;
  *
  * @author Mor
  */
-public class GameSceneView extends VBox implements Initializable, ControlledScreen {
+public class GameSceneView extends AnchorPane implements Initializable, ControlledScreen {
         
     @FXML private GameView gameView;
     
@@ -75,6 +78,11 @@ public class GameSceneView extends VBox implements Initializable, ControlledScre
     @FXML
     private void handleButtonActionSaveGameAs(ActionEvent event) {
         GameController.getInstance().saveGameAs();
+    }
+    
+    @FXML
+    private void handleTest(MouseEvent event) {
+        MessageDisplayer.showMessage("Test");
     }
 
     @Override

@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import mvcModelComponent.*;
@@ -154,7 +155,7 @@ public class GameController {
             ErrorDisplayer.showError(e.getMessage());
         }
         
-        gameSceneView = (VBox)ScreensController.getInstance().getScreen(ScreensController.GAME_SCENE);
+        gameSceneView = (VBox)((AnchorPane)ScreensController.getInstance().getScreen(ScreensController.GAME_SCENE)).getChildren().get(0);
         gameSceneView.getChildren().set(0, generateGameView());
         ScreensController.getInstance().setScreen(ScreensController.GAME_SCENE);
         
