@@ -260,11 +260,12 @@ public class GameController {
 
     public void saveGameAs() {
         FileChooser fileChooser = new FileChooser();       
-        File file = fileChooser.showOpenDialog(null);
+        File file = fileChooser.showSaveDialog(null);
         String filePath = file.getAbsolutePath();  
         
         lastSaveName = filePath;
-        saveGameToLastName();
+        new Thread (() -> saveGameToLastName()).start();
+         
     }
 
     public void saveGame() {
@@ -272,17 +273,14 @@ public class GameController {
             saveGameAs();
         }
         else{
-            saveGameToLastName();
+            new Thread (() -> saveGameToLastName()).start();
         }
     }
     
     private void saveGameToLastName(){
         XmlHandler xmlHandler = new XmlHandler(); 
-        if(xmlHandler.saveGame(lastSaveName, this.gameStateBackup)){
-            MessageDisplayer.showMessage("game saved");
-        }
-        else{
-            MessageDisplayer.showMessage("error game not saved");
+        if(!xmlHandler.saveGame(lastSaveName, this.gameStateBackup)){
+            saveGameAs();
         }
     }
 
