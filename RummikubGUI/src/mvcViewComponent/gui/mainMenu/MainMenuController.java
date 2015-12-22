@@ -34,12 +34,7 @@ public class MainMenuController implements Initializable, ControlledScreen {
     
     @FXML
     private void handleMenuButtonLoadAction(ActionEvent event) throws SAXException, IOException {
-        GameController.getInstance().setGameName("a");
-        GameController.getInstance().setNumberOfPlayers(2);
-        GameController.getInstance().setNumberOfComputerPlayers(1);
-        GameController.getInstance().addPlayer("1", true);
-        GameController.getInstance().addPlayer("2", false);
-        GameController.getInstance().startGame();
+        new LoadGameCommand().execute();
     }
     
     @FXML
