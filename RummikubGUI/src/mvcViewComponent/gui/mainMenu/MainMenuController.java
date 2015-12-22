@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import mvcControllerComponent.GameController;
@@ -28,7 +29,7 @@ import org.xml.sax.SAXException;
  */
 public class MainMenuController implements Initializable, ControlledScreen {
         
-    @FXML private Label label;
+    
     @FXML Pane mainMnuePane;
     
     @FXML
@@ -50,7 +51,8 @@ public class MainMenuController implements Initializable, ControlledScreen {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //mainMnuePane.getChildren().
+        //final ImageView imageView = ImageUtils.getImageView("\\mvcModelComponent\\resorses\\rummikub-no-matter-where-you-are-large-2.jpg");
+        
     }    
 
     @Override
