@@ -151,11 +151,11 @@ public class NewGameSceneController implements Initializable , ControlledScreen 
         {
             if(sameName)
             {
-                sendErrorMSG("player mast hav defrant names!");
+                sendErrorMSG("Players must have different names!");
             }
             else
             {
-                sendErrorMSG("the game requires atlist one huoman player!");
+                sendErrorMSG("The game requires atleast one human player!");
             }
             return false;
         }
@@ -164,10 +164,10 @@ public class NewGameSceneController implements Initializable , ControlledScreen 
     
     private void sendErrorMSG(String errorMSG)
     {
-            errorLabel.setText("error:  " + errorMSG);
-            Timeline timeline = new Timeline(new KeyFrame(
-            Duration.millis(5666),ae -> errorLabel.setText("")));
-            timeline.play();
+        errorLabel.setText("error:  " + errorMSG);
+        Timeline timeline = new Timeline(new KeyFrame(
+        Duration.millis(5666),ae -> errorLabel.setText("")));
+        timeline.play();
     }
     
     private String date()

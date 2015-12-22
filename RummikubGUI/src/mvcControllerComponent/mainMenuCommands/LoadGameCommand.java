@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import mvcViewComponent.gui.messagingModule.MessageDisplayer;
@@ -24,23 +25,29 @@ import org.xml.sax.SAXException;
  *
  * @author Mor
  */
-public class LoadGameCommand implements MenuCommand {
+public class LoadGameCommand implements Runnable {
 
     @Override
-    public void execute() throws IOException, SAXException {
+    public void run() {
              
         FileChooser fileChooser = new FileChooser();       
         File file = fileChooser.showOpenDialog(null);
         
         if(file != null){
             String filePath = file.getAbsolutePath();  
-            new Thread (() ->{
-                try {
-                    loadGame(filePath);
-                } catch (IOException | SAXException ex) {
-                    MessageDisplayer.showMessage("Error game not loaded");
-                }
-            }).start();   
+            
+            Thread thread = new Thread(() -> {
+                Platform.runLater(() -> {
+                    try {
+                        loadGame(filePath);
+                    } catch (IOException | SAXException ex) {
+                        MessageDisplayer.showMessage("Error game not loaded");
+                    }
+                });   
+            });
+            
+            thread.setDaemon(true);
+            thread.start();
         }
     }
 
@@ -60,5 +67,4 @@ public class LoadGameCommand implements MenuCommand {
            MessageDisplayer.showMessage("Error game not loaded" + System.lineSeparator() + e.getMessage());
        }
     }
-    
 }

@@ -7,28 +7,22 @@ package mvcControllerComponent;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import mvcViewComponent.gui.gameViewElements.boardView.BoardView;
 import mvcViewComponent.gui.gameViewElements.playerView.PlayerView;
 import mvcViewComponent.gui.gameViewElements.cardView.CardView;
 import mvcViewComponent.gui.gameViewElements.gameView.GameView;
 import mvcViewComponent.gui.gameViewElements.cardSetView.CardSetView;
 import mvcViewComponent.gui.messagingModule.ErrorDisplayer;
-import mvcViewComponent.gui.messagingModule.MessageDisplayer;
-import java.util.HashMap;
-import java.util.Map;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import static javafx.scene.input.DataFormat.URL;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import mvcModelComponent.*;
 import mvcModelComponent.xmlHandler.*;
-import mvcViewComponent.gui.gameScene.GameSceneView;
 import mvcViewComponent.gui.sceneController.ScreensController;
 
 /**
@@ -258,7 +252,9 @@ public class GameController {
             }
         }
         catch(Exception e){
-            ErrorDisplayer.showError(e.getMessage());
+            Platform.runLater(() -> {
+                ErrorDisplayer.showError(e.getMessage());
+            });
         }
     }
 
@@ -280,7 +276,12 @@ public class GameController {
             saveGameAs();
         }
         else{
-            new Thread (() -> saveGameToLastName()).start();
+            Thread thread = new Thread(() -> { 
+                saveGameToLastName();
+            });
+            
+            thread.setDaemon(false);
+            thread.start();
         }
     }
     
@@ -304,14 +305,41 @@ public class GameController {
     }
 
     private void updateGameView() {
-        //new Thread(() -> gameSceneView.getChildren().set(0, generateGameView())).start();
-        gameSceneView.getChildren().set(0, generateGameView());
+        Thread thread = new Thread(() ->{
+            GameView gameView = generateGameView();
+            
+            Platform.runLater(() -> {
+                gameSceneView.getChildren().set(0, gameView);
+            });
+        });
+        
+        thread.setDaemon(true);
+        thread.start();
     }
 
+    //If this is a turn of a bot, we'll requeset a move from them
     private void startTurn() {
-        //If it hasn't and this turn is that of a bot player, request their move.
-        while(gameState.getCurrentPlayer().isBot()){
-            aiMoveCard();
+        if(gameState.getCurrentPlayer().isBot()){
+            Thread thread = new Thread(() -> {
+                Player currentPlayer = gameState.getCurrentPlayer();
+                
+                try {
+                    Thread.sleep(1000);
+                } 
+                catch (InterruptedException ex) {
+                    Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                aiMoveCard();
+                updateGameView();
+                
+                if(currentPlayer == gameState.getCurrentPlayer()){
+                    startTurn();
+                }
+            });
+            
+            thread.setDaemon(true);
+            thread.start();
         }
     }
 }

@@ -42,7 +42,7 @@
             <Label id="player1Label" layoutY="1.0" prefHeight="27.0" prefWidth="55.0" text="Player 1" textFill="#e10c0c" />
          </children>
       </Pane>
-      <Label id="newGameSetingLabel" contentDisplay="CENTER" layoutX="244.0" prefHeight="48.0" prefWidth="113.0" text="New Game Seting" textAlignment="CENTER" textFill="#11d918" AnchorPane.leftAnchor="244.0" AnchorPane.rightAnchor="272.0" AnchorPane.topAnchor="0.0" />
+      <Label id="newGameSetingLabel" contentDisplay="CENTER" layoutX="244.0" prefHeight="48.0" prefWidth="113.0" text="New Game Settings" textAlignment="CENTER" textFill="#11d918" AnchorPane.leftAnchor="244.0" AnchorPane.rightAnchor="272.0" AnchorPane.topAnchor="0.0" />
       <Pane layoutX="14.0" layoutY="164.0" prefHeight="75.0" prefWidth="313.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="302.0" AnchorPane.topAnchor="164.0">
          <children>
             <Label id="numberOfPlayersLabel" layoutX="1.0" layoutY="54.0" prefHeight="17.0" prefWidth="107.0" text="Number of players" />
@@ -50,7 +50,7 @@
             <Button id="gameSize3PlayerButton" layoutX="168.0" layoutY="50.0" mnemonicParsing="false" onAction="#onActionNumberOfPlayers3Button" prefHeight="25.0" prefWidth="23.0" text="3" textFill="#0916d3" />
             <Button id="gameSize4PlayerButton" layoutX="208.0" layoutY="50.0" mnemonicParsing="false" onAction="#onActionNumberOfPlayers4Button" prefHeight="25.0" prefWidth="23.0" text="4" textFill="#dd0606" />
             <Label id="gameNameLabel" layoutX="1.0" layoutY="14.0" prefHeight="17.0" prefWidth="75.0" text="Game Name" />
-            <TextField id="gameNameTextField" fx:id="gameNameTextField" layoutX="84.0" layoutY="10.0" promptText="enter game name" />
+            <TextField id="gameNameTextField" fx:id="gameNameTextField" layoutX="84.0" layoutY="10.0" promptText="Enter game name" />
          </children>
       </Pane>
       <Label id="player3NameLabol" fx:id="errorLabel" layoutX="15.0" layoutY="137.0" prefHeight="17.0" prefWidth="292.0" textFill="#e02610" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="130.0" />
