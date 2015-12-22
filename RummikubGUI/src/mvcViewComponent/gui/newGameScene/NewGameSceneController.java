@@ -7,7 +7,10 @@ package mvcViewComponent.gui.newGameScene;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -96,7 +99,7 @@ public class NewGameSceneController implements Initializable , ControlledScreen 
     {
         if(isGameRedy())
         {
-            GameController.getInstance().setGameName(fixName(gameNameTextField.getText(), "Rummikub"));
+            GameController.getInstance().setGameName(fixName(gameNameTextField.getText(), "Rummikub " + date() ));
             GameController.getInstance().setNumberOfPlayers(numberOfPlayers);
             GameController.getInstance().addPlayer(player1name,player1AiPlayerChoiceBox.isSelected());
             GameController.getInstance().addPlayer(player2name,player2AiPlayerChoiceBox.isSelected());
@@ -158,11 +161,19 @@ public class NewGameSceneController implements Initializable , ControlledScreen 
         }
         return true;
     }
+    
     private void sendErrorMSG(String errorMSG)
     {
             errorLabel.setText("error:  " + errorMSG);
             Timeline timeline = new Timeline(new KeyFrame(
             Duration.millis(5666),ae -> errorLabel.setText("")));
             timeline.play();
+    }
+    
+    private String date()
+    {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        return dateFormat.format(date);
     }
 }
