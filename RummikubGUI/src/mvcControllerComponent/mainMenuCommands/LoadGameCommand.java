@@ -54,8 +54,7 @@ public class LoadGameCommand implements Runnable {
     private void loadGame(String filePath) throws IOException, SAXException {
         XmlHandler xmlHandler = new XmlHandler();
         try{
-            GameController.getInstance().loadGame(xmlHandler.loadGame(filePath));
-            MessageDisplayer.showMessage("Game loaded...");
+            GameController.getInstance().loadGame(xmlHandler.loadGame(filePath));           
             GameController.getInstance().startGame();
        }
        catch(JAXBException  e)

@@ -1,3 +1,39 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -164,20 +200,24 @@ public class XmlHandler {
 
     private generated.Rummikub createJaxBGame(File file) throws JAXBException, SAXException, InvalidLoadFileException {
     
-    generated.Rummikub loadedGame = null;
-    File schemaFile = new File("rummikub.xsd");
-    SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-    Schema schema = schemaFactory.newSchema(schemaFile);
-    try{
-        JAXBContext context = JAXBContext.newInstance(generated.Rummikub.class);
-        Unmarshaller unmarshaller = context.createUnmarshaller();
-        unmarshaller.setSchema(schema);
-        loadedGame = (generated.Rummikub)unmarshaller.unmarshal(file);
-    }
-    catch (JAXBException exception){
-        throw new InvalidLoadFileException("fail data did not mach the recyayerd schema");
-    }
-        return loadedGame;
+        try{    
+            generated.Rummikub loadedGame = null;
+            File schemaFile = new File("src/resources/rummikub.xsd");
+            SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            Schema schema = schemaFactory.newSchema(schemaFile);
+
+            JAXBContext context = JAXBContext.newInstance(generated.Rummikub.class);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            unmarshaller.setSchema(schema);
+            loadedGame = (generated.Rummikub)unmarshaller.unmarshal(file);
+            return loadedGame;
+        }
+        catch (SAXException ex) {
+                throw new InvalidLoadFileException("erroe loding schema");
+        }
+        catch (JAXBException exception){
+            throw new InvalidLoadFileException("fail data did not mach the recyayerd schema");
+        }
     }
 
     private void loadPlayers(generated.Rummikub jaxBGame) throws InvalidLoadFileException {
