@@ -80,11 +80,6 @@ public class GameSceneView extends AnchorPane implements Initializable, Controll
         GameController.getInstance().saveGameAs();
     }
     
-    @FXML
-    private void handleTest(MouseEvent event) {
-        MessageDisplayer.showMessage("Test");
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }

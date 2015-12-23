@@ -8,7 +8,7 @@
 <?import java.util.ArrayList?>
 <?import mvcViewComponent.gui.gameViewElements.gameView.*?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mvcViewComponent.gui.gameScene.GameSceneView" onMouseClicked="#handleTest" >
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mvcViewComponent.gui.gameScene.GameSceneView">
     <VBox minHeight="600.0" minWidth="800.0" maxHeight="Infinity" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" > 
         <children>
             <GameView fx:id="gameView" VBox.vgrow="ALWAYS" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="599.0" prefWidth="685.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
