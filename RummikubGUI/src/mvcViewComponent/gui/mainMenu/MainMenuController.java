@@ -31,17 +31,20 @@ import org.xml.sax.SAXException;
  * @author Mor
  */
 public class MainMenuController implements Initializable, ControlledScreen{
+    
     @FXML private Label errorLabel;
     
     @FXML
-    private void handleMenuButtonLoadAction(ActionEvent event) throws SAXException, IOException {
+    private void handleMenuButtonLoadAction(ActionEvent event) throws SAXException, IOException {        
         new LoadGameCommand().run();
+        sendErrorMSG();
     }
     
     @FXML
     private void handleMenuButtonPlayAction(ActionEvent event) throws IOException
     {
-        ScreensController.getInstance().setScreen(ScreensController.NEW_GAME_SCENE);      
+        ScreensController.getInstance().setScreen(ScreensController.NEW_GAME_SCENE); 
+        
     }
     
     @Override
@@ -50,12 +53,13 @@ public class MainMenuController implements Initializable, ControlledScreen{
     } 
     
     
-    public void sendErrorMSG(String errorMSG)
+    public void sendErrorMSG()
     {
-        errorLabel.setText("error:  " + errorMSG);
+        errorLabel.setText(LoadGameCommand.errorMSG);
         Timeline timeline = new Timeline(new KeyFrame(
         Duration.millis(5666),ae -> errorLabel.setText("")));
         timeline.play();
+        LoadGameCommand.errorMSG = "Error game not loaded";
     }
 
     @Override

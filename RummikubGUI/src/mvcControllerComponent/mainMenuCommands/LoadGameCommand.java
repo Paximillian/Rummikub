@@ -18,6 +18,7 @@ import mvcControllerComponent.GameController;
 import mvcControllerComponent.MenuCommand;
 import mvcModelComponent.xmlHandler.InvalidLoadFileException;
 import mvcModelComponent.xmlHandler.XmlHandler;
+import mvcViewComponent.gui.mainMenu.MainMenuController;
 import mvcViewComponent.gui.sceneController.ScreensController;
 import org.xml.sax.SAXException;
 
@@ -26,7 +27,8 @@ import org.xml.sax.SAXException;
  * @author Mor
  */
 public class LoadGameCommand implements Runnable {
-
+     
+    public static String errorMSG ="Error game not loaded";
     @Override
     public void run() {
              
@@ -41,7 +43,7 @@ public class LoadGameCommand implements Runnable {
                     try {
                         loadGame(filePath);
                     } catch (IOException | SAXException ex) {
-                        MessageDisplayer.showMessage("Error game not loaded");
+                        errorMSG = "Error game not loaded";                       
                     }
                 });   
             });
@@ -59,11 +61,11 @@ public class LoadGameCommand implements Runnable {
        }
        catch(JAXBException  e)
        {
-           MessageDisplayer.showMessage("Error game not loaded");
+           errorMSG = "Error game not loaded";
        }
        catch(InvalidLoadFileException e)
        {
-           MessageDisplayer.showMessage("Error game not loaded" + System.lineSeparator() + e.getMessage());
+           errorMSG = "Error game not loaded" + System.lineSeparator() + e.getMessage();
        }
     }
 }
