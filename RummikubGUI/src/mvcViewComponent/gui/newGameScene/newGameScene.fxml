@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.canvas.*?>
@@ -11,7 +12,7 @@
 
 <AnchorPane id="newGameScene" minHeight="400.0" minWidth="250.0" prefHeight="537.0" prefWidth="629.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mvcViewComponent.gui.newGameScene.NewGameSceneController">
    <children>
-      <Pane id="player3canvas" fx:id="player3canvas" layoutX="14.0" layoutY="389.0" prefHeight="55.0" prefWidth="313.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="302.0">
+      <Pane id="player3canvas" fx:id="player3canvas" disable="true" layoutX="286.0" layoutY="420.0" prefHeight="55.0" prefWidth="313.0" AnchorPane.leftAnchor="286.0" AnchorPane.rightAnchor="30.0">
          <children>
             <TextField id="player3NameTextField" fx:id="player3NameTextField" layoutX="45.0" layoutY="29.0" prefHeight="17.0" prefWidth="131.0" promptText="player3" />
             <CheckBox id="player3AiPlayerChoiceBox" fx:id="player3AiPlayerChoiceBox" layoutX="196.0" layoutY="33.0" mnemonicParsing="false" text="Ai Player" />
@@ -19,7 +20,7 @@
             <Label id="player3NameLabol" layoutX="-2.0" layoutY="33.0" prefHeight="17.0" prefWidth="39.0" text="Name" />
          </children>
       </Pane>
-      <Pane id="player3cavas" fx:id="player4canvas" disable="true" layoutX="15.0" layoutY="444.0" prefHeight="55.0" prefWidth="313.0" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="302.0">
+      <Pane id="player3cavas" fx:id="player4canvas" disable="true" layoutX="286.0" layoutY="475.0" prefHeight="55.0" prefWidth="313.0" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="286.0" AnchorPane.rightAnchor="30.0">
          <children>
             <Label id="player4NameLabol" layoutX="-2.0" layoutY="33.0" prefHeight="17.0" prefWidth="39.0" text="Name" />
             <TextField id="player4NameTextField" fx:id="player4NameTextField" layoutX="45.0" layoutY="29.0" prefHeight="17.0" prefWidth="131.0" promptText="player4" />
@@ -27,7 +28,7 @@
             <Label id="player4Label" layoutX="-2.0" layoutY="1.0" prefHeight="27.0" prefWidth="55.0" text="Player 4" textFill="#cd1799" />
          </children>
       </Pane>
-      <Pane id="player2cavas" layoutX="15.0" layoutY="334.0" prefHeight="55.0" prefWidth="313.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="302.0">
+      <Pane id="player2cavas" layoutX="286.0" layoutY="365.0" prefHeight="55.0" prefWidth="313.0" AnchorPane.leftAnchor="286.0" AnchorPane.rightAnchor="30.0">
          <children>
             <Label id="player2NameLabol" layoutX="-2.0" layoutY="33.0" prefHeight="17.0" prefWidth="39.0" text="Name" />
             <TextField id="player2NameTextField" fx:id="player2NameTextField" layoutX="45.0" layoutY="29.0" prefHeight="17.0" prefWidth="131.0" promptText="player2" />
@@ -35,7 +36,7 @@
             <Label id="player2Label" layoutX="-2.0" layoutY="1.0" prefHeight="27.0" prefWidth="55.0" text="Player 2" textFill="#102ad7" />
          </children>
       </Pane>
-      <Pane id="player1cavas" layoutX="15.0" layoutY="279.0" prefHeight="55.0" prefWidth="313.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="302.0">
+      <Pane id="player1cavas" layoutX="286.0" layoutY="310.0" prefHeight="55.0" prefWidth="313.0" AnchorPane.leftAnchor="286.0" AnchorPane.rightAnchor="30.0">
          <children>
             <Label id="player1NameLabol" layoutX="-2.0" layoutY="33.0" prefHeight="17.0" prefWidth="39.0" text="Name" />
             <TextField id="player1NameTextField" fx:id="player1NameTextField" layoutX="45.0" layoutY="29.0" prefHeight="17.0" prefWidth="131.0" promptText="player1" />
@@ -43,8 +44,8 @@
             <Label id="player1Label" layoutX="-2.0" layoutY="1.0" prefHeight="27.0" prefWidth="55.0" text="Player 1" textFill="#e10c0c" />
          </children>
       </Pane>
-      <Label id="newGameSetingLabel" contentDisplay="CENTER" layoutX="105.0" prefHeight="48.0" prefWidth="113.0" text="New Game Settings" textAlignment="CENTER" textFill="#11d918" AnchorPane.leftAnchor="105.0" AnchorPane.rightAnchor="411.0" AnchorPane.topAnchor="0.0" />
-      <Pane layoutX="14.0" layoutY="164.0" prefHeight="75.0" prefWidth="313.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="302.0" AnchorPane.topAnchor="164.0">
+      <Label id="newGameSetingLabel" contentDisplay="CENTER" layoutX="341.0" layoutY="32.0" prefHeight="48.0" prefWidth="113.0" text="New Game Settings" textAlignment="CENTER" textFill="#11d918" AnchorPane.leftAnchor="341.0" AnchorPane.rightAnchor="175.0" AnchorPane.topAnchor="32.0" />
+      <Pane layoutX="286.0" layoutY="195.0" prefHeight="75.0" prefWidth="313.0" AnchorPane.leftAnchor="286.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="195.0">
          <children>
             <Label id="numberOfPlayersLabel" layoutX="1.0" layoutY="54.0" prefHeight="17.0" prefWidth="107.0" text="Number of players" />
             <Button id="gameSize2PlayerButton" layoutX="126.0" layoutY="50.0" mnemonicParsing="false" onAction="#onActionNumberOfPlayers2Button" prefHeight="17.0" prefWidth="16.0" text="2" textFill="#4ae408" />
@@ -55,7 +56,7 @@
          </children>
       </Pane>
       <Label fx:id="errorLabel" layoutX="15.0" layoutY="137.0" prefHeight="17.0" prefWidth="292.0" textFill="#e02610" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="130.0" />
-      <Button layoutX="51.0" layoutY="63.0" mnemonicParsing="false" onAction="#onActionBackButton" prefHeight="55.0" prefWidth="107.0" text="BACK" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="60.0" />
-      <Button layoutX="172.0" layoutY="60.0" mnemonicParsing="false" onAction="#onActionRedyButton" prefHeight="55.0" prefWidth="107.0" text="REDY" AnchorPane.rightAnchor="350.0" />
+      <Button layoutX="286.0" layoutY="92.0" mnemonicParsing="false" onAction="#onActionBackButton" prefHeight="55.0" prefWidth="107.0" text="BACK" AnchorPane.leftAnchor="286.0" AnchorPane.topAnchor="92.0" />
+      <Button layoutX="408.0" layoutY="92.0" mnemonicParsing="false" onAction="#onActionRedyButton" prefHeight="55.0" prefWidth="107.0" text="REDY" AnchorPane.rightAnchor="114.0" />
    </children>
 </AnchorPane>
