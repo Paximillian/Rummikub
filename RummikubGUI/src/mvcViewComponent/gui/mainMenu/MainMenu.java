@@ -32,6 +32,7 @@ public class MainMenu extends Application {
        
        stage.setScene(scene); 
        ScreensController.getInstance().setScreen(ScreensController.MAIN_SCENE);
+       stage.setResizable(false);
        stage.show();
     }
 
