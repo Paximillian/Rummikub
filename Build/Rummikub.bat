@@ -1,1 +1,1 @@
-java -jar "RummikubConsole.jar"
+java -jar "RummikubGUI.jar"
