@@ -16,3 +16,8 @@ hs_err_pid*
 /RummikubGUI/nbproject/private/
 /RummikubGUI/build/
 /RummikubGUI/dist/
+/RummikubWebApp/nbproject/private/
+/RummikubWebApp/build/
+/RummikubWebApp/dist/
+/RummikubWebServer/nbproject/private/
+/RummikubWebServer/build/

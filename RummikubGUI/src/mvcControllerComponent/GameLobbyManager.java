@@ -5,41 +5,33 @@
  */
 package mvcControllerComponent;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.*;
-import mvcControllerComponent.mainMenuCommands.*;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import mvcControllerComponent.client.ws.RummikubWebService;
+import mvcControllerComponent.client.ws.RummikubWebServiceService;
 /**
  *
  * @author Mor
  */
 public class GameLobbyManager {
-    public static boolean exitGame = false;
-        
-    public static void main(String[] args) {
-        //Menu menu = new Menu();
-        
-        /*Map<String, MenuCommand> menuCommands = new HashMap<String, MenuCommand>();
-        menuCommands.put("New Game", new NewGameCommand());
-        menuCommands.put("Load Game", new LoadGameCommand());
-        menuCommands.put("Exit", () -> exitGame());
-        
-        do{
-            try{
-                //menu.showMenu(menuCommands);
-            }
-            catch(InputMismatchException e){
-                System.out.println(e.getMessage());
-            }
-            
-            //If all the details have been validated, we can start a new game.
-            if(GameController.getInstance().getGameReady()){
-                //GameController.getInstance().startGame();
-            }
+    
+    private static final String SERVICE_URL = "http://localthost";
+    private static final String SERVICE_PORT = "8080";
+    private static final String SERVICE_NAME = "api/RummikubWebServiceService?wsdl";
+    private static URL getServiceURL() throws MalformedURLException{ return new URL(String.format("%s:%s/%s", SERVICE_URL, SERVICE_PORT, SERVICE_NAME)); }
+    
+    private static RummikubWebService webService;
+    
+    static{
+        try {
+            RummikubWebServiceService service = new RummikubWebServiceService(getServiceURL());
+            webService = service.getRummikubWebServicePort();
+        } 
+        catch (MalformedURLException ex) {
+            Logger.getLogger(GameLobbyManager.class.getName()).log(Level.SEVERE, null, ex);
         }
-        while(!exitGame);*/
-    }
-
-    private static void exitGame() {
-        exitGame = true;
     }
 }
