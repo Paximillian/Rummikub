@@ -6,12 +6,15 @@
  */
 package mvcViewComponent.gui.mainMenu;
 
+import java.util.List;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import mvcControllerComponent.client.ws.RummikubWebService;
+import mvcControllerComponent.client.ws.RummikubWebServiceService;
 import mvcViewComponent.gui.sceneController.ScreensController;
 
 /**
@@ -29,7 +32,7 @@ public class MainMenu extends Application {
        Group root = new Group(); 
        root.getChildren().addAll(ScreensController.getInstance()); 
        Scene scene = new Scene(root, 800, 650); 
-       
+              
        stage.setScene(scene); 
        ScreensController.getInstance().setScreen(ScreensController.MAIN_SCENE);
        stage.setResizable(false);
