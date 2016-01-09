@@ -2,7 +2,7 @@
 <jax-ws xmlns="http://www.netbeans.org/ns/jax-ws/1">
   <services>
     <service name="RummiWS">
-      <implementation-class>ws.game.RummiWS</implementation-class>
+      <implementation-class>ws.server.RummiWS</implementation-class>
       <wsdl-url>file:/C:/Rummikub/RummikubWebServiceService.wsdl</wsdl-url>
       <local-wsdl-file>RummikubWebServiceService.wsdl</local-wsdl-file>
       <service-name>RummikubWebServiceService</service-name>
