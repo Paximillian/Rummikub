@@ -14,8 +14,7 @@
    <children>
       <Pane id="player3canvas" fx:id="player3canvas" disable="true" layoutX="286.0" layoutY="420.0" prefHeight="55.0" prefWidth="313.0" AnchorPane.leftAnchor="286.0" AnchorPane.rightAnchor="30.0">
          <children>
-            <TextField id="player3NameTextField" fx:id="player3NameTextField" layoutX="45.0" layoutY="29.0" prefHeight="17.0" prefWidth="131.0" promptText="player3" />
-            <CheckBox id="player3AiPlayerChoiceBox" fx:id="player3AiPlayerChoiceBox" layoutX="196.0" layoutY="33.0" mnemonicParsing="false" text="Ai Player" />
+            <TextField id="player3NameTextField" fx:id="player3NameTextField" editable="false" layoutX="45.0" layoutY="29.0" prefHeight="17.0" prefWidth="131.0" promptText="player3" />
             <Label id="player3Label" layoutX="-2.0" layoutY="1.0" prefHeight="27.0" prefWidth="55.0" text="Player 3" textFill="#f3ff13" />
             <Label id="player3NameLabol" layoutX="-2.0" layoutY="33.0" prefHeight="17.0" prefWidth="39.0" text="Name" />
          </children>
@@ -23,16 +22,14 @@
       <Pane id="player3cavas" fx:id="player4canvas" disable="true" layoutX="286.0" layoutY="475.0" prefHeight="55.0" prefWidth="313.0" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="286.0" AnchorPane.rightAnchor="30.0">
          <children>
             <Label id="player4NameLabol" layoutX="-2.0" layoutY="33.0" prefHeight="17.0" prefWidth="39.0" text="Name" />
-            <TextField id="player4NameTextField" fx:id="player4NameTextField" layoutX="45.0" layoutY="29.0" prefHeight="17.0" prefWidth="131.0" promptText="player4" />
-            <CheckBox id="player3AiPlayerChoiceBox" fx:id="player4AiPlayerChoiceBox" layoutX="196.0" layoutY="33.0" mnemonicParsing="false" text="Ai Player" />
+            <TextField id="player4NameTextField" fx:id="player4NameTextField" editable="false" layoutX="45.0" layoutY="29.0" prefHeight="17.0" prefWidth="131.0" promptText="player4" />
             <Label id="player4Label" layoutX="-2.0" layoutY="1.0" prefHeight="27.0" prefWidth="55.0" text="Player 4" textFill="#cd1799" />
          </children>
       </Pane>
-      <Pane id="player2cavas" layoutX="286.0" layoutY="365.0" prefHeight="55.0" prefWidth="313.0" AnchorPane.leftAnchor="286.0" AnchorPane.rightAnchor="30.0">
+      <Pane id="player2cavas" disable="true" layoutX="286.0" layoutY="365.0" prefHeight="55.0" prefWidth="313.0" AnchorPane.leftAnchor="286.0" AnchorPane.rightAnchor="30.0">
          <children>
             <Label id="player2NameLabol" layoutX="-2.0" layoutY="33.0" prefHeight="17.0" prefWidth="39.0" text="Name" />
-            <TextField id="player2NameTextField" fx:id="player2NameTextField" layoutX="45.0" layoutY="29.0" prefHeight="17.0" prefWidth="131.0" promptText="player2" />
-            <CheckBox id="player2AiPlayerChoiceBox" fx:id="player2AiPlayerChoiceBox" layoutX="196.0" layoutY="33.0" mnemonicParsing="false" text="Ai Player" />
+            <TextField id="player2NameTextField" fx:id="player2NameTextField" editable="false" layoutX="45.0" layoutY="29.0" prefHeight="17.0" prefWidth="131.0" promptText="player2" />
             <Label id="player2Label" layoutX="-2.0" layoutY="1.0" prefHeight="27.0" prefWidth="55.0" text="Player 2" textFill="#102ad7" />
          </children>
       </Pane>
@@ -40,23 +37,28 @@
          <children>
             <Label id="player1NameLabol" layoutX="-2.0" layoutY="33.0" prefHeight="17.0" prefWidth="39.0" text="Name" />
             <TextField id="player1NameTextField" fx:id="player1NameTextField" layoutX="45.0" layoutY="29.0" prefHeight="17.0" prefWidth="131.0" promptText="player1" />
-            <CheckBox id="player1AiPlayerChoiceBox" fx:id="player1AiPlayerChoiceBox" layoutX="196.0" layoutY="33.0" mnemonicParsing="false" text="Ai Player" />
             <Label id="player1Label" layoutX="-2.0" layoutY="1.0" prefHeight="27.0" prefWidth="55.0" text="Player 1" textFill="#e10c0c" />
          </children>
       </Pane>
       <Label id="newGameSetingLabel" contentDisplay="CENTER" layoutX="341.0" layoutY="32.0" prefHeight="48.0" prefWidth="113.0" text="New Game Settings" textAlignment="CENTER" textFill="#11d918" AnchorPane.leftAnchor="341.0" AnchorPane.rightAnchor="175.0" AnchorPane.topAnchor="32.0" />
-      <Pane layoutX="286.0" layoutY="195.0" prefHeight="75.0" prefWidth="313.0" AnchorPane.leftAnchor="286.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="195.0">
+      <Pane layoutX="286.0" layoutY="195.0" prefHeight="103.0" prefWidth="313.0" AnchorPane.leftAnchor="286.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="195.0">
          <children>
             <Label id="numberOfPlayersLabel" layoutX="1.0" layoutY="54.0" prefHeight="17.0" prefWidth="107.0" text="Number of players" />
-            <Button id="gameSize2PlayerButton" layoutX="126.0" layoutY="50.0" mnemonicParsing="false" onAction="#onActionNumberOfPlayers2Button" prefHeight="17.0" prefWidth="16.0" text="2" textFill="#4ae408" />
-            <Button id="gameSize3PlayerButton" layoutX="168.0" layoutY="50.0" mnemonicParsing="false" onAction="#onActionNumberOfPlayers3Button" prefHeight="25.0" prefWidth="23.0" text="3" textFill="#0916d3" />
-            <Button id="gameSize4PlayerButton" layoutX="208.0" layoutY="50.0" mnemonicParsing="false" onAction="#onActionNumberOfPlayers4Button" prefHeight="25.0" prefWidth="23.0" text="4" textFill="#dd0606" />
+            <Button id="gameSize2PlayerButton" fx:id="playerAmount2Button" layoutX="158.0" layoutY="45.0" mnemonicParsing="false" onAction="#onActionNumberOfPlayers2Button" prefHeight="17.0" prefWidth="16.0" text="2" textFill="#4ae408" />
+            <Button id="gameSize3PlayerButton" fx:id="playerAmount3Button" layoutX="200.0" layoutY="45.0" mnemonicParsing="false" onAction="#onActionNumberOfPlayers3Button" prefHeight="25.0" prefWidth="23.0" text="3" textFill="#0916d3" />
+            <Button id="gameSize4PlayerButton" fx:id="playerAmount4Button" layoutX="240.0" layoutY="45.0" mnemonicParsing="false" onAction="#onActionNumberOfPlayers4Button" prefHeight="25.0" prefWidth="23.0" text="4" textFill="#dd0606" />
             <Label id="gameNameLabel" layoutX="1.0" layoutY="14.0" prefHeight="17.0" prefWidth="75.0" text="Game Name" />
             <TextField id="gameNameTextField" fx:id="gameNameTextField" layoutX="84.0" layoutY="10.0" promptText="Enter game name" />
+            <Button id="gameSize4PlayerButton" fx:id="aiAmount2Button" layoutX="239.0" layoutY="72.0" mnemonicParsing="false" onAction="#onActionNumberOfAIPlayers2Button" prefHeight="25.0" prefWidth="23.0" text="2" textFill="#dd0606" />
+            <Button id="gameSize3PlayerButton" fx:id="aiAmount1Button" layoutX="199.0" layoutY="72.0" mnemonicParsing="false" onAction="#onActionNumberOfAIPlayers1Button" prefHeight="25.0" prefWidth="23.0" text="1" textFill="#0916d3" />
+            <Button id="gameSize2PlayerButton" fx:id="aiAmount0Button" layoutX="157.0" layoutY="72.0" mnemonicParsing="false" onAction="#onActionNumberOfAIPlayers0Button" prefHeight="17.0" prefWidth="16.0" text="0" textFill="#4ae408" />
+            <Label id="numberOfPlayersLabel" layoutY="81.0" prefHeight="17.0" prefWidth="131.0" text="Number of AI players" />
+            <Button id="gameSize4PlayerButton" fx:id="aiAmount3Button" layoutX="276.0" layoutY="72.0" mnemonicParsing="false" onAction="#onActionNumberOfAIPlayers3Button" prefHeight="25.0" prefWidth="23.0" text="3" textFill="#ff96ef" />
          </children>
       </Pane>
       <Label fx:id="errorLabel" layoutX="15.0" layoutY="137.0" prefHeight="17.0" prefWidth="292.0" textFill="#e02610" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="130.0" />
       <Button layoutX="286.0" layoutY="92.0" mnemonicParsing="false" onAction="#onActionBackButton" prefHeight="55.0" prefWidth="107.0" text="BACK" AnchorPane.leftAnchor="286.0" AnchorPane.topAnchor="92.0" />
-      <Button layoutX="408.0" layoutY="92.0" mnemonicParsing="false" onAction="#onActionRedyButton" prefHeight="55.0" prefWidth="107.0" text="REDY" AnchorPane.rightAnchor="114.0" />
+      <Button fx:id="createGameButton" layoutX="408.0" layoutY="92.0" mnemonicParsing="false" onAction="#onActionRedyButton" prefHeight="55.0" prefWidth="107.0" text="CREATE" AnchorPane.rightAnchor="114.0" />
+      <Label fx:id="waitingForPlayersLabel" layoutX="286.0" layoutY="72.0" text="Waiting for players: " visible="false" />
    </children>
 </AnchorPane>

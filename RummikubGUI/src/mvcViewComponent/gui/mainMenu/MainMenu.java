@@ -13,6 +13,7 @@ import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import mvcControllerComponent.GameLobbyManager;
 import mvcControllerComponent.client.ws.RummikubWebService;
 import mvcControllerComponent.client.ws.RummikubWebServiceService;
 import mvcViewComponent.gui.sceneController.ScreensController;
@@ -29,6 +30,7 @@ public class MainMenu extends Application {
        ScreensController.getInstance().loadScreen(ScreensController.MAIN_SCENE, ScreensController.MAIN_SCENE_FXML); 
        ScreensController.getInstance().loadScreen(ScreensController.NEW_GAME_SCENE, ScreensController.NEW_GAME_SCENE_FXML); 
        ScreensController.getInstance().loadScreen(ScreensController.GAME_SCENE, ScreensController.GAME_SCENE_FXML); 
+       ScreensController.getInstance().loadScreen(ScreensController.JOIN_GAME_SCENE, ScreensController.JOIN_GAME_SCENE_FXML); 
        Group root = new Group(); 
        root.getChildren().addAll(ScreensController.getInstance()); 
        Scene scene = new Scene(root, 800, 650); 

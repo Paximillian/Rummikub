@@ -5,6 +5,7 @@
  */
 package ws.server;
 
+import controller.LobbyManager;
 import javax.jws.WebService;
 import ws.rummikub.DuplicateGameName_Exception;
 import ws.rummikub.GameDoesNotExists_Exception;
@@ -34,23 +35,19 @@ public class RummiWS {
     }
 
     public void createGame(java.lang.String name, int humanPlayers, int computerizedPlayers) throws InvalidParameters_Exception, DuplicateGameName_Exception {
-        //TODO implement this method
-        throw new UnsupportedOperationException("Not implemented yet.");
+        LobbyManager.createGame(name, humanPlayers, computerizedPlayers);
     }
 
     public ws.rummikub.GameDetails getGameDetails(java.lang.String gameName) throws GameDoesNotExists_Exception {
-        //TODO implement this method
-        throw new UnsupportedOperationException("Not implemented yet.");
+        return LobbyManager.getGameDetails(gameName);
     }
 
     public java.util.List<java.lang.String> getWaitingGames() {
-        //TODO implement this method
-        throw new UnsupportedOperationException("Not implemented yet.");
+        return LobbyManager.getWaitingGameNames();
     }
 
     public int joinGame(java.lang.String gameName, java.lang.String playerName) throws GameDoesNotExists_Exception, InvalidParameters_Exception {
-        //TODO implement this method
-        throw new UnsupportedOperationException("Not implemented yet.");
+        return LobbyManager.addPlayerToGame(gameName, playerName);
     }
 
     public ws.rummikub.PlayerDetails getPlayerDetails(int playerId) throws GameDoesNotExists_Exception, InvalidParameters_Exception {

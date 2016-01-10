@@ -10,28 +10,33 @@ import java.net.URL;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import mvcControllerComponent.client.ws.DuplicateGameName_Exception;
+import mvcControllerComponent.client.ws.GameDetails;
+import mvcControllerComponent.client.ws.GameDoesNotExists_Exception;
+import mvcControllerComponent.client.ws.InvalidParameters_Exception;
 import mvcControllerComponent.client.ws.RummikubWebService;
 import mvcControllerComponent.client.ws.RummikubWebServiceService;
+import mvcViewComponent.gui.messagingModule.ErrorDisplayer;
 /**
  *
  * @author Mor
  */
-public class GameLobbyManager {
+public class GameLobbyManager extends WebClient{
     
-    private static final String SERVICE_URL = "http://localthost";
-    private static final String SERVICE_PORT = "8080";
-    private static final String SERVICE_NAME = "api/RummikubWebServiceService?wsdl";
-    private static URL getServiceURL() throws MalformedURLException{ return new URL(String.format("%s:%s/%s", SERVICE_URL, SERVICE_PORT, SERVICE_NAME)); }
+    public static List<String> getWaitingGameNames(){
+        return webService.getWaitingGames();
+    }
+
+    public static void createGame(String creatingPlayerName, String gameName, int numberOfPlayers, int numberOfComputerPlayers) throws GameDoesNotExists_Exception, DuplicateGameName_Exception, InvalidParameters_Exception {
+       webService.createGame(gameName, numberOfPlayers, numberOfComputerPlayers);
+       webService.joinGame(gameName, creatingPlayerName);
+    }
     
-    private static RummikubWebService webService;
-    
-    static{
-        try {
-            RummikubWebServiceService service = new RummikubWebServiceService(getServiceURL());
-            webService = service.getRummikubWebServicePort();
-        } 
-        catch (MalformedURLException ex) {
-            Logger.getLogger(GameLobbyManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public static int joinGame(String gameName, String playerName) throws GameDoesNotExists_Exception, InvalidParameters_Exception{
+        return webService.joinGame(gameName, playerName);
+    }
+
+    public static GameDetails getGameDetails(String gameName) throws GameDoesNotExists_Exception {
+        return webService.getGameDetails(gameName);
     }
 }

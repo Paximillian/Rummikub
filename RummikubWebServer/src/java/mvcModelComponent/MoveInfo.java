@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mvcViewComponent.gui.sceneController;
+package mvcModelComponent;
 
 /**
  *
  * @author Mor
  */
-public interface ControlledScreen {
-    public void setScreenParent(ScreensController screenParent);
+public class MoveInfo {
+    public int fromSetID;
+    public int fromCardID;
+    public int toSetID;
+    public int toPositionID;
 }

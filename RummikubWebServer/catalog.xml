@@ -2,4 +2,5 @@
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
     <system systemId="file:/C:/Rummikub/RummikubWebServiceService.wsdl" uri="src/conf/xml-resources/web-services/RummiWS/wsdl/RummikubWebServiceService.wsdl"/>
     <system systemId="file:/C:/Rummikub/RummikubWebServiceService_schema1.xsd" uri="src/conf/xml-resources/web-services/RummiWS/wsdl/RummikubWebServiceService_schema1.xsd"/>
+    <system systemId="file:/C:/Rummikub/RummikubWebServer/src/java/resources/rummikub.xsd" uri="src/conf/xml-resources/jaxb/jaxB/rummikub.xsd"/>
 </catalog>

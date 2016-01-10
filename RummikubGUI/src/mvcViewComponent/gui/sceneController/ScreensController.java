@@ -31,6 +31,8 @@ public class ScreensController extends StackPane {
     public static final String NEW_GAME_SCENE_FXML = "/mvcViewComponent/gui/newGameScene/newGameScene.fxml";
     public static final String GAME_SCENE = "GameScene";
     public static final String GAME_SCENE_FXML = "/mvcViewComponent/gui/gameScene/GameSceneView.fxml";
+    public static final String JOIN_GAME_SCENE = "JoinGameScene";
+    public static final String JOIN_GAME_SCENE_FXML = "/mvcViewComponent/gui/joinGame/JoinGameMenu.fxml";
     
     private static ScreensController instance;
     public static ScreensController getInstance(){

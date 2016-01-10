@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<SplitPane dividerPositions="0.07727975270479134" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="664.0" prefWidth="809.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mvcViewComponent.gui.joinGame.JoinGameMenuController">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="84.0" prefWidth="598.0">
+         <children>
+            <Button layoutX="308.0" layoutY="12.0" mnemonicParsing="false" onAction="#Button_RefreshGameList" text="Refresh Game List" />
+            <Button layoutX="23.0" layoutY="12.0" mnemonicParsing="false" onAction="#Button_BackToMainMenu" text="Back" />
+            <Label layoutX="549.0" layoutY="16.0" text="Player Name" />
+            <TextField fx:id="playerNameTextBox" layoutX="625.0" layoutY="12.0" />
+         </children></AnchorPane>
+      <ScrollPane hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS">
+         <content>
+            <VBox fx:id="gameList" prefHeight="606.0" prefWidth="794.0" />
+         </content>
+      </ScrollPane>
+  </items>
+</SplitPane>
