@@ -25,8 +25,7 @@ public class RummiWS {
     }
 
     public java.lang.String createGameFromXML(java.lang.String xmlData) throws InvalidParameters_Exception, DuplicateGameName_Exception, InvalidXML_Exception {
-        //TODO implement this method
-        throw new UnsupportedOperationException("Not implemented yet.");
+        return LobbyManager.createGameFromXML(xmlData);
     }
 
     public java.util.List<ws.rummikub.PlayerDetails> getPlayersDetails(java.lang.String gameName) throws GameDoesNotExists_Exception {

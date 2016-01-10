@@ -7,6 +7,9 @@ package mvcControllerComponent.mainMenuCommands;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -15,10 +18,17 @@ import javafx.stage.Stage;
 import mvcViewComponent.gui.messagingModule.MessageDisplayer;
 import javax.xml.bind.JAXBException;
 import mvcControllerComponent.GameController;
+import mvcControllerComponent.GameLobbyManager;
 import mvcControllerComponent.MenuCommand;
+import mvcControllerComponent.client.ws.DuplicateGameName_Exception;
+import mvcControllerComponent.client.ws.GameDoesNotExists_Exception;
+import mvcControllerComponent.client.ws.InvalidParameters_Exception;
+import mvcControllerComponent.client.ws.InvalidXML_Exception;
 import mvcModelComponent.xmlHandler.InvalidLoadFileException;
 import mvcModelComponent.xmlHandler.XmlHandler;
 import mvcViewComponent.gui.mainMenu.MainMenuController;
+import mvcViewComponent.gui.messagingModule.ErrorDisplayer;
+import mvcViewComponent.gui.newGameScene.NewGameSceneController;
 import mvcViewComponent.gui.sceneController.ScreensController;
 import org.xml.sax.SAXException;
 
@@ -39,33 +49,24 @@ public class LoadGameCommand implements Runnable {
             String filePath = file.getAbsolutePath();  
             
             Thread thread = new Thread(() -> {
-                Platform.runLater(() -> {
-                    try {
-                        loadGame(filePath);
-                    } catch (IOException | SAXException ex) {
-                        errorMSG = "Error game not loaded";                       
-                    }
-                });   
+                try {
+                    byte[] encodedXml = Files.readAllBytes(Paths.get(filePath));
+                    String xmlData = new String(encodedXml, Charset.defaultCharset());
+                    String gameName = GameLobbyManager.createGameFromXml(xmlData);
+                    
+                    Platform.runLater(() -> {
+                        MessageDisplayer.showMessage(String.format("The game named %s has been loaded, you may now join it from the join games menu", gameName));   
+                    });
+                } 
+                catch (IOException | DuplicateGameName_Exception | InvalidParameters_Exception | InvalidXML_Exception ex) {
+                    Platform.runLater(() -> {
+                       ErrorDisplayer.showError(ex.getMessage());   
+                    });
+                }
             });
             
             thread.setDaemon(true);
             thread.start();
         }
-    }
-
-    private void loadGame(String filePath) throws IOException, SAXException {
-        XmlHandler xmlHandler = new XmlHandler();
-        try{
-            GameController.getInstance().loadGame(xmlHandler.loadGame(filePath));           
-            GameController.getInstance().startGame();
-       }
-       catch(JAXBException  e)
-       {
-           errorMSG = "Error game not loaded";
-       }
-       catch(InvalidLoadFileException e)
-       {
-           errorMSG = "Error game not loaded" + System.lineSeparator() + e.getMessage();
-       }
     }
 }

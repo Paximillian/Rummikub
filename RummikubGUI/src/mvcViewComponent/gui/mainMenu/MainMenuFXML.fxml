@@ -9,10 +9,10 @@
 
 <AnchorPane id="main" fx:id="mainMnuePane" prefHeight="650.0" prefWidth="800.0" styleClass="root" stylesheets="@MainMenu.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mvcViewComponent.gui.mainMenu.MainMenuController">
     <children>
-      <Button id="menuButtonLoad" layoutX="61.0" layoutY="65.0" mnemonicParsing="false" onAction="#handleMenuButtonLoadAction" prefHeight="70.0" prefWidth="100.0" text="LOAD" textFill="#1815dd" visible="false" AnchorPane.leftAnchor="61.0" />
-      <Button id="menuButtonPlay" layoutX="300.0" layoutY="160.0" mnemonicParsing="false" onAction="#handleMenuButtonPlayAction" prefHeight="70.0" prefWidth="100.0" text="Create Game" textFill="#16c418" AnchorPane.rightAnchor="400.0" />
+      <Button id="menuButtonLoad" layoutX="465.0" layoutY="160.0" mnemonicParsing="false" onAction="#handleMenuButtonLoadAction" prefHeight="70.0" prefWidth="100.0" text="Create From XML" textAlignment="CENTER" textFill="#1815dd" wrapText="true" AnchorPane.leftAnchor="465.0" />
+      <Button id="menuButtonPlay" layoutX="250.0" layoutY="160.0" mnemonicParsing="false" onAction="#handleMenuButtonPlayAction" prefHeight="70.0" prefWidth="100.0" text="Create Game" textFill="#16c418" AnchorPane.rightAnchor="450.0" />
       <Label layoutX="335.0" layoutY="110.0" prefHeight="50.0" prefWidth="130.0" text="Welcome to Rummikub" AnchorPane.topAnchor="110.0" />
-      <Label id="errorLabel" fx:id="errorLabel" layoutX="285.0" layoutY="166.0" prefHeight="20.0" prefWidth="200.0" text="" textFill="#e02610" AnchorPane.topAnchor="250.0" />
-      <Button id="menuButtonPlay" layoutX="407.0" layoutY="160.0" mnemonicParsing="false" onAction="#handleMenuButtonJoinAction" prefHeight="70.0" prefWidth="100.0" text="Join Game" textFill="#f53029" />
+      <Label id="errorLabel" fx:id="errorLabel" layoutX="235.0" layoutY="250.0" prefHeight="20.0" prefWidth="200.0" text="" textFill="#e02610" AnchorPane.topAnchor="250.0" />
+      <Button id="menuButtonPlay" layoutX="357.0" layoutY="160.0" mnemonicParsing="false" onAction="#handleMenuButtonJoinAction" prefHeight="70.0" prefWidth="100.0" text="Join Game" textFill="#f53029" />
     </children>
 </AnchorPane>

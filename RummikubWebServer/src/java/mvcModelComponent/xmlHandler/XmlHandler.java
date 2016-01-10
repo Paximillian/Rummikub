@@ -1,39 +1,4 @@
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -48,6 +13,8 @@ import generated.Players;
 
 import generated.Rummikub;
 import java.io.File;
+import java.io.Reader;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.XMLConstants;
@@ -183,12 +150,12 @@ public class XmlHandler {
         return convertedPlayerTails;
     }
     
-        public mvcModelComponent.Game loadGame(String filePath) throws JAXBException, InvalidLoadFileException, SAXException{
+    public mvcModelComponent.Game loadGame(String filePath) throws JAXBException, InvalidLoadFileException, SAXException{
         
         File file = new File(filePath.endsWith(".xml") ? filePath : filePath + ".xml"); 
         if(file == null || !file.exists())
         {
-            throw new InvalidLoadFileException("fill is corapted or at das not exisit");
+            throw new InvalidLoadFileException("File is corrupted or it does not exist");
         }
         generated.Rummikub jaxBGame = createJaxBGame(file);
         loadPlayers(jaxBGame);
@@ -196,6 +163,39 @@ public class XmlHandler {
         loadCurrentPlayer(jaxBGame);
         this.game.setGameName(jaxBGame.getName());
         return game;
+    }
+    
+    public mvcModelComponent.Game loadGameFromXml(String xmlData) throws JAXBException, InvalidLoadFileException, SAXException{
+        
+        generated.Rummikub jaxBGame = createJaxBGameFromXml(xmlData);
+        loadPlayers(jaxBGame);
+        loadBoard(jaxBGame);       
+        loadCurrentPlayer(jaxBGame);
+        this.game.setGameName(jaxBGame.getName());
+        return game;
+    }
+
+    private generated.Rummikub createJaxBGameFromXml(String xmlData) throws JAXBException, SAXException, InvalidLoadFileException {
+    
+        try{    
+            generated.Rummikub loadedGame = null;
+            File schemaFile = new File("src/resources/rummikub.xsd");
+            SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            Schema schema = schemaFactory.newSchema(schemaFile);
+
+            JAXBContext context = JAXBContext.newInstance(generated.Rummikub.class);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            unmarshaller.setSchema(schema);
+            StringReader xmlReader = new StringReader(xmlData);
+            loadedGame = (generated.Rummikub)unmarshaller.unmarshal(xmlReader);
+            return loadedGame;
+        }
+        catch (SAXException ex) {
+                throw new InvalidLoadFileException("erroe loding schema");
+        }
+        catch (JAXBException exception){
+            throw new InvalidLoadFileException("fail data did not mach the recyayerd schema");
+        }
     }
 
     private generated.Rummikub createJaxBGame(File file) throws JAXBException, SAXException, InvalidLoadFileException {

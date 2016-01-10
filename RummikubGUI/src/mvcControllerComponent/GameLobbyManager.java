@@ -14,6 +14,7 @@ import mvcControllerComponent.client.ws.DuplicateGameName_Exception;
 import mvcControllerComponent.client.ws.GameDetails;
 import mvcControllerComponent.client.ws.GameDoesNotExists_Exception;
 import mvcControllerComponent.client.ws.InvalidParameters_Exception;
+import mvcControllerComponent.client.ws.InvalidXML_Exception;
 import mvcControllerComponent.client.ws.RummikubWebService;
 import mvcControllerComponent.client.ws.RummikubWebServiceService;
 import mvcViewComponent.gui.messagingModule.ErrorDisplayer;
@@ -38,5 +39,9 @@ public class GameLobbyManager extends WebClient{
 
     public static GameDetails getGameDetails(String gameName) throws GameDoesNotExists_Exception {
         return webService.getGameDetails(gameName);
+    }
+    
+    public static String createGameFromXml(String xmlData) throws DuplicateGameName_Exception, InvalidParameters_Exception, InvalidXML_Exception{
+        return webService.createGameFromXML(xmlData);
     }
 }
