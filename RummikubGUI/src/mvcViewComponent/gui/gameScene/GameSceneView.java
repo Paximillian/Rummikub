@@ -10,6 +10,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +21,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import mvcControllerComponent.GameController;
+import mvcControllerComponent.GameLobbyManager;
+import mvcControllerComponent.client.ws.InvalidParameters_Exception;
 import mvcViewComponent.gui.gameViewElements.boardView.BoardView;
 import mvcViewComponent.gui.gameViewElements.gameView.GameView;
 import mvcViewComponent.gui.gameViewElements.playerView.PlayerView;
@@ -31,10 +36,44 @@ import mvcViewComponent.gui.sceneController.ScreensController;
  * @author Mor
  */
 public class GameSceneView extends AnchorPane implements Initializable, ControlledScreen {
+
         
     @FXML private GameView gameView;
+    private static int playerId = -1;
     
     public GameSceneView(){
+        pollServerStatus();
+    }
+    
+    public static void setPlayerId(int id) {
+        playerId = id;
+    }
+    
+    public void pollServerStatus(){
+        Thread thread = new Thread(() -> {
+            while(playerId != -1){}
+            
+            boolean activeGame = true;
+            
+            while(activeGame){
+                if(playerId == -1){
+                    Platform.runLater(() -> ErrorDisplayer.showError("Invalid player Id"));
+                    activeGame = false;
+                }
+                
+                GameView gameView = GameController.getInstance().pollServerStatus(playerId);
+                Platform.runLater(() -> setGameView(gameView));
+                
+                try {
+                    Thread.sleep(1000);
+                } 
+                catch (InterruptedException ex) {
+                    Logger.getLogger(GameSceneView.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        thread.setDaemon(true);
+        thread.start();
     }
     
     public void setGameView(GameView targetGameView) {
@@ -55,8 +94,8 @@ public class GameSceneView extends AnchorPane implements Initializable, Controll
         try {
             GameController.getInstance().endTurn();
         } 
-        catch (CloneNotSupportedException ex) {
-            ErrorDisplayer.showError(String.format("A cloning error has occured, please contact the developers and tell them to: 'Fix it, you lazy fucks!'%sThank you!", System.lineSeparator()));
+        catch (InvalidParameters_Exception ex) {
+            ErrorDisplayer.showError(ex.getMessage());
         }
     }
     
@@ -65,19 +104,19 @@ public class GameSceneView extends AnchorPane implements Initializable, Controll
         try {
             GameController.getInstance().clearLastPlay();
         } 
-        catch (CloneNotSupportedException ex) {
-            ErrorDisplayer.showError(String.format("A cloning error has occured, please contact the developers and tell them to: 'Fix it, you lazy fucks!'%sThank you!", System.lineSeparator()));
+        catch (InvalidParameters_Exception ex) {
+            ErrorDisplayer.showError(ex.getMessage());
         }
     }
     
     @FXML
     private void handleButtonActionSaveGame(ActionEvent event) {
-        GameController.getInstance().saveGame();
+        //GameController.getInstance().saveGame();
     }
     
     @FXML
     private void handleButtonActionSaveGameAs(ActionEvent event) {
-        GameController.getInstance().saveGameAs();
+        //GameController.getInstance().saveGameAs();
     }
     
     @Override

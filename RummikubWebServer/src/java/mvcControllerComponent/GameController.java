@@ -18,6 +18,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import mvcModelComponent.*;
 import mvcModelComponent.xmlHandler.*;
+import ws.rummikub.InvalidParameters;
+import ws.rummikub.InvalidParameters_Exception;
 
 /**
  *
@@ -60,7 +62,7 @@ public class GameController {
     }
     
     //When a turn ends we check the validity of all the changes, if they're legal, we'll set the new state.
-    public void endTurn() throws CloneNotSupportedException{        
+    public void endTurn() throws InvalidParameters_Exception{        
         if(gameState.isLegalGameState()){
            if(gameState.getCurrentPlayer().getCardsPlayedThisTurn().size() > 0){
                gameState.getCurrentPlayer().setPlacedFirstSequence(true);
@@ -72,7 +74,13 @@ public class GameController {
         }
         
         gameState.advancePlayerTurn();
-        gameStateBackup = gameState.clone();
+        
+        try {
+            gameStateBackup = gameState.clone();
+        } 
+        catch (CloneNotSupportedException ex) {
+            throw new InvalidParameters_Exception("Can't clone game", new InvalidParameters());
+        }
         
         //If the game ended, move to the main menu
         if(!hasGameEnded()){
@@ -142,8 +150,13 @@ public class GameController {
         }
     }
 
-    public void clearLastPlay() throws CloneNotSupportedException {
-        gameState = gameStateBackup.clone();
+    public void clearLastPlay() throws InvalidParameters_Exception {
+        try {
+            gameState = gameStateBackup.clone();
+        } 
+        catch (CloneNotSupportedException ex) {
+            throw new InvalidParameters_Exception("Can't clone game", new InvalidParameters());
+        }
     }
 
     //If this is a turn of a bot, we'll requeset a move from them

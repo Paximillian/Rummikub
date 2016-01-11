@@ -71,9 +71,9 @@ public class Game {
         return true;
     }
 
-    public int addNewPlayer(String newName, boolean isBotStatus)
+    public int addNewPlayer(String newName, int playerId, boolean isBotStatus)
     {
-        Player newPlayer = new Player(newName, isBotStatus, newHand());
+        Player newPlayer = new Player(newName, playerId, isBotStatus, newHand());
         
         if(isBotStatus){
             this.players.add(newPlayer);

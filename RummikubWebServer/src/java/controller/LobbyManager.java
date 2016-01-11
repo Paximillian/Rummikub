@@ -68,7 +68,8 @@ public class LobbyManager {
         game.setGameName(name);
         
         for(int i = 0; i < computerizedPlayers; ++i){
-            game.addNewPlayer("bot"+i, true);
+            game.addNewPlayer("bot"+i, playerNames.size(), true);
+            playerNames.add("bot"+1);
         }
         
         GameDetails gameDetails = new GameDetails();
@@ -120,7 +121,7 @@ public class LobbyManager {
                 }
             }
 
-            game.addNewPlayer(playerName, false);
+            game.addNewPlayer(playerName, playerNames.size(), false);
             playerNames.add(playerName);
             playerID = playerNames.size() - 1;
         }
@@ -207,6 +208,49 @@ public class LobbyManager {
         
         return playerDetails;
     }
+    
+    public static Game getGameForPlayer(int playerId) throws GameDoesNotExists_Exception, InvalidParameters_Exception{
+        if(playerId < 0 || playerId >= playerNames.size()){
+            throw new InvalidParameters_Exception("Invalid ID supplied", new InvalidParameters());
+        }
+        
+        Game playerGame = null;
+        String playerName = playerNames.get(playerId);
+        
+        for(Game game : waitingGames.values()){
+            for(Player player : game.getPlayers()){
+                if(player.getName().equals(playerName)){
+                    playerGame = game;
+                    break;
+                }
+            }
+            
+            if(playerGame != null){
+                break;
+            }
+        }
+        
+        if(playerGame == null){
+            for(Game game : playingGames.values()){
+                for(Player player : game.getPlayers()){
+                    if(player.getName().equals(playerName)){
+                        playerGame = game;
+                        break;
+                    }
+                }
+
+                if(playerGame != null){
+                    break;
+                }
+            }
+        }
+        
+        if(playerGame == null){
+            throw new GameDoesNotExists_Exception("Player is not present in any game", new GameDoesNotExists());
+        }
+        
+        return playerGame;
+    }
 
     public static PlayerDetails getPlayerDetails(int playerId) throws GameDoesNotExists_Exception, InvalidParameters_Exception{
         if(playerId < 0 || playerId > playerNames.size()){
@@ -253,14 +297,69 @@ public class LobbyManager {
     }
 
     private static PlayerDetails getPlayerDetailsFromPlayer(Player player) {
-            PlayerDetails playerDetails = new PlayerDetails();
+        PlayerDetails playerDetails = new PlayerDetails();
+
+        playerDetails.setName(player.getName());
+        playerDetails.setNumberOfTiles(player.getHand().size());
+        playerDetails.setPlayedFirstSequence(player.isPlacedFirstSequence());
+        playerDetails.setType(player.isBot() ? PlayerType.COMPUTER : PlayerType.HUMAN);
+        playerDetails.setStatus(player.isActive() ? PlayerStatus.ACTIVE : PlayerStatus.RETIRED);
+
+        return playerDetails;
+    }
+
+    public static GameController getGameControllerForPlayer(int playerId) throws InvalidParameters_Exception {
+        if(playerId < 0 || playerId >= playerNames.size()){
+            throw new InvalidParameters_Exception("Invalid ID supplied", new InvalidParameters());
+        }
+        
+        GameController playerGame = null;
+        String playerName = playerNames.get(playerId);
+        String gameName = null;
+        
+        for(String game : waitingGames.keySet()){
+            for(Player player : waitingGames.get(game).getPlayers()){
+                if(player.getName().equals(playerName)){
+                    gameName = game;
+                    break;
+                }
+            }
             
-            playerDetails.setName(player.getName());
-            playerDetails.setNumberOfTiles(player.getHand().size());
-            playerDetails.setPlayedFirstSequence(player.isPlacedFirstSequence());
-            playerDetails.setType(player.isBot() ? PlayerType.COMPUTER : PlayerType.HUMAN);
-            playerDetails.setStatus(player.isActive() ? PlayerStatus.ACTIVE : PlayerStatus.RETIRED);
-            
-            return playerDetails;
+            if(gameName != null){
+                break;
+            }
+        }
+        
+        if(gameName == null){
+            for(String game : playingGames.keySet()){
+                for(Player player : playingGames.get(game).getPlayers()){
+                    if(player.getName().equals(playerName)){
+                        gameName = game;
+                        break;
+                    }
+                }
+
+                if(gameName != null){
+                    break;
+                }
+            }
+        }
+        
+        if(gameName == null){
+            throw new InvalidParameters_Exception("Player is not present in any game", new InvalidParameters());
+        }
+        
+        return gameControllers.get(gameName);
+    }
+
+    public static void resignPlayer(int playerId) throws InvalidParameters_Exception {
+        try {
+            PlayerDetails playerDetails = LobbyManager.getPlayerDetails(playerId);
+            playerDetails.setStatus(PlayerStatus.RETIRED);
+            playerDetails.setType(PlayerType.COMPUTER);
+        } 
+        catch (GameDoesNotExists_Exception ex) {
+            throw new InvalidParameters_Exception(ex.getMessage(), new InvalidParameters());
+        }
     }
 }

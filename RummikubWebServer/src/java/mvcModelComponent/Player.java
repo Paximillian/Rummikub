@@ -24,6 +24,7 @@ public class Player {
     
     private final Sequence cardsPlayedThisTurn = new Sequence();
     private boolean active = true;
+    private int id = -1;
     
     public boolean isPlacedFirstSequence() {
         return placedFirstSequence;
@@ -33,10 +34,11 @@ public class Player {
         this.placedFirstSequence = PlacedFirstSequence;
     }
 
-    public Player(String newName, boolean isBotStatus, ArrayList<Tile> hand) {
+    public Player(String newName, int playerId, boolean isBotStatus, ArrayList<Tile> hand) {
         playerName = newName;
         isBot = isBotStatus;
         placedFirstSequence = false;
+        id = playerId;
         
         this.hand = new Sequence(hand);
     }
@@ -95,7 +97,7 @@ public class Player {
             clonedHand.add(tile);
         }
         
-        return new Player(this.getName(), this.isBot, clonedHand);
+        return new Player(this.getName(), this.id, this.isBot, clonedHand);
     }
 
     public MoveInfo requestMove(Game gameState) throws Exception {
@@ -254,5 +256,13 @@ public class Player {
     
     public void setActive(boolean isActive){
         active = isActive;
+    }
+    
+    public int getId(){
+        return id;
+    }
+    
+    public void setId(int pId){
+        id = pId;
     }
 }

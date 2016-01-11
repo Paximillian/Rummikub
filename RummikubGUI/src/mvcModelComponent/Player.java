@@ -19,8 +19,10 @@ import java.util.stream.Collectors;
 public class Player {
     private String playerName;
     private boolean isBot;
-    private final Sequence hand ;    
-    private boolean placedFirstSequence ;
+    private final Sequence hand;
+    private boolean placedFirstSequence;
+    
+    private int id = -1;
     
     private final Sequence cardsPlayedThisTurn = new Sequence();
     
@@ -245,5 +247,13 @@ public class Player {
     
     public void clearCardsPlayedThisTurn(){
         cardsPlayedThisTurn.clear();
+    }
+    
+    public void setId(int pId){
+        id = pId;
+    }
+    
+    public int getId(){
+        return id;
     }
 }

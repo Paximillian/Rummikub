@@ -6,11 +6,18 @@
 package ws.server;
 
 import controller.LobbyManager;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.jws.WebService;
+import mvcModelComponent.MoveInfo;
 import ws.rummikub.DuplicateGameName_Exception;
 import ws.rummikub.GameDoesNotExists_Exception;
+import ws.rummikub.InvalidParameters;
 import ws.rummikub.InvalidParameters_Exception;
 import ws.rummikub.InvalidXML_Exception;
+import ws.rummikub.PlayerDetails;
+import ws.rummikub.PlayerStatus;
+import ws.rummikub.PlayerType;
 
 /**
  *
@@ -52,34 +59,35 @@ public class RummiWS {
         return LobbyManager.getPlayerDetails(playerId);
     }
 
+    //Not relevant to our project structure.
     public void createSequence(int playerId, java.util.List<ws.rummikub.Tile> tiles) throws InvalidParameters_Exception {
-        //TODO implement this method
         throw new UnsupportedOperationException("Not implemented yet.");
     }
 
+    //Not relevant to our project structure.
     public void addTile(int playerId, ws.rummikub.Tile tile, int sequenceIndex, int sequencePosition) throws InvalidParameters_Exception {
-        //TODO implement this method
         throw new UnsupportedOperationException("Not implemented yet.");
     }
 
+    //Not relevant to our project structure.
     public void takeBackTile(int playerId, int sequenceIndex, int sequencePosition) throws InvalidParameters_Exception {
-        //TODO implement this method
-        throw new UnsupportedOperationException("Not implemented yet.");
     }
 
     public void moveTile(int playerId, int sourceSequenceIndex, int sourceSequencePosition, int targetSequenceIndex, int targetSequencePosition) throws InvalidParameters_Exception {
-        //TODO implement this method
-        throw new UnsupportedOperationException("Not implemented yet.");
+        MoveInfo moveInfo = new MoveInfo();
+        moveInfo.fromSetID = sourceSequenceIndex; 
+        moveInfo.fromCardID = sourceSequencePosition; 
+        moveInfo.toSetID = targetSequenceIndex; 
+        moveInfo.toPositionID = targetSequencePosition;
+        LobbyManager.getGameControllerForPlayer(playerId).moveCard(moveInfo);
     }
 
     public void finishTurn(int playerId) throws InvalidParameters_Exception {
-        //TODO implement this method
-        throw new UnsupportedOperationException("Not implemented yet.");
+        LobbyManager.getGameControllerForPlayer(playerId).endTurn();
     }
 
     public void resign(int playerId) throws InvalidParameters_Exception {
-        //TODO implement this method
-        throw new UnsupportedOperationException("Not implemented yet.");
+        LobbyManager.resignPlayer(playerId);
     }
     
 }

@@ -19,6 +19,7 @@ import javafx.scene.layout.VBox;
 import mvcControllerComponent.GameLobbyManager;
 import mvcControllerComponent.client.ws.GameDoesNotExists_Exception;
 import mvcControllerComponent.client.ws.InvalidParameters_Exception;
+import mvcViewComponent.gui.gameScene.GameSceneView;
 import mvcViewComponent.gui.messagingModule.ErrorDisplayer;
 import mvcViewComponent.gui.newGameScene.NewGameSceneController;
 import mvcViewComponent.gui.sceneController.ControlledScreen;
@@ -67,9 +68,10 @@ public class JoinGameMenuController implements Initializable, ControlledScreen {
                     }
                     else{
                         try {
-                            GameLobbyManager.joinGame(gameName, playerNameTextBox.getText());
-                            ScreensController.getInstance().setScreen(ScreensController.NEW_GAME_SCENE);
+                            int id = GameLobbyManager.joinGame(gameName, playerNameTextBox.getText());
+                            GameSceneView.setPlayerId(id);
                             NewGameSceneController.setLoadedGame(gameName);
+                            ScreensController.getInstance().setScreen(ScreensController.NEW_GAME_SCENE);
                         } 
                         catch (GameDoesNotExists_Exception | InvalidParameters_Exception ex) {
                             ErrorDisplayer.showError(ex.getMessage());

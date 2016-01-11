@@ -18,7 +18,9 @@ import mvcControllerComponent.client.ws.InvalidXML_Exception;
 import mvcControllerComponent.client.ws.PlayerDetails;
 import mvcControllerComponent.client.ws.RummikubWebService;
 import mvcControllerComponent.client.ws.RummikubWebServiceService;
+import mvcViewComponent.gui.gameScene.GameSceneView;
 import mvcViewComponent.gui.messagingModule.ErrorDisplayer;
+import mvcViewComponent.gui.sceneController.ScreensController;
 /**
  *
  * @author Mor
@@ -31,7 +33,8 @@ public class GameLobbyManager extends WebClient{
 
     public static void createGame(String creatingPlayerName, String gameName, int numberOfPlayers, int numberOfComputerPlayers) throws GameDoesNotExists_Exception, DuplicateGameName_Exception, InvalidParameters_Exception {
        webService.createGame(gameName, numberOfPlayers - numberOfComputerPlayers, numberOfComputerPlayers);
-       webService.joinGame(gameName, creatingPlayerName);
+       int id = webService.joinGame(gameName, creatingPlayerName);
+       GameSceneView.setPlayerId(id);
     }
     
     public static int joinGame(String gameName, String playerName) throws GameDoesNotExists_Exception, InvalidParameters_Exception{
