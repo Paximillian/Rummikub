@@ -23,6 +23,7 @@ public class Player {
     private boolean placedFirstSequence ;
     
     private final Sequence cardsPlayedThisTurn = new Sequence();
+    private boolean active = true;
     
     public boolean isPlacedFirstSequence() {
         return placedFirstSequence;
@@ -245,5 +246,13 @@ public class Player {
     
     public void clearCardsPlayedThisTurn(){
         cardsPlayedThisTurn.clear();
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+    
+    public void setActive(boolean isActive){
+        active = isActive;
     }
 }

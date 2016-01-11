@@ -28,6 +28,9 @@ import ws.rummikub.InvalidParameters;
 import ws.rummikub.InvalidParameters_Exception;
 import ws.rummikub.InvalidXML;
 import ws.rummikub.InvalidXML_Exception;
+import ws.rummikub.PlayerDetails;
+import ws.rummikub.PlayerStatus;
+import ws.rummikub.PlayerType;
 
 /**
  *
@@ -35,7 +38,8 @@ import ws.rummikub.InvalidXML_Exception;
  */
 public class LobbyManager {
     private static final Map<String, Game> waitingGames = new HashMap<>();
-    private static final Map<String, GameDetails> waitingGameDetails = new HashMap<>();
+    private static final Map<String, GameDetails> detailsForGame = new HashMap<>();
+    private static final Map<String, GameController> gameControllers = new HashMap<>();
     private static final Map<String, Game> playingGames = new HashMap<>();
     private static final List<String> playerNames = new ArrayList<>();
     
@@ -76,7 +80,7 @@ public class LobbyManager {
         gameDetails.setStatus(GameStatus.WAITING);
                 
         waitingGames.put(name, game);
-        waitingGameDetails.put(name, gameDetails);
+        detailsForGame.put(name, gameDetails);
     }
 
     public static int addPlayerToGame(String gameName, String playerName) throws GameDoesNotExists_Exception, InvalidParameters_Exception  {
@@ -86,7 +90,7 @@ public class LobbyManager {
             throw new GameDoesNotExists_Exception("No game of the given name exists", new GameDoesNotExists());
         }
         
-        GameDetails gameDetails = waitingGameDetails.get(gameName);
+        GameDetails gameDetails = detailsForGame.get(gameName);
         
         int playerID = -1;
         
@@ -124,6 +128,14 @@ public class LobbyManager {
         
         gameDetails.setJoinedHumanPlayers(gameDetails.getJoinedHumanPlayers() + 1);
         
+        //If we have enough human players then we can mark the game as started.
+        if(gameDetails.getJoinedHumanPlayers() == gameDetails.getHumanPlayers()){
+            gameDetails.setStatus(GameStatus.ACTIVE);
+            waitingGames.remove(game);
+            playingGames.put(gameName, game);
+            gameControllers.put(gameName, new GameController(game, gameDetails.getHumanPlayers(), gameDetails.getComputerizedPlayers()));
+        }
+        
         return playerID;
     }
 
@@ -134,7 +146,7 @@ public class LobbyManager {
         
         Game game = waitingGames.get(gameName);
         
-        GameDetails gameDetails = waitingGameDetails.get(gameName);
+        GameDetails gameDetails = detailsForGame.get(gameName);
         
         return gameDetails;
     }
@@ -160,7 +172,7 @@ public class LobbyManager {
             gameDetails.setStatus(GameStatus.WAITING);
 
             waitingGames.put(game.getGameName(), game);
-            waitingGameDetails.put(game.getGameName(), gameDetails);
+            detailsForGame.put(game.getGameName(), gameDetails);
         } 
         catch (JAXBException ex) {
             throw new InvalidXML_Exception(ex.getMessage(), new InvalidXML());
@@ -170,5 +182,85 @@ public class LobbyManager {
         }
         
         return gameName;
+    }
+
+    public static List<PlayerDetails> getPlayerDetails(String gameName) throws GameDoesNotExists_Exception  {
+        Game game = null;
+        
+        if(waitingGames.containsKey(gameName)){
+            game = waitingGames.get(gameName);
+        }
+        else if(playingGames.containsKey(gameName)){
+            game = playingGames.get(gameName);
+        }
+        else{
+            throw new GameDoesNotExists_Exception("No game of the given name exists", new GameDoesNotExists());
+        }
+        
+        List<PlayerDetails> playerDetails = new ArrayList<PlayerDetails>();
+        
+        for(Player player : game.getPlayers()){
+            PlayerDetails pDetails = getPlayerDetailsFromPlayer(player);
+            
+            playerDetails.add(pDetails);
+        }
+        
+        return playerDetails;
+    }
+
+    public static PlayerDetails getPlayerDetails(int playerId) throws GameDoesNotExists_Exception, InvalidParameters_Exception{
+        if(playerId < 0 || playerId > playerNames.size()){
+            throw new InvalidParameters_Exception("Invalid player ID", new InvalidParameters());
+        }
+        
+        String playerName = playerNames.get(playerId);
+        
+        PlayerDetails playerDetails = null;
+        
+        for(Game game : waitingGames.values()){
+            for(Player player : game.getPlayers()){
+                if(player.getName().equals(playerName)){
+                    playerDetails = getPlayerDetailsFromPlayer(player);
+                    break;
+                }
+            }
+            
+            if(playerDetails != null){
+                break;
+            }
+        }
+        
+        if(playerDetails == null){
+            for(Game game : playingGames.values()){
+                for(Player player : game.getPlayers()){
+                    if(player.getName().equals(playerName)){
+                        playerDetails = getPlayerDetailsFromPlayer(player);
+                        break;
+                    }
+                }
+
+                if(playerDetails != null){
+                    break;
+                }
+            }
+        }
+        
+        if(playerDetails == null){
+            throw new GameDoesNotExists_Exception(String.format("No game exists which %s is a part of", playerName), new GameDoesNotExists());
+        }
+        
+        return playerDetails;
+    }
+
+    private static PlayerDetails getPlayerDetailsFromPlayer(Player player) {
+            PlayerDetails playerDetails = new PlayerDetails();
+            
+            playerDetails.setName(player.getName());
+            playerDetails.setNumberOfTiles(player.getHand().size());
+            playerDetails.setPlayedFirstSequence(player.isPlacedFirstSequence());
+            playerDetails.setType(player.isBot() ? PlayerType.COMPUTER : PlayerType.HUMAN);
+            playerDetails.setStatus(player.isActive() ? PlayerStatus.ACTIVE : PlayerStatus.RETIRED);
+            
+            return playerDetails;
     }
 }

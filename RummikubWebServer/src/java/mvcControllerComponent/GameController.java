@@ -28,8 +28,6 @@ import mvcModelComponent.xmlHandler.*;
 public class GameController {
     private static final int MAX_PLAYER_COUNT = 4;
     private static final int MIN_PLAYER_COUNT = 2;
-    
-    private static GameController instance;
         
     private int numberOfPlayers;
     private int numberOfComputerPlayers;
@@ -42,23 +40,11 @@ public class GameController {
     private boolean gameReady = false;
     
     private String lastSaveName = "";
-    
-    private VBox gameSceneView;
-        
-    public static GameController getInstance(){
-        if(instance == null){
-            instance = new GameController();
-        }
-        
-        return instance;
-    }
-    public void loadGame(Game gameToLoad)
-    {
-        gameState = gameToLoad;
-    }
-    
-    private GameController(){
-        gameState = new Game();
+            
+    public GameController(Game game, int humanPlayers, int aiPlayers){
+        gameState = game;
+        numberOfComputerPlayers = aiPlayers;
+        numberOfPlayers = humanPlayers + aiPlayers;
     }
 
     public void endGame() {
@@ -71,72 +57,6 @@ public class GameController {
     
     boolean getGameReady() {
         return gameReady;
-    }
-    
-    public void setNumberOfPlayers(int playerCount) throws IllegalArgumentException, IllegalStateException{
-        if(gameStarted){
-            throw new IllegalStateException("Can't set the number of players of a game that already started");
-        }
-        
-        if(playerCount > MAX_PLAYER_COUNT || playerCount < MIN_PLAYER_COUNT){
-            throw new IllegalArgumentException(String.format("Illegal number of players(Legal range is %d-%d)", MIN_PLAYER_COUNT, MAX_PLAYER_COUNT));
-        }
-        
-        numberOfPlayers = playerCount;
-    }
-
-    public void setNumberOfComputerPlayers(int computerPlayerCount) throws IllegalArgumentException, IllegalStateException{
-        if(gameStarted){
-            throw new IllegalStateException("Can't set the number of players of a game that already started");
-        }
-        
-        if(computerPlayerCount < 0 || computerPlayerCount > numberOfPlayers){
-            throw new IllegalArgumentException(String.format("Illegal number of players(Legal range is %d-%d)", MIN_PLAYER_COUNT, MAX_PLAYER_COUNT));
-        }
-        
-        numberOfComputerPlayers = computerPlayerCount;
-    }
-
-    public void setGameName(String nameOfGame) throws IllegalStateException {
-        if(gameStarted){
-            throw new IllegalStateException("Can't set the name of a game that already started");
-        }
-        
-        gameState.setGameName(nameOfGame);
-    }
-
-    public void addPlayer(String playerName, boolean isBot) throws IllegalStateException, IllegalArgumentException {
-        if(gameStarted){
-            throw new IllegalStateException("Can't add a player to a game that already started");
-        }
-        
-        //Name can't already exist.
-        if(gameState.getPlayers().stream().noneMatch(player -> player.getName().equals(playerName))){
-            //Name can't be empty
-            if(playerName.length() == 0){
-                throw new IllegalArgumentException("Player name can't be empty");
-            }
-            else{
-                gameState.addNewPlayer(playerName, isBot);
-            }
-        }
-        else{
-            if(isBot){
-                addPlayer(String.format("B%s", playerName), isBot);
-            }
-            else{
-                throw new IllegalArgumentException("This player name already exists.");
-            }
-        }
-                
-        //If all players have been added.
-        if(gameState.getPlayers().size() == numberOfPlayers){
-            gameReady = true;
-        }
-    }
-    
-    public void resetGame(){
-        instance = null;
     }
     
     //When a turn ends we check the validity of all the changes, if they're legal, we'll set the new state.

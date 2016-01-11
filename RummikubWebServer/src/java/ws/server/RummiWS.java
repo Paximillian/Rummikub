@@ -29,8 +29,7 @@ public class RummiWS {
     }
 
     public java.util.List<ws.rummikub.PlayerDetails> getPlayersDetails(java.lang.String gameName) throws GameDoesNotExists_Exception {
-        //TODO implement this method
-        throw new UnsupportedOperationException("Not implemented yet.");
+        return LobbyManager.getPlayerDetails(gameName);
     }
 
     public void createGame(java.lang.String name, int humanPlayers, int computerizedPlayers) throws InvalidParameters_Exception, DuplicateGameName_Exception {
@@ -50,8 +49,7 @@ public class RummiWS {
     }
 
     public ws.rummikub.PlayerDetails getPlayerDetails(int playerId) throws GameDoesNotExists_Exception, InvalidParameters_Exception {
-        //TODO implement this method
-        throw new UnsupportedOperationException("Not implemented yet.");
+        return LobbyManager.getPlayerDetails(playerId);
     }
 
     public void createSequence(int playerId, java.util.List<ws.rummikub.Tile> tiles) throws InvalidParameters_Exception {

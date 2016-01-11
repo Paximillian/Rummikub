@@ -11,6 +11,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,7 +40,10 @@ import mvcControllerComponent.GameLobbyManager;
 import mvcControllerComponent.client.ws.DuplicateGameName_Exception;
 import mvcControllerComponent.client.ws.GameDetails;
 import mvcControllerComponent.client.ws.GameDoesNotExists_Exception;
+import mvcControllerComponent.client.ws.GameStatus;
 import mvcControllerComponent.client.ws.InvalidParameters_Exception;
+import mvcControllerComponent.client.ws.PlayerDetails;
+import mvcControllerComponent.client.ws.PlayerType;
 import mvcViewComponent.gui.messagingModule.ErrorDisplayer;
 import mvcViewComponent.gui.sceneController.ControlledScreen;
 import mvcViewComponent.gui.sceneController.ScreensController;
@@ -119,10 +123,11 @@ public class NewGameSceneController implements Initializable , ControlledScreen 
                         boolean keepUpdating = true;
                         while(keepUpdating){
                             try{
-                                GameDetails gameDetails = GameLobbyManager.getGameDetails(gameNameTextField.getText());
-
+                                GameDetails gameDetails = GameLobbyManager.getGameDetails(loadedGameName);
+                                List<PlayerDetails> playerDetails = GameLobbyManager.getPlayerDetails(gameDetails.getName());
+                                
                                 Platform.runLater(() -> {
-                                        updateRoomFrom(gameDetails);
+                                    updateRoomFrom(gameDetails, playerDetails);
                                 });
                             }   
                             catch (GameDoesNotExists_Exception ex) {
@@ -287,6 +292,7 @@ public class NewGameSceneController implements Initializable , ControlledScreen 
         try {
             GameLobbyManager.createGame(player1NameTextField.getText(), gameNameTextField.getText(), numberOfPlayers, numberOfComputerPlayers);
             
+            setLoadedGame(gameNameTextField.getText());
             getRoomUpdatesFromServer();
         } 
         catch (GameDoesNotExists_Exception | DuplicateGameName_Exception | InvalidParameters_Exception ex) {
@@ -294,71 +300,10 @@ public class NewGameSceneController implements Initializable , ControlledScreen 
         }
     }
     
-    /*private void startGame() throws IOException{
-        if(isGameRedy())
-        {
-            GameController.getInstance().setGameName(fixName(gameNameTextField.getText(), "Rummikub " + date() ));
-            GameController.getInstance().setNumberOfPlayers(numberOfPlayers);
-            GameController.getInstance().addPlayer(player1name,player1AiPlayerChoiceBox.isSelected());
-            GameController.getInstance().addPlayer(player2name,player2AiPlayerChoiceBox.isSelected());
-            if(numberOfPlayers > 2)
-            {
-                GameController.getInstance().addPlayer(player3name,player3AiPlayerChoiceBox.isSelected());
-                if(numberOfPlayers == 4)
-                {
-                    GameController.getInstance().addPlayer(player4name,player4AiPlayerChoiceBox.isSelected());
-                }
-            }
-            GameController.getInstance().startGame();
-        }
-    }*/
-    
     private String fixName(String str1,String str2)
     {
         return str1.trim().isEmpty() ? str2 : str1;
     }
-
-    /*private boolean isGameRedy() {
-        ArrayList<String> names = new ArrayList<String>();
-        boolean allBots = true;
-        boolean sameName = false;
-        player1name = fixName(player1NameTextField.getText(), "Player1");
-        player2name = fixName(player2NameTextField.getText(), "Player2");
-        player3name = fixName(player3NameTextField.getText(), "Player3");
-        player4name = fixName(player4NameTextField.getText(), "Player4");
-        
-        names.add(player1name);
-        allBots = player1AiPlayerChoiceBox.isSelected() && player2AiPlayerChoiceBox.isSelected();
-        if(names.contains(player2name))
-                sameName = true;        
-        names.add(player2name);
-        if(numberOfPlayers > 2)
-        {
-            if(names.contains(player3name))
-                sameName = true;
-            names.add(player3name);
-            allBots = allBots && player3AiPlayerChoiceBox.isSelected();
-            if(numberOfPlayers == 4)
-            {
-                allBots = allBots && player4AiPlayerChoiceBox.isSelected();
-                if(names.contains(player4name))
-                    sameName = true;
-            }
-        }
-        if(sameName || allBots )
-        {
-            if(sameName)
-            {
-                sendErrorMSG("Players must have different names!");
-            }
-            else
-            {
-                sendErrorMSG("The game requires atleast one human player!");
-            }
-            return false;
-        }
-        return true;
-    }*/
     
     private void sendErrorMSG(String errorMSG)
     {
@@ -375,45 +320,71 @@ public class NewGameSceneController implements Initializable , ControlledScreen 
         return dateFormat.format(date);
     }
 
-    private void updateRoomFrom(GameDetails gameDetails) {
-        aiAmount0Button.setBackground(UNSELECTED_BACKGROUND);
-        aiAmount1Button.setBackground(UNSELECTED_BACKGROUND);
-        aiAmount2Button.setBackground(UNSELECTED_BACKGROUND);
-        aiAmount3Button.setBackground(UNSELECTED_BACKGROUND);
-        switch(gameDetails.getComputerizedPlayers()){
-            case 0:
-                aiAmount0Button.setBackground(SELECTED_BACKGROUND);
-                break;
-            case 1:
-                aiAmount1Button.setBackground(SELECTED_BACKGROUND);
-                break;
-            case 2:
-                aiAmount2Button.setBackground(SELECTED_BACKGROUND);
-                break;
-            case 3:
-                aiAmount3Button.setBackground(SELECTED_BACKGROUND);
-                break;
+    private void updateRoomFrom(GameDetails gameDetails, List<PlayerDetails> playerDetails) {
+        if(gameDetails.getStatus() == GameStatus.ACTIVE){
+            ScreensController.getInstance().setScreen(ScreensController.GAME_SCENE);
         }
+        else{
+            aiAmount0Button.setBackground(UNSELECTED_BACKGROUND);
+            aiAmount1Button.setBackground(UNSELECTED_BACKGROUND);
+            aiAmount2Button.setBackground(UNSELECTED_BACKGROUND);
+            aiAmount3Button.setBackground(UNSELECTED_BACKGROUND);
+            switch(gameDetails.getComputerizedPlayers()){
+                case 0:
+                    aiAmount0Button.setBackground(SELECTED_BACKGROUND);
+                    break;
+                case 1:
+                    aiAmount1Button.setBackground(SELECTED_BACKGROUND);
+                    break;
+                case 2:
+                    aiAmount2Button.setBackground(SELECTED_BACKGROUND);
+                    break;
+                case 3:
+                    aiAmount3Button.setBackground(SELECTED_BACKGROUND);
+                    break;
+            }
 
-        playerAmount2Button.setBackground(UNSELECTED_BACKGROUND);
-        playerAmount3Button.setBackground(UNSELECTED_BACKGROUND);
-        playerAmount4Button.setBackground(UNSELECTED_BACKGROUND);
-        switch(gameDetails.getHumanPlayers()){
-            case 2:
-                playerAmount2Button.setBackground(SELECTED_BACKGROUND);
-                break;
-            case 3:
-                playerAmount3Button.setBackground(SELECTED_BACKGROUND);
-                break;
-            case 4:
-                playerAmount4Button.setBackground(SELECTED_BACKGROUND);
-                break;
+            playerAmount2Button.setBackground(UNSELECTED_BACKGROUND);
+            playerAmount3Button.setBackground(UNSELECTED_BACKGROUND);
+            playerAmount4Button.setBackground(UNSELECTED_BACKGROUND);
+            switch(gameDetails.getHumanPlayers() + gameDetails.getComputerizedPlayers()){
+                case 2:
+                    playerAmount2Button.setBackground(SELECTED_BACKGROUND);
+                    break;
+                case 3:
+                    playerAmount3Button.setBackground(SELECTED_BACKGROUND);
+                    player3canvas.setVisible(true);
+                    break;
+                case 4:
+                    playerAmount4Button.setBackground(SELECTED_BACKGROUND);
+                    player3canvas.setVisible(true);
+                    player4canvas.setVisible(true);
+                    break;
+            }
+
+            gameNameTextField.setText(gameDetails.getName());
+            
+            int playerPos = 0;
+            for(int i = 0; i < playerDetails.size(); ++i){
+                if(playerPos == 0){
+                    player1NameTextField.setText(playerDetails.get(i).getName());
+                }
+                else if(playerPos == 1){
+                    player2NameTextField.setText(playerDetails.get(i).getName());
+                }
+                else if(playerPos == 2){
+                    player3NameTextField.setText(playerDetails.get(i).getName());
+                }
+                else if(playerPos == 3){
+                    player4NameTextField.setText(playerDetails.get(i).getName());
+                }
+
+                ++playerPos;
+            }
+
+            waitingForPlayersLabel.setDisable(false);
+            waitingForPlayersLabel.setText(String.format("Waiting for %d players", gameDetails.getHumanPlayers() - gameDetails.getJoinedHumanPlayers()));
         }
-
-        gameNameTextField.setText(gameDetails.getName());
-        
-        waitingForPlayersLabel.setDisable(false);
-        waitingForPlayersLabel.setText(String.format("Waiting for %d players", gameDetails.getHumanPlayers() - gameDetails.getJoinedHumanPlayers()));
     }
 
     private void disableControls() {
