@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import mvcControllerComponent.GameLobbyManager;
 import mvcControllerComponent.client.ws.RummikubWebService;
 import mvcControllerComponent.client.ws.RummikubWebServiceService;
+import mvcViewComponent.gui.messagingModule.ErrorDisplayer;
 import mvcViewComponent.gui.sceneController.ScreensController;
 
 /**

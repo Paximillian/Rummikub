@@ -116,48 +116,52 @@ public class NewGameSceneController implements Initializable , ControlledScreen 
         Thread checkThread = new Thread(() -> {
             boolean keepChecking = true;
             while(keepChecking){
-                if(GameLobbyManager.getWaitingGameNames().contains(loadedGameName)){
-                    disableControls();
+                try{
+                    if(GameLobbyManager.getWaitingGameNames().contains(loadedGameName)){
+                        disableControls();
 
-                    Thread thread = new Thread(() -> {
-                        boolean keepUpdating = true;
-                        while(keepUpdating){
-                            try{
-                                GameDetails gameDetails = GameLobbyManager.getGameDetails(loadedGameName);
-                                List<PlayerDetails> playerDetails = GameLobbyManager.getPlayerDetails(gameDetails.getName());
-                                
-                                Platform.runLater(() -> {
-                                    updateRoomFrom(gameDetails, playerDetails);
-                                });
-                            }   
-                            catch (GameDoesNotExists_Exception ex) {
-                                keepUpdating = false;
-                                loadedGameName = "";
-                                
-                                Platform.runLater(() ->{
-                                    ErrorDisplayer.showError("Game room was closed");
-                                    ScreensController.getInstance().setScreen(ScreensController.MAIN_SCENE);
-                                });
+                        Thread thread = new Thread(() -> {
+                            boolean keepUpdating = true;
+                            while(keepUpdating){
+                                try{
+                                    GameDetails gameDetails = GameLobbyManager.getGameDetails(loadedGameName);
+                                    List<PlayerDetails> playerDetails = GameLobbyManager.getPlayerDetails(gameDetails.getName());
+
+                                    Platform.runLater(() -> {
+                                        updateRoomFrom(gameDetails, playerDetails);
+                                    });
+                                }   
+                                catch (GameDoesNotExists_Exception ex) {
+                                    keepUpdating = false;
+                                    loadedGameName = "";
+
+                                    Platform.runLater(() ->{
+                                        ErrorDisplayer.showError("Game room was closed");
+                                        ScreensController.getInstance().setScreen(ScreensController.MAIN_SCENE);
+                                    });
+                                }
+
+                                try {
+                                    Thread.sleep(1000);
+                                } 
+                                catch (InterruptedException ex) {
+                                    Logger.getLogger(NewGameSceneController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
                             }
+                        });
 
-                            try {
-                                Thread.sleep(1000);
-                            } 
-                            catch (InterruptedException ex) {
-                                Logger.getLogger(NewGameSceneController.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        }
-                    });
+                        thread.setDaemon(true);
+                        thread.start();
+                    }
 
-                    thread.setDaemon(true);
-                    thread.start();
+                    try {
+                        Thread.sleep(1000);
+                    } 
+                    catch (InterruptedException ex) {
+                        Logger.getLogger(NewGameSceneController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
-                
-                try {
-                    Thread.sleep(1000);
-                } 
-                catch (InterruptedException ex) {
-                    Logger.getLogger(NewGameSceneController.class.getName()).log(Level.SEVERE, null, ex);
+                catch(Exception e){
                 }
             }
         });

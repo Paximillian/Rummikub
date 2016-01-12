@@ -5,11 +5,13 @@
  */
 package mvcControllerComponent;
 
+import com.sun.javafx.application.PlatformImpl;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import mvcControllerComponent.client.ws.DuplicateGameName_Exception;
 import mvcControllerComponent.client.ws.GameDetails;
 import mvcControllerComponent.client.ws.GameDoesNotExists_Exception;
@@ -28,7 +30,21 @@ import mvcViewComponent.gui.sceneController.ScreensController;
 public class GameLobbyManager extends WebClient{
     
     public static List<String> getWaitingGameNames(){
-        return webService.getWaitingGames();
+        List<String> gameNames = null;
+        
+        try{
+            gameNames = webService.getWaitingGames();   
+        }
+        catch(Exception e){
+            try{
+                ErrorDisplayer.showError(e.getMessage());
+                Platform.exit();
+            }
+            catch(Exception ex){
+            }
+        }
+        
+        return gameNames;
     }
 
     public static void createGame(String creatingPlayerName, String gameName, int numberOfPlayers, int numberOfComputerPlayers) throws GameDoesNotExists_Exception, DuplicateGameName_Exception, InvalidParameters_Exception {

@@ -122,6 +122,7 @@ public class GameController extends WebClient {
         }
         
         webService.finishTurn(gameState.getCurrentPlayer().getId());
+        gameStateBackup = gameState;
     }
     
     public void moveCard(MoveInfo moveInfo) {
@@ -144,6 +145,7 @@ public class GameController extends WebClient {
 
     public void clearLastPlay() throws InvalidParameters_Exception {
         actionsPlayedThisTurn.clear();
+        gameState = gameStateBackup;
         //MoveInfo moveInfo = actionsPlayedThisTurn.pop();
         //webService.takeBackTile(gameState.getCurrentPlayer().getId(), moveInfo.toSetID, moveInfo.toPositionID);
     }

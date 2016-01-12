@@ -51,7 +51,7 @@ public class GameSceneView extends AnchorPane implements Initializable, Controll
     
     public void pollServerStatus(){
         Thread thread = new Thread(() -> {
-            while(playerId != -1){}
+            while(playerId == -1){}
             
             boolean activeGame = true;
             

@@ -7,6 +7,8 @@ package mvcControllerComponent;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -18,6 +20,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import mvcModelComponent.*;
 import mvcModelComponent.xmlHandler.*;
+import ws.rummikub.Event;
+import ws.rummikub.EventType;
 import ws.rummikub.InvalidParameters;
 import ws.rummikub.InvalidParameters_Exception;
 
@@ -42,6 +46,8 @@ public class GameController {
     private boolean gameReady = false;
     
     private String lastSaveName = "";
+    
+    private List<Event> eventList = new ArrayList<Event>();
             
     public GameController(Game game, int humanPlayers, int aiPlayers){
         gameState = game;
@@ -51,6 +57,21 @@ public class GameController {
 
     public void endGame() {
         gameEnded = true;
+        
+        Event overEvent = new Event();
+        overEvent.setType(EventType.GAME_OVER);
+        eventList.add(overEvent);
+        
+        Event winnerEvent = new Event();
+        winnerEvent.setType(EventType.GAME_WINNER);
+        int max = 0;
+        for(Player player : gameState.getPlayers()){
+            if(player.getScore() > max){
+                winnerEvent.setPlayerName(player.getName());
+                max = player.getScore();
+            }
+        }
+        eventList.add(winnerEvent);
     }
     
     public boolean hasGameEnded(){
@@ -82,6 +103,10 @@ public class GameController {
             throw new InvalidParameters_Exception("Can't clone game", new InvalidParameters());
         }
         
+        Event endTurnEvent = new Event();
+        endTurnEvent.setType(EventType.PLAYER_FINISHED_TURN);
+        eventList.add(endTurnEvent);
+        
         //If the game ended, move to the main menu
         if(!hasGameEnded()){
             startTurn();
@@ -90,6 +115,14 @@ public class GameController {
 
     public void moveCard(MoveInfo moveInfo){
         gameState.moveCard(moveInfo.fromSetID, moveInfo.fromCardID, moveInfo.toSetID, moveInfo.toPositionID);
+        
+        Event moveEvent = new Event();
+        moveEvent.setType(EventType.TILE_MOVED);
+        moveEvent.setSourceSequenceIndex(moveInfo.fromSetID);
+        moveEvent.setSourceSequencePosition(moveInfo.fromCardID);
+        moveEvent.setTargetSequenceIndex(moveInfo.toSetID);
+        moveEvent.setTargetSequencePosition(moveInfo.toPositionID);
+        eventList.add(moveEvent);
     }
     
     public void aiMoveCard() {
@@ -161,6 +194,11 @@ public class GameController {
 
     //If this is a turn of a bot, we'll requeset a move from them
     private void startTurn() {
+        Event newTurnEvent = new Event();
+        newTurnEvent.setType(EventType.PLAYER_TURN);
+        newTurnEvent.setPlayerName(gameState.getCurrentPlayer().getName());
+        eventList.add(newTurnEvent);
+        
         if(gameState.getCurrentPlayer().isBot()){
             Thread thread = new Thread(() -> {
                 Player currentPlayer = gameState.getCurrentPlayer();
@@ -182,5 +220,9 @@ public class GameController {
             thread.setDaemon(true);
             thread.start();
         }
+    }
+
+    public List<Event> getEvents(int eventId) {
+        return eventList.subList(eventId, eventList.size());
     }
 }

@@ -25,6 +25,7 @@ public class Player {
     private final Sequence cardsPlayedThisTurn = new Sequence();
     private boolean active = true;
     private int id = -1;
+    private int score = 0;
     
     public boolean isPlacedFirstSequence() {
         return placedFirstSequence;
@@ -85,7 +86,15 @@ public class Player {
     }
 
     public boolean isTurnLegalForPlayer() {
-        return placedFirstSequence = isPlacedFirstSequence() || cardsPlayedThisTurn.size() == 0 || cardsPlayedThisTurn.isSumOfFirstSequenceSufficient();
+        boolean legal = placedFirstSequence = isPlacedFirstSequence() || cardsPlayedThisTurn.size() == 0 || cardsPlayedThisTurn.isSumOfFirstSequenceSufficient();
+        
+        if(legal){
+            for(Tile tile : cardsPlayedThisTurn.getTiles()){
+                score += tile.getValue();
+            }
+        }
+        
+        return legal;
     }
     
     @Override
@@ -264,5 +273,9 @@ public class Player {
     
     public void setId(int pId){
         id = pId;
+    }
+
+    public int getScore() {
+        return score;
     }
 }

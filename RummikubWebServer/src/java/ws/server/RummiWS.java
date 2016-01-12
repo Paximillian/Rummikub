@@ -27,8 +27,7 @@ import ws.rummikub.PlayerType;
 public class RummiWS {
 
     public java.util.List<ws.rummikub.Event> getEvents(int playerId, int eventId) throws InvalidParameters_Exception {
-        //TODO implement this method
-        throw new UnsupportedOperationException("Not implemented yet.");
+        return LobbyManager.getGameControllerForPlayer(playerId).getEvents(eventId);
     }
 
     public java.lang.String createGameFromXML(java.lang.String xmlData) throws InvalidParameters_Exception, DuplicateGameName_Exception, InvalidXML_Exception {
