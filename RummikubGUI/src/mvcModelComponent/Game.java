@@ -11,6 +11,7 @@ import mvcViewComponent.gui.gameViewElements.cardSetView.CardSetView;
 import mvcViewComponent.gui.gameViewElements.cardView.CardView;
 import java.util.ArrayList;
 import java.util.List;
+import mvcControllerComponent.GameController;
 
 /**
  *
@@ -127,9 +128,11 @@ public class Game {
         board = newBoard;
     }
 
-    public void moveCard(int fromSetID, int fromCardID, int toSetID, int toPositionID) throws IllegalArgumentException {
+    public void moveCard(String playerName, int fromSetID, int fromCardID, int toSetID, int toPositionID) throws IllegalArgumentException {
         Sequence sourceCardSet = null;
         Sequence targetCardSet = null;
+        
+        Player player = GameController.getInstance().getPlayerByName(playerName);
         
         //Checking if set ID is valid.
         if(fromSetID < 0 || fromSetID > board.getSequences().size() 
@@ -154,11 +157,11 @@ public class Game {
         //Getting the source set's reference
         if(fromSetID == 0){
             //Checking if the source card position is out of range.
-            if(fromCardID > getCurrentPlayer().getHand().size()){
+            if(fromCardID > player.getHand().size()){
                 return;
             }
             
-            sourceCardSet = getCurrentPlayer().getHand();
+            sourceCardSet = player.getHand();
         }
         else{
             //Checking if the source card position is out of range.
@@ -194,8 +197,6 @@ public class Game {
         }
         
         sourceCardSet.removeTileAt(fromCardID - 1);
-        
-        getCurrentPlayer().addToCardsPlayedThisTurn(movedCard);
     }
     
     @Override

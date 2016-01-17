@@ -55,16 +55,22 @@ public class CardView extends AnchorPane implements Initializable{
     }
         
     public void setCardValue(String value){
-        Tile tile = new Tile(value);
-        cardValue = value;
-        
-        if(tile.getRank() == Tile.Rank.JOKER){
-            this.getStyleClass().add("joker");
+        if(value.equals("")){
+            this.getStyleClass().add("unkown");
+            labelCardValue.setText("");
         }
         else{
-            this.getStyleClass().add(tile.getColor().name().toLowerCase());
+            Tile tile = new Tile(value);
+            cardValue = value;
+
+            if(tile.getRank() == Tile.Rank.JOKER){
+                this.getStyleClass().add("joker");
+            }
+            else{
+                this.getStyleClass().add(tile.getColor().name().toLowerCase());
+            }
+            labelCardValue.setText(value.substring(3));
         }
-        labelCardValue.setText(value.substring(3));
     }
     
     public void setCardSetRelevance(CardSetView cardSet){

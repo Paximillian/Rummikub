@@ -52,4 +52,9 @@ public class BoardView extends AnchorPane implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
+
+    public void reset() {
+        publicCardSets.clear();
+        paneBoard.getChildren().clear();
+    }
 }

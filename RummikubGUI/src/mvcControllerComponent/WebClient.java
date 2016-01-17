@@ -17,10 +17,13 @@ import mvcControllerComponent.client.ws.RummikubWebServiceService;
  * @author Mor
  */
 public class WebClient {
-    
+    //private static final String SERVICE_URL = "http://mobedu3.mtacloud.co.il";
+    //private static final String SERVICE_PORT = "8080";
+    //private static final String SERVICE_NAME = "RummikubWebServer/RummikubWebServiceService?wsdl";
     private static final String SERVICE_URL = "http://localhost";
     private static final String SERVICE_PORT = "8084";
     private static final String SERVICE_NAME = "api/RummikubWebServiceService?wsdl";
+    
     private static URL getServiceURL() throws MalformedURLException{ return new URL(String.format("%s:%s/%s", SERVICE_URL, SERVICE_PORT, SERVICE_NAME)); }
     
     protected static RummikubWebService webService;

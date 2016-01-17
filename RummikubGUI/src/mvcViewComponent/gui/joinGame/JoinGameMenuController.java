@@ -16,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import mvcControllerComponent.GameController;
 import mvcControllerComponent.GameLobbyManager;
 import mvcControllerComponent.client.ws.GameDoesNotExists_Exception;
 import mvcControllerComponent.client.ws.InvalidParameters_Exception;
@@ -70,6 +71,7 @@ public class JoinGameMenuController implements Initializable, ControlledScreen {
                         try {
                             int id = GameLobbyManager.joinGame(gameName, playerNameTextBox.getText());
                             GameSceneView.setPlayerId(id);
+                            GameController.getInstance().setPlayerName(playerNameTextBox.getText());
                             NewGameSceneController.setLoadedGame(gameName);
                             ScreensController.getInstance().setScreen(ScreensController.NEW_GAME_SCENE);
                         } 

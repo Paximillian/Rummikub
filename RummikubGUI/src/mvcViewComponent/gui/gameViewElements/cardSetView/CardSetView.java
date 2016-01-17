@@ -157,4 +157,10 @@ public class CardSetView extends HBox implements Initializable{
             event.consume();
         });
     }
+
+    public void reset() {
+        while(cardsInSet.size() > 0){
+            removeCard(cardsInSet.get(0));
+        }
+    }
 }

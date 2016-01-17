@@ -18,6 +18,7 @@ import mvcModelComponent.Player;
 import mvcModelComponent.xmlHandler.InvalidLoadFileException;
 import mvcModelComponent.xmlHandler.XmlHandler;
 import org.xml.sax.SAXException;
+import ws.rummikub.Color;
 import ws.rummikub.DuplicateGameName;
 import ws.rummikub.DuplicateGameName_Exception;
 import ws.rummikub.GameDetails;
@@ -31,6 +32,7 @@ import ws.rummikub.InvalidXML_Exception;
 import ws.rummikub.PlayerDetails;
 import ws.rummikub.PlayerStatus;
 import ws.rummikub.PlayerType;
+import ws.rummikub.Tile;
 
 /**
  *
@@ -93,6 +95,10 @@ public class LobbyManager {
         
         GameDetails gameDetails = detailsForGame.get(gameName);
         
+        if(gameDetails.getJoinedHumanPlayers() >= gameDetails.getHumanPlayers()){
+            throw new InvalidParameters_Exception("Game is full", new InvalidParameters());
+        }
+        
         int playerID = -1;
         
         if(gameDetails.isLoadedFromXML()){
@@ -132,20 +138,28 @@ public class LobbyManager {
         //If we have enough human players then we can mark the game as started.
         if(gameDetails.getJoinedHumanPlayers() == gameDetails.getHumanPlayers()){
             gameDetails.setStatus(GameStatus.ACTIVE);
-            waitingGames.remove(game);
+            waitingGames.remove(gameName);
             playingGames.put(gameName, game);
             gameControllers.put(gameName, new GameController(game, gameDetails.getHumanPlayers(), gameDetails.getComputerizedPlayers()));
+            gameControllers.get(gameName).startGame();
         }
         
         return playerID;
     }
 
     public static GameDetails getGameDetails(String gameName) throws GameDoesNotExists_Exception {
-        if(!waitingGames.containsKey(gameName)){
+        
+        Game game = null;
+        
+        if(waitingGames.containsKey(gameName)){
+            game = waitingGames.get(gameName);
+        }
+        else if(playingGames.containsKey(gameName)){
+            game = playingGames.get(gameName);
+        }
+        else{
             throw new GameDoesNotExists_Exception("No game of the given name was found", new GameDoesNotExists());
         }
-        
-        Game game = waitingGames.get(gameName);
         
         GameDetails gameDetails = detailsForGame.get(gameName);
         
@@ -305,6 +319,8 @@ public class LobbyManager {
         playerDetails.setType(player.isBot() ? PlayerType.COMPUTER : PlayerType.HUMAN);
         playerDetails.setStatus(player.isActive() ? PlayerStatus.ACTIVE : PlayerStatus.RETIRED);
 
+        playerDetails.setTiles(player.getHand().getTiles());
+        
         return playerDetails;
     }
 
@@ -357,9 +373,14 @@ public class LobbyManager {
             PlayerDetails playerDetails = LobbyManager.getPlayerDetails(playerId);
             playerDetails.setStatus(PlayerStatus.RETIRED);
             playerDetails.setType(PlayerType.COMPUTER);
+            getGameControllerForPlayer(playerId).resignPlayer(playerId);
         } 
         catch (GameDoesNotExists_Exception ex) {
             throw new InvalidParameters_Exception(ex.getMessage(), new InvalidParameters());
         }
+    }
+
+    public static void unsupportedOperation() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

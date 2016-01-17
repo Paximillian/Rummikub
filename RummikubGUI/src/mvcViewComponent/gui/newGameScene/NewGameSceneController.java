@@ -82,6 +82,7 @@ public class NewGameSceneController implements Initializable , ControlledScreen 
     @FXML private Pane player4canvas;
     private int numberOfPlayers = 2;
     private int numberOfComputerPlayers = 0;
+    private boolean keepUpdating;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -117,45 +118,13 @@ public class NewGameSceneController implements Initializable , ControlledScreen 
             boolean keepChecking = true;
             while(keepChecking){
                 try{
-                    if(GameLobbyManager.getWaitingGameNames().contains(loadedGameName)){
+                    if(!loadedGameName.equals("")){
                         disableControls();
-
-                        Thread thread = new Thread(() -> {
-                            boolean keepUpdating = true;
-                            while(keepUpdating){
-                                try{
-                                    GameDetails gameDetails = GameLobbyManager.getGameDetails(loadedGameName);
-                                    List<PlayerDetails> playerDetails = GameLobbyManager.getPlayerDetails(gameDetails.getName());
-
-                                    Platform.runLater(() -> {
-                                        updateRoomFrom(gameDetails, playerDetails);
-                                    });
-                                }   
-                                catch (GameDoesNotExists_Exception ex) {
-                                    keepUpdating = false;
-                                    loadedGameName = "";
-
-                                    Platform.runLater(() ->{
-                                        ErrorDisplayer.showError("Game room was closed");
-                                        ScreensController.getInstance().setScreen(ScreensController.MAIN_SCENE);
-                                    });
-                                }
-
-                                try {
-                                    Thread.sleep(1000);
-                                } 
-                                catch (InterruptedException ex) {
-                                    Logger.getLogger(NewGameSceneController.class.getName()).log(Level.SEVERE, null, ex);
-                                }
-                            }
-                        });
-
-                        thread.setDaemon(true);
-                        thread.start();
+                        keepChecking = false;
                     }
 
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(100);
                     } 
                     catch (InterruptedException ex) {
                         Logger.getLogger(NewGameSceneController.class.getName()).log(Level.SEVERE, null, ex);
@@ -164,6 +133,39 @@ public class NewGameSceneController implements Initializable , ControlledScreen 
                 catch(Exception e){
                 }
             }
+            
+            Thread thread = new Thread(() -> {
+                keepUpdating = true;
+                while(keepUpdating){
+                    try{
+                        GameDetails gameDetails = GameLobbyManager.getGameDetails(loadedGameName);
+                        List<PlayerDetails> playerDetails = GameLobbyManager.getPlayerDetails(gameDetails.getName());
+
+                        Platform.runLater(() -> {
+                            keepUpdating = updateRoomFrom(gameDetails, playerDetails);
+                        });
+                    }   
+                    catch (GameDoesNotExists_Exception ex) {
+                        keepUpdating = false;
+                        loadedGameName = "";
+
+                        Platform.runLater(() ->{
+                            ErrorDisplayer.showError("Game room was closed");
+                            ScreensController.getInstance().setScreen(ScreensController.MAIN_SCENE);
+                        });
+                    }
+
+                    try {
+                        Thread.sleep(100);
+                    } 
+                    catch (InterruptedException ex) {
+                        Logger.getLogger(NewGameSceneController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+
+            thread.setDaemon(true);
+            thread.start();
         });
         
         checkThread.setDaemon(true);
@@ -295,9 +297,9 @@ public class NewGameSceneController implements Initializable , ControlledScreen 
     {
         try {
             GameLobbyManager.createGame(player1NameTextField.getText(), gameNameTextField.getText(), numberOfPlayers, numberOfComputerPlayers);
+            GameController.getInstance().setPlayerName(player1NameTextField.getText());
             
             setLoadedGame(gameNameTextField.getText());
-            getRoomUpdatesFromServer();
         } 
         catch (GameDoesNotExists_Exception | DuplicateGameName_Exception | InvalidParameters_Exception ex) {
             ErrorDisplayer.showError(ex.getMessage());
@@ -324,9 +326,16 @@ public class NewGameSceneController implements Initializable , ControlledScreen 
         return dateFormat.format(date);
     }
 
-    private void updateRoomFrom(GameDetails gameDetails, List<PlayerDetails> playerDetails) {
+    private boolean updateRoomFrom(GameDetails gameDetails, List<PlayerDetails> playerDetails) {
+        boolean keepUpdating = true;
+        
         if(gameDetails.getStatus() == GameStatus.ACTIVE){
+            GameController.getInstance().setGameName(loadedGameName);
+            if(GameController.getInstance().getPlayerName().equals("")){
+                GameController.getInstance().setPlayerName(player1NameTextField.getText());
+            }
             ScreensController.getInstance().setScreen(ScreensController.GAME_SCENE);
+            keepUpdating = false;
         }
         else{
             aiAmount0Button.setBackground(UNSELECTED_BACKGROUND);
@@ -389,6 +398,8 @@ public class NewGameSceneController implements Initializable , ControlledScreen 
             waitingForPlayersLabel.setDisable(false);
             waitingForPlayersLabel.setText(String.format("Waiting for %d players", gameDetails.getHumanPlayers() - gameDetails.getJoinedHumanPlayers()));
         }
+        
+        return keepUpdating;
     }
 
     private void disableControls() {

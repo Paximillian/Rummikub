@@ -6,6 +6,9 @@
 package mvcModelComponent;
 
 import java.util.ArrayList;
+import java.util.List;
+import mvcModelComponent.Tile.Color;
+import mvcModelComponent.Tile.Rank;
 
 
 public class Sequence {
@@ -149,5 +152,15 @@ public class Sequence {
 
     public void clear() {
         tiles.clear();
+    }
+
+    void setTiles(List<mvcControllerComponent.client.ws.Tile> newTiles) {
+        tiles.clear();
+        
+        for(mvcControllerComponent.client.ws.Tile tile : newTiles){
+            Tile newTile = new Tile(Color.fromValue(tile.getColor().value()), Rank.fromValue(tile.getValue()));
+            
+            tiles.add(newTile);
+        }
     }
 }

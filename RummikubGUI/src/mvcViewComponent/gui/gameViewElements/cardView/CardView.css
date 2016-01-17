@@ -15,6 +15,10 @@
     -fx-background-color: lightseagreen;
 }
 
+.unkown{
+    -fx-background-color: wheat;
+}
+
 .card{
     -fx-border-width: 1; 
     -fx-border-style: solid;

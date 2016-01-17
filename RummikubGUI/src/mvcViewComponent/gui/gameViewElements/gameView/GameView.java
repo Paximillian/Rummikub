@@ -49,6 +49,8 @@ public class GameView extends AnchorPane implements Initializable {
     }
     
     public void setBoard(BoardView board){
+        this.setDisabled(board.disabledProperty().get());
+        
         for(CardSetView cardSet : board.getCardSets()){
             boardView.addCardSet(cardSet);
         }
@@ -66,5 +68,16 @@ public class GameView extends AnchorPane implements Initializable {
 
     public PlayerView getCurrentPlayer() {
         return currentPlayerView;
+    }
+
+    public void reset() {
+        boardView.reset();
+        currentPlayerView.reset();
+        
+        while(players.size() > 0){
+            PlayerView player = players.get(0);
+            player.reset();
+            players.remove(0);
+        }
     }
 }

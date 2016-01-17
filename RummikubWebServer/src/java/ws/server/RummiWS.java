@@ -60,16 +60,17 @@ public class RummiWS {
 
     //Not relevant to our project structure.
     public void createSequence(int playerId, java.util.List<ws.rummikub.Tile> tiles) throws InvalidParameters_Exception {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        LobbyManager.unsupportedOperation();
     }
 
     //Not relevant to our project structure.
     public void addTile(int playerId, ws.rummikub.Tile tile, int sequenceIndex, int sequencePosition) throws InvalidParameters_Exception {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        LobbyManager.unsupportedOperation();
     }
 
     //Not relevant to our project structure.
     public void takeBackTile(int playerId, int sequenceIndex, int sequencePosition) throws InvalidParameters_Exception {
+        LobbyManager.unsupportedOperation();
     }
 
     public void moveTile(int playerId, int sourceSequenceIndex, int sourceSequencePosition, int targetSequenceIndex, int targetSequencePosition) throws InvalidParameters_Exception {

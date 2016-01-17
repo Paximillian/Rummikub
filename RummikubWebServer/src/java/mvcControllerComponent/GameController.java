@@ -5,10 +5,13 @@
  */
 package mvcControllerComponent;
 
+import controller.LobbyManager;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -22,6 +25,7 @@ import mvcModelComponent.*;
 import mvcModelComponent.xmlHandler.*;
 import ws.rummikub.Event;
 import ws.rummikub.EventType;
+import ws.rummikub.GameDoesNotExists_Exception;
 import ws.rummikub.InvalidParameters;
 import ws.rummikub.InvalidParameters_Exception;
 
@@ -34,6 +38,7 @@ import ws.rummikub.InvalidParameters_Exception;
 public class GameController {
     private static final int MAX_PLAYER_COUNT = 4;
     private static final int MIN_PLAYER_COUNT = 2;
+    private static final int TURN_TIMER = 120 * 1000;
         
     private int numberOfPlayers;
     private int numberOfComputerPlayers;
@@ -48,6 +53,7 @@ public class GameController {
     private String lastSaveName = "";
     
     private List<Event> eventList = new ArrayList<Event>();
+    private List<Event> eventsSinceLastSync = new ArrayList<Event>();
             
     public GameController(Game game, int humanPlayers, int aiPlayers){
         gameState = game;
@@ -85,9 +91,14 @@ public class GameController {
     //When a turn ends we check the validity of all the changes, if they're legal, we'll set the new state.
     public void endTurn() throws InvalidParameters_Exception{        
         if(gameState.isLegalGameState()){
-           if(gameState.getCurrentPlayer().getCardsPlayedThisTurn().size() > 0){
-               gameState.getCurrentPlayer().setPlacedFirstSequence(true);
-           }
+            if(gameState.getCurrentPlayer().getCardsPlayedThisTurn().isSumOfFirstSequenceSufficient()){
+                gameState.getCurrentPlayer().setPlacedFirstSequence(true);
+            }
+        
+            while(eventsSinceLastSync.size() > 0){
+                eventList.add(eventsSinceLastSync.get(0));
+                eventsSinceLastSync.remove(0);
+            }
         }
         else{
            clearLastPlay();
@@ -117,12 +128,13 @@ public class GameController {
         gameState.moveCard(moveInfo.fromSetID, moveInfo.fromCardID, moveInfo.toSetID, moveInfo.toPositionID);
         
         Event moveEvent = new Event();
+        moveEvent.setPlayerName(gameState.getCurrentPlayer().getName());
         moveEvent.setType(EventType.TILE_MOVED);
         moveEvent.setSourceSequenceIndex(moveInfo.fromSetID);
         moveEvent.setSourceSequencePosition(moveInfo.fromCardID);
         moveEvent.setTargetSequenceIndex(moveInfo.toSetID);
         moveEvent.setTargetSequencePosition(moveInfo.toPositionID);
-        eventList.add(moveEvent);
+        eventsSinceLastSync.add(moveEvent);
     }
     
     public void aiMoveCard() {
@@ -184,6 +196,8 @@ public class GameController {
     }
 
     public void clearLastPlay() throws InvalidParameters_Exception {
+        eventsSinceLastSync.clear();
+        
         try {
             gameState = gameStateBackup.clone();
         } 
@@ -197,32 +211,57 @@ public class GameController {
         Event newTurnEvent = new Event();
         newTurnEvent.setType(EventType.PLAYER_TURN);
         newTurnEvent.setPlayerName(gameState.getCurrentPlayer().getName());
+        newTurnEvent.setTiles(gameState.getCurrentPlayer().getHand().getTiles());
         eventList.add(newTurnEvent);
+    }
+
+    public List<Event> getEvents(int eventId) {
+        if(eventId > eventList.size()){
+            return new ArrayList<Event>();
+        }
+        else{
+            return eventList.subList(eventId, eventList.size());
+        }
+    }
+
+    public void startGame() {
+        Event startGameEvent = new Event();
+        startGameEvent.setType(EventType.GAME_START);
+        eventList.add(startGameEvent);
+        try{
+            gameStateBackup = gameState.clone();
+        }
+        catch(CloneNotSupportedException ex){
+            gameStateBackup = gameState;
+        }
         
-        if(gameState.getCurrentPlayer().isBot()){
-            Thread thread = new Thread(() -> {
-                Player currentPlayer = gameState.getCurrentPlayer();
+        Thread thread = new Thread(() -> {
+            while(!gameEnded){
+                if(gameState.getCurrentPlayer().isBot()){
+                    Player currentPlayer = gameState.getCurrentPlayer();
+
+                    aiMoveCard();
+                }
                 
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(0);
                 } 
                 catch (InterruptedException ex) {
                     Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
-                aiMoveCard();
-                
-                if(currentPlayer == gameState.getCurrentPlayer()){
-                    startTurn();
-                }
-            });
-            
-            thread.setDaemon(true);
-            thread.start();
-        }
+            }
+        });
+
+        thread.setDaemon(true);
+        thread.start();
+        startTurn();
     }
 
-    public List<Event> getEvents(int eventId) {
-        return eventList.subList(eventId, eventList.size());
+    public void resignPlayer(Integer playerId) throws InvalidParameters_Exception, GameDoesNotExists_Exception {
+        Event resignEvent = new Event();
+        resignEvent.setType(EventType.PLAYER_RESIGNED);
+        resignEvent.setPlayerName(LobbyManager.getPlayerDetails(playerId).getName());
+        
+        eventList.add(resignEvent);
     }
 }

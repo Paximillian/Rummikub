@@ -76,8 +76,14 @@ public class PlayerView extends VBox implements Initializable{
     }
 
     public void setHand(CardSetView hand) {
+        this.setDisabled(hand.disabledProperty().get());
+        
         for(CardView card : hand.getCards()){
             paneHand.addCard(card);
         }
+    }
+
+    public void reset() {
+        paneHand.reset();
     }
 }

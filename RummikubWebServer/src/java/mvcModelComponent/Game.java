@@ -224,7 +224,7 @@ public class Game {
         
         //Clone the players
         for(Player player : this.getPlayers()){
-            Player clonedPlayer = players.get(clonedGame.addNewPlayer(player.clone()));
+            Player clonedPlayer = clonedGame.getPlayers().get(clonedGame.addNewPlayer(player.clone()));
             
             //If this player is the active one, we'll set them to be the active player in the cloned
             //game too.

@@ -14,7 +14,7 @@ public class Tile implements Comparable{
     
     private final Rank rank;
     private final Color color;
-    
+        
     public Tile(Color color, Rank rank)
     {
         this.color = color;
@@ -97,7 +97,7 @@ public class Tile implements Comparable{
         
         private final int value;
         
-        private  Rank(int value){
+        private Rank(int value){
             this.value = value;
         }
         

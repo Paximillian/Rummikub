@@ -20,6 +20,7 @@ public class Sequence {
         for (Tile tile : tiles) {
             sum += tile.isJoker() ? 13 : tile.getRank().rankValue();         
         }
+        
         return sum >= FIRST_SEQUENCE_SUM;
     }
     public Sequence(ArrayList<Tile> tiles)

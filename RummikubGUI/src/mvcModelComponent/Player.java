@@ -256,4 +256,8 @@ public class Player {
     public int getId(){
         return id;
     }
+
+    public void setHand(List<mvcControllerComponent.client.ws.Tile> tiles) {
+        hand.setTiles(tiles);
+    }
 }
