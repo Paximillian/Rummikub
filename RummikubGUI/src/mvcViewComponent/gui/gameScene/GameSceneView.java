@@ -22,6 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javax.jws.WebService;
 import mvcControllerComponent.GameController;
 import mvcControllerComponent.GameLobbyManager;
 import mvcControllerComponent.client.ws.GameDoesNotExists_Exception;
@@ -52,6 +53,17 @@ public class GameSceneView extends AnchorPane implements Initializable, Controll
     
     public static void setPlayerId(int id) {
         playerId = id;
+    }
+    
+    public static void resignPlayer(){
+        if(playerId >= 0){
+            try {
+                GameLobbyManager.resignGame(playerId);
+            } 
+            catch (InvalidParameters_Exception ex) {
+                Logger.getLogger(GameSceneView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
     
     public void pollServerStatus(){

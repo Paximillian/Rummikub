@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import mvcControllerComponent.GameLobbyManager;
 import mvcControllerComponent.client.ws.RummikubWebService;
 import mvcControllerComponent.client.ws.RummikubWebServiceService;
+import mvcViewComponent.gui.gameScene.GameSceneView;
 import mvcViewComponent.gui.messagingModule.ErrorDisplayer;
 import mvcViewComponent.gui.sceneController.ScreensController;
 
@@ -39,6 +40,7 @@ public class MainMenu extends Application {
        stage.setScene(scene); 
        ScreensController.getInstance().setScreen(ScreensController.MAIN_SCENE);
        stage.setResizable(false);
+       stage.setOnCloseRequest((handler) -> GameSceneView.resignPlayer());
        stage.show();
     }
 

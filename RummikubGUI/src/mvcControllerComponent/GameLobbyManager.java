@@ -72,4 +72,8 @@ public class GameLobbyManager extends WebClient{
     public static PlayerDetails getPlayerDetails(int playerID) throws GameDoesNotExists_Exception, InvalidParameters_Exception {
         return webService.getPlayerDetails(playerID);
     }
+
+    public static void resignGame(int playerId) throws InvalidParameters_Exception {
+        webService.resign(playerId);
+    }
 }
