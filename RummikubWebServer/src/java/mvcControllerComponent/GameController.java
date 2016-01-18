@@ -155,46 +155,6 @@ public class GameController {
         }
     }
 
-    public void saveGameAs() {
-        FileChooser fileChooser = new FileChooser();       
-        File file = fileChooser.showSaveDialog(null);
-        
-        if(file != null){
-            String filePath = file.getAbsolutePath();  
-
-            lastSaveName = filePath;
-            new Thread (() -> saveGameToLastName()).start();
-        }
-         
-    }
-
-    public void saveGame() {
-        if(lastSaveName.equals("")){
-            saveGameAs();
-        }
-        else{
-            Thread thread = new Thread(() -> { 
-                saveGameToLastName();
-            });
-            
-            thread.setDaemon(false);
-            thread.start();
-        }
-    }
-    
-    private void saveGameToLastName(){
-        XmlHandler xmlHandler = new XmlHandler(); 
-        
-        try{
-            if(!xmlHandler.saveGame(lastSaveName, this.gameStateBackup)){
-                saveGameAs();
-            }
-        }
-        catch(Exception e){
-            saveGameAs();
-        }
-    }
-
     public void clearLastPlay() throws InvalidParameters_Exception {
         eventsSinceLastSync.clear();
         
@@ -213,6 +173,10 @@ public class GameController {
         newTurnEvent.setPlayerName(gameState.getCurrentPlayer().getName());
         newTurnEvent.setTiles(gameState.getCurrentPlayer().getHand().getTiles());
         eventList.add(newTurnEvent);
+        
+        while(gameState.getCurrentPlayer().isBot()){
+            aiMoveCard();
+        }
     }
 
     public List<Event> getEvents(int eventId) {
@@ -235,25 +199,6 @@ public class GameController {
             gameStateBackup = gameState;
         }
         
-        Thread thread = new Thread(() -> {
-            while(!gameEnded){
-                if(gameState.getCurrentPlayer().isBot()){
-                    Player currentPlayer = gameState.getCurrentPlayer();
-
-                    aiMoveCard();
-                }
-                
-                try {
-                    Thread.sleep(0);
-                } 
-                catch (InterruptedException ex) {
-                    Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-
-        thread.setDaemon(true);
-        thread.start();
         startTurn();
     }
 
