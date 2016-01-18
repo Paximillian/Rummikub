@@ -4,7 +4,7 @@
         *** TO CHANGE TARGETS GENERATED TO jaxws-build.xml COPY THOSE             ***
         *** TARGETS TO ../build.xml AND MODIFY THAT FILE INSTEAD                  ***
 
-        --><project xmlns:j2seproject3="http://www.netbeans.org/ns/j2se-project/3" xmlns:xalan="http://xml.apache.org/xslt" xmlns:jaxws="http://www.netbeans.org/ns/jax-ws/1">
+        --><project xmlns:xalan="http://xml.apache.org/xslt" xmlns:j2seproject3="http://www.netbeans.org/ns/j2se-project/3" xmlns:jaxws="http://www.netbeans.org/ns/jax-ws/1">
     <!--
                 ===================
                 JAX-WS WSIMPORT SECTION
@@ -18,8 +18,8 @@
     </target>
     <target name="wsimport-client-RummikubWebServiceService" depends="wsimport-init">
         <mkdir dir="${build.generated.dir}/jax-wsCache/RummikubWebServiceService"/>
-        <property name="wsdl-RummikubWebServiceService" location="xml-resources/web-service-references/RummikubWebServiceService/wsdl/localhost_8084/api/RummikubWebServiceService.wsdl"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/RummikubWebServiceService" destdir="${build.generated.dir}/jax-wsCache/RummikubWebServiceService" wsdl="${wsdl-RummikubWebServiceService}" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:8084/api/RummikubWebServiceService?wsdl" xnocompile="true" xendorsed="true" package="mvcControllerComponent.client.ws">
+        <property name="wsdl-RummikubWebServiceService" location="xml-resources/web-service-references/RummikubWebServiceService/wsdl/mobedu3.mtacloud.co.il_8080/RummikubWebServer/RummikubWebServiceService.wsdl"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/RummikubWebServiceService" destdir="${build.generated.dir}/jax-wsCache/RummikubWebServiceService" wsdl="${wsdl-RummikubWebServiceService}" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://mobedu3.mtacloud.co.il:8080/RummikubWebServer/RummikubWebServiceService?wsdl" xnocompile="true" xendorsed="true" package="mvcControllerComponent.client.ws">
             <depends file="${wsdl-RummikubWebServiceService}"/>
             <produces dir="${build.generated.dir}/jax-wsCache/RummikubWebServiceService"/>
         </wsimport>

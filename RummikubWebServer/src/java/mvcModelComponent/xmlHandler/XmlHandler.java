@@ -179,9 +179,8 @@ public class XmlHandler {
     
         try{    
             generated.Rummikub loadedGame = null;
-            File schemaFile = new File("src/resources/rummikub.xsd");
             SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Schema schema = schemaFactory.newSchema(schemaFile);
+            Schema schema = schemaFactory.newSchema(XmlHandler.class.getResource("rummikub.xsd"));
 
             JAXBContext context = JAXBContext.newInstance(generated.Rummikub.class);
             Unmarshaller unmarshaller = context.createUnmarshaller();

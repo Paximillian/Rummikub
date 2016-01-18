@@ -3,11 +3,10 @@
   <services/>
   <clients>
     <client name="RummikubWebServiceService">
-      <wsdl-url>http://localhost:8084/api/RummikubWebServiceService?wsdl</wsdl-url>
-      <local-wsdl-file>localhost_8084/api/RummikubWebServiceService.wsdl</local-wsdl-file>
+      <wsdl-url>http://mobedu3.mtacloud.co.il:8080/RummikubWebServer/RummikubWebServiceService?wsdl</wsdl-url>
+      <local-wsdl-file>mobedu3.mtacloud.co.il_8080/RummikubWebServer/RummikubWebServiceService.wsdl</local-wsdl-file>
       <package-name forceReplace="true">mvcControllerComponent.client.ws</package-name>
       <catalog-file>catalog.xml</catalog-file>
-      <use-dispatch>true</use-dispatch>
       <wsimport-options>
         <wsimport-option>
           <wsimport-option-name>extension</wsimport-option-name>
@@ -23,7 +22,7 @@
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>wsdlLocation</wsimport-option-name>
-          <wsimport-option-value>http://localhost:8084/api/RummikubWebServiceService?wsdl</wsimport-option-value>
+          <wsimport-option-value>http://mobedu3.mtacloud.co.il:8080/RummikubWebServer/RummikubWebServiceService?wsdl</wsimport-option-value>
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>xnocompile</wsimport-option-name>

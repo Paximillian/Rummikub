@@ -4,4 +4,7 @@
     <system systemId="file:/C:/ramyJava/Rummikub/RummikubGUI/src/mvcModelComponent/rummikub.xsd" uri="xml-resources/jaxb/jaxB/rummikub.xsd"/>
     <system systemId="http://localhost:8084/api/RummikubWebServiceService?wsdl" uri="xml-resources/web-service-references/RummikubWebServiceService/wsdl/localhost_8084/api/RummikubWebServiceService.wsdl"/>
     <system systemId="http://localhost:8084/api/RummikubWebServiceService?xsd=1" uri="xml-resources/web-service-references/RummikubWebServiceService/wsdl/localhost_8084/api/RummikubWebServiceService.xsd_1.xsd"/>
+    <system systemId="file:/C:/ramyJava/Rummikub/RummikubGUI/src/resources/rummikub.xsd" uri="xml-resources/jaxb/jaxB/rummikub.xsd"/>
+    <system systemId="http://mobedu3.mtacloud.co.il:8080/RummikubWebServer/RummikubWebServiceService?wsdl" uri="xml-resources/web-service-references/RummikubWebServiceService/wsdl/mobedu3.mtacloud.co.il_8080/RummikubWebServer/RummikubWebServiceService.wsdl"/>
+    <system systemId="http://mobedu3.mtacloud.co.il:8080/RummikubWebServer/RummikubWebServiceService?xsd=1" uri="xml-resources/web-service-references/RummikubWebServiceService/wsdl/mobedu3.mtacloud.co.il_8080/RummikubWebServer/RummikubWebServiceService.xsd_1.xsd"/>
 </catalog>
