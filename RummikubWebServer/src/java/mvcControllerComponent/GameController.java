@@ -207,6 +207,13 @@ public class GameController {
         resignEvent.setType(EventType.PLAYER_RESIGNED);
         resignEvent.setPlayerName(LobbyManager.getPlayerDetails(playerId).getName());
         
+        for(Player player : gameState.getPlayers()){
+            if(player.getId() == playerId){
+                player.setIsBot(true);
+                break;
+            }
+        }
+        
         eventList.add(resignEvent);
     }
 }
