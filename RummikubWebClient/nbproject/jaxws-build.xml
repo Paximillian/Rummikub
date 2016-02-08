@@ -28,8 +28,8 @@
     </target>
     <target name="wsimport-client-RummikubWebServiceService" depends="wsimport-init">
         <mkdir dir="${build.generated.dir}/jax-wsCache/RummikubWebServiceService"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/RummikubWebServiceService" destdir="${build.generated.dir}/jax-wsCache/RummikubWebServiceService" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/RummikubWebServiceService/wsdl/localhost_8084/api/RummikubWebServiceService.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:8084/api/RummikubWebServiceService?wsdl" xnocompile="true" xendorsed="true" package="ws.rummikub">
-            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/RummikubWebServiceService/wsdl/localhost_8084/api/RummikubWebServiceService.wsdl"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/RummikubWebServiceService" destdir="${build.generated.dir}/jax-wsCache/RummikubWebServiceService" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/RummikubWebServiceService/wsdl/mobedu3.mtacloud.co.il_8080/RummikubWebServer/RummikubWebServiceService.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://mobedu3.mtacloud.co.il:8080/RummikubWebServer/RummikubWebServiceService?wsdl" xnocompile="true" xendorsed="true" package="ws.rummikub">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/RummikubWebServiceService/wsdl/mobedu3.mtacloud.co.il_8080/RummikubWebServer/RummikubWebServiceService.wsdl"/>
             <produces dir="${build.generated.dir}/jax-wsCache/RummikubWebServiceService"/>
         </wsimport>
         <copy todir="${build.generated.sources.dir}/jax-ws">

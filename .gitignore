@@ -26,3 +26,4 @@ hs_err_pid*
 /RummikubWebClient/nbproject/private/
 /RummikubWebClient/build/
 /RummikubWebClient/dist/
+*.properties

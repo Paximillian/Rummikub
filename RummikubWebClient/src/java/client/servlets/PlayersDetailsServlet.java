@@ -20,7 +20,7 @@ import ws.rummikub.InvalidParameters_Exception;
  * @author Mor
  */
 
-@WebServlet("/Lobby/PlayerDetails")
+@WebServlet("/Lobby/PlayersDetails")
 //Expects: gameName - string
 //Returns: playerDetails - List<PlayerDetails>
 public class PlayersDetailsServlet extends WebClient {
