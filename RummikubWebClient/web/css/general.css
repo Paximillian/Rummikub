@@ -1,0 +1,28 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Feb 8, 2016, 5:40:50 PM
+    Author     : yafita870
+*/
+
+body{
+    
+    background-image: url("../res/light-blue-background-1.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.mainTitale{
+    font-size:64px;
+    text-align: center;
+    color: rgb(94,24,216);
+}
+
+.continer{
+    margin-top: 20px;
+    text-align: center;
+}
+

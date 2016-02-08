@@ -1,0 +1,20 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Feb 8, 2016, 3:16:47 PM
+    Author     : yafita870
+*/
+
+.mainMenuButton{
+    background-color: rgb(205,239,155);
+    font-size:24px;
+    width: 256px;
+    height: 64px;
+    color: rgb(94,24,216);
+    alignment-adjust:middle
+}
+
+
