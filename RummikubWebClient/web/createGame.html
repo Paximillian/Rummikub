@@ -6,24 +6,205 @@ and open the template in the editor.
 -->
 <html>
     <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
         <title>createGame</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src='js/CookieUtils.js'></script>
         <link rel="stylesheet" href="css/general.css"/>
         <link rel="stylesheet" href="css/createGame.css"/>
     </head>
     <body>
-        <form>
+        <div action='Lobby/CreateGame' method='post'>
+            <input type="hidden" id="humanPlayers" name="humanPlayers"/>
+            <input type="hidden" id="computerPlayers" name="computerPlayers"/>
+             <input type="hidden" id="gameStatus" name="gameStatus"/>
+            
             <p class="mainTitale">New Game Settings</p>
             <div class="continer">
-               <input class ="submit" type="submit" value="Create Game">
+                <button class ="createGameButton" onclick="createGame();">Create Game</button>
             </div>
             <div class="continer">
-                <p>Game name </p> <input type="text" name="gameName" value="Enter Game Name"> <br><br>
-                Number of players <br>
+                <h2  class="witinForPlayerMsg" ></h2><br>
+                Game name  <input type="text" id=gameName name="gameName" value="Enter Game Name"> <br><br>
+                Number of players <button type="button" onClick="numberOfPlayersSetTo2();" id="numberOfPlayersButton2" class="numberOfPlayersButton2">2</button>
+                <button type="button" id="numberOfPlayersButton3" class="numberOfPlayersButton3" onClick="numberOfPlayersSetTo3();" >3</button>
+                <button type="button" id="numberOfPlayersButton4" class="numberOfPlayersButton4" onClick="numberOfPlayersSetTo4();">4</button><br><br>
+                Number of AI Players <button type="button" id="numberOfAIPlayersButton0" class='numberOfAIPlayersButton0' onClick="$('#computerPlayers').val('0');" >0</button>
+                <button type="button" id="numberOfAIPlayersButton1" class="numberOfAIPlayersButton1" onClick="$('#computerPlayers').val('1');">1</button><button type="button" id="numberOfAIPlayersButton2" class="numberOfAIPlayersButton2" onClick="$('#computerPlayers').val('2');">2</button><button type="button" id="numberOfAIPlayersButton3" class="numberOfAIPlayersButton3" onClick="$('#computerPlayers').val('3');">3</button><br><br><br><br>
+                <div id="continerPlayer1" >
+                    Player1    Name <input type="text" name="playerName" id="playerName" value="enter name"><br>
+                </div>
+                <div id="continerPlayer2" class="PlayerContiner">
+                    Player2    Name <input type="text" id="playerName2" value="" disabled> <br>
+                </div>
+                <div id="continerPlayer3" class="PlayerContiner">
+                    Player3    Name <input type="text" id="playerName3" value="" disabled> <br>
+                </div>
+                <div id="continerPlayer4" class="PlayerContiner">
+                    Player4    Name <input type="text" id="playerName4" value="" disabled> <br>
+                </div>
             </div>
             
            
-        </form>
+        </div>
+        <script>
+            $(document).ready(function(){ init();});
+            
+            function init(){
+                var gameName = getCookie('gameName');
+                if(gameName === ''){
+                    $('#computerPlayers').val('0');              
+                    numberOfPlayersSetTo2();
+                }
+                else { getGameDetals(gameName);}
+            }
+            function numberOfPlayersSetTo2(){
+                $('#numberOfAIPlayersButton2').hide();
+                $('#numberOfAIPlayersButton3').hide();
+                $('#continerPlayer3').hide();
+                $('#continerPlayer4').hide();
+                
+                $('#humanPlayers').val('2');
+                
+            }
+            
+            function numberOfPlayersSetTo3(){          
+                $('#numberOfAIPlayersButton3').hide();
+                $('#continerPlayer4').hide();
+                $('#numberOfAIPlayersButton2').show();
+                $('#continerPlayer3').show();
+                
+                $('#humanPlayers').val('3');
+            }
+            
+            function numberOfPlayersSetTo4(){          
+                $('#numberOfAIPlayersButton3').show();
+                $('#continerPlayer4').show();
+                $('#numberOfAIPlayersButton2').show();
+                $('#continerPlayer3').show();
+                
+                $('#humanPlayers').val('4');
+            }
+            
+            function getGameDetals(gamename){
+                
+                setCookie('gameName', gamename);
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (xhttp.readyState == 4 && xhttp.status == 200)
+                    {                      
+                        var gameDetals = jQuery.parseJSON( xhttp.responseText);
+                        if(gameDetals !== null )
+                        {                          
+                              $('.witinForPlayerMsg').html('Witing for mor players');
+                              $('button').attr('disabled','disabled');
+                              $('input').attr('disabled','disabled');
+                              updatedCrateGamePage(gameDetals);
+                        }     
+                    }
+                    else
+                    {
+                        $('.witinForPlayerMsg').html(xhttp.responseText);
+                    }
+                }
+                xhttp.open("GET", "Lobby/GameDetails", true);
+                xhttp.send();  
+            }
+            
+            function updatedCrateGamePage(gameDetals){
+                
+                $('#gameName').val(gameDetals["name"]);
+                var namerOfPlayers = gameDetals['humanPlayers'] + gameDetals['computerizedPlayers'];
+                setNamberOfPlayers(namerOfPlayers);
+                $('#computerPlayers').val(gameDetals['computerizedPlayers']);
+                setNamesOfPlayers(gameDetals["name"] );
+                $('#gameStatus').val(gameDetals['status']);
+                watingRoom();
+            }
+            
+            function watingRoom()
+            {            
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (xhttp.readyState == 4 && xhttp.status == 200)
+                    {                      
+                        var gameDetals = jQuery.parseJSON( xhttp.responseText);
+                        if(gameDetals !== null )
+                        { 
+                            setNamesOfPlayers(gameDetals["name"]);
+                            $('#gameStatus').val(gameDetals['status']);
+                            if($('#gameStatus').val() === 'WAITING')
+                            {
+                                setInterval(watingRoom(),4000);
+                            }
+                            else{
+                                location.href='index.html';
+                            }
+                        }     
+                    }
+                }
+                xhttp.open("GET", "Lobby/GameDetails", true);
+                xhttp.send(); 
+            }
+            
+            function setNamesOfPlayers(gameName ){   
+                setCookie('gameName', gameName);
+                
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (xhttp.readyState == 4 && xhttp.status == 200)
+                    {                      
+                        var playersNames = jQuery.parseJSON( xhttp.responseText);
+                        if(playersNames !== null )
+                        {
+                            $('#playerName').val(playersNames[0]["name"]);
+                            if(playersNames.length >1){
+                                $('#playerName2').val(playersNames[1]["name"]);
+                                if(playersNames.length >2){
+                                    $('#playerName3').val(playersNames[2]["name"]);
+                                    if(playersNames.length > 3){
+                                        $('#playerName4').val(playersNames[3]["name"]);
+                                    }
+                                }
+                            }                          
+                        }     
+                    }
+                }
+                xhttp.open("GET", "Lobby/PlayersDetails", true);
+                xhttp.send(); 
+            }
+            
+            function setNamberOfPlayers(namberOfHumanPlayers){
+                if(namberOfHumanPlayers === 4) numberOfPlayersSetTo4();
+                else if (namberOfHumanPlayers === 3) numberOfPlayersSetTo3();
+                else numberOfPlayersSetTo2();
+            }
+                      
+            function createGame(){
+                var gamename = $('#gameName').val();
+                setCookie('gameName', gamename);
+                setCookie('playerName', $('#playerName').val());
+                setCookie('humanPlayers', ($('#humanPlayers').val() - $('#computerPlayers').val()));
+                setCookie('computerPlayers', $('#computerPlayers').val());
+                            
+                var xhttp = new XMLHttpRequest();
+                xhttp.open("POST", "Lobby/CreateGame", true);
+                //xhttp.setRequestHeader('Content-length',msg.length);
+                xhttp.onreadystatechange = function() {
+                    if (xhttp.readyState == 4 && xhttp.status == 200)
+                    {  
+                        getGameDetals(gamename);
+                    }
+                    else
+                    {
+                        $('.witinForPlayerMsg').html(xhttp.responseText);
+                    }
+                }
+                
+                xhttp.send(); 
+            }
+            
+        </script>
     </body>
 </html>

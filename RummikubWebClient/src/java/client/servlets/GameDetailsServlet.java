@@ -6,6 +6,7 @@
 package client.servlets;
 
 import client.serverConnection.WebClient;
+import static client.servlets.Cookie.CookieUtils.CookieMap;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -27,14 +28,14 @@ public class GameDetailsServlet extends WebClient {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         
-        String gameName = request.getParameter("gameName");
+        String gameName = CookieMap(request.getCookies() ,"gameName" );
             
         if(gameName != null && !gameName.equals("")){
             try {
                 out.write(json.toJson(webService.getGameDetails(gameName)));
             } 
             catch (GameDoesNotExists_Exception ex) {
-                response.sendError(404, ex.getMessage());
+                out.write(json.toJson(null));
             }
         }
         else{

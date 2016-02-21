@@ -8,11 +8,48 @@ and open the template in the editor.
     Author     : yafita870
 */
 
-.submit{
+.createGameButton{
     background-color: rgb(205,239,155);
     font-size:24px;
     width: 180px;
     height: 50px;
     color: rgb(94,24,216);
     
+}
+.witinForPlayerMsg{
+    
+    color: red;
+}
+.numberOfPlayersButton2{
+    background-color: rgb(41, 219, 213);
+    color:#f7bd24;
+}
+
+.numberOfPlayersButton3{
+    background-color:#2437f7;
+    color:#f7bd24;
+}
+
+.numberOfPlayersButton4{
+    background-color:#9024f7;
+    color:#f7bd24        
+}
+
+.numberOfAIPlayersButton0{
+    background-color: rgb(41, 219, 213);
+    color:#f7bd24;
+}
+.numberOfAIPlayersButton1{
+    background-color:#2437f7;
+    color:#f7bd24;
+}
+
+.numberOfAIPlayersButton2{
+    background-color:#9024f7;
+    color:#f7bd24;
+}
+
+.numberOfAIPlayersButton3{
+    background-color:#ff0007;
+    color:#f7bd24;
 }

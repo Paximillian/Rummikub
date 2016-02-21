@@ -1,0 +1,30 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Feb 10, 2016, 5:42:51 PM
+    Author     : yafita870
+*/
+.joenGsmeButton{
+    background-color: rgb(205,239,155);
+    font-size:16px;
+    width: 100px;
+    height: 32px;
+    color: rgb(94,24,216);
+    alignment-adjust:middle;
+}
+
+.errorMSG{
+    color: red;
+}
+
+.joenGsmejoenGameButton{
+    background-color: rgb(205,239,155);
+    font-size:12px;
+    width: 512px;
+    height: 16px;
+    color: rgb(94,24,216);
+    alignment-adjust:middle;
+}

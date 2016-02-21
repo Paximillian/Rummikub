@@ -6,6 +6,7 @@
 package client.servlets;
 
 import client.serverConnection.WebClient;
+import static client.servlets.Cookie.CookieUtils.CookieMap;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -25,10 +26,10 @@ import ws.rummikub.InvalidParameters_Exception;
 //Returns: playerDetails - List<PlayerDetails>
 public class PlayersDetailsServlet extends WebClient {
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         
-        String gameName = request.getParameter("gameName");
+        String gameName = CookieMap(request.getCookies() ,"gameName" );
         
         if(gameName != null && !gameName.equals("")){
             try {

@@ -6,6 +6,7 @@
 package client.servlets;
 
 import client.serverConnection.WebClient;
+import static client.servlets.Cookie.CookieUtils.CookieMap;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
@@ -31,8 +32,8 @@ public class JoinGameServlet extends WebClient {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         
-        String gameName = request.getParameter("gameName");
-        String playerName = request.getParameter("playerName");
+        String gameName = CookieMap(request.getCookies() ,"gameName" );
+        String playerName = CookieMap(request.getCookies() ,"playerName");
         
         if(gameName != null && !gameName.equals("")){
             if(playerName != null && !playerName.equals("")){

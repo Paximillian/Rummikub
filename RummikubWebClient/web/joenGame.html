@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>joinGame</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <script src="js/CookieUtils.js"></script>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/general.css"/>
+        <link rel="stylesheet" href="css/joenGame.css"/>
+    </head>
+    <body>
+        <p class="mainTitale">Join game</p>
+        <div class="continer">
+            <button type="button" class="joenGsmeButton" onclick="location.href='index.html'">Back</button>
+            <button type="button" class="joenGsmeButton" onclick="getGameList();">Refrash</button>
+        </div>
+        <div id="continerPlayer1" class="continer" >
+            <h2  class="errorMSG" ></h2><br>
+            Player  Name <input type="text" id="playerName" name="playerName"><br><br><br><br>
+        </div>
+        
+        <div id = 'gameList'>
+            
+        </div>
+        
+    <script>
+        $(document).ready(function(){
+            console.log('banna');
+            getGameList();
+        });
+        
+        
+        function getGameList(){
+            
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                    if (xhttp.readyState == 4 && xhttp.status == 200)
+                    {
+                        $("#gameList").html("");
+                        var gameListArr = jQuery.parseJSON( xhttp.responseText);
+                        if(gameListArr != null && gameListArr.length !== 0)
+                        {
+                            for(var i = 0 ; i < gameListArr.length ; i++)
+                            {
+                                $("#gameList").html($("#gameList").html() + "<div class='continer'><button type='button' class = joenGsmejoenGameButton onClick = 'joinGame(\""+gameListArr[i]+"\");'>" + 'join the game named:  ' +gameListArr[i]+"</button></div>");
+                            }
+                        }     
+                    }
+                }
+            xhttp.open("GET", "Lobby/WaitingGames", true);
+            xhttp.send();  
+        }
+                
+        function joinGame(gameName){
+            
+            setCookie('gameName', gameName);
+            registerPlayer();
+        }    
+        
+        function registerPlayer(){
+            setCookie('playerName', $('#playerName').val());
+            
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (xhttp.readyState == 4 )
+                    {
+                        if(xhttp.status == 200)
+                        {
+                            location.href='createGame.html';
+                        }
+                        else
+                        {
+                            $('.errorMSG').html('select adefrant name');
+                        }
+                    }
+                }
+                xhttp.open("POST", "Lobby/JoinGame", true);
+                xhttp.send(); 
+        }
+
+        </script>
+    </body>
+</html>
