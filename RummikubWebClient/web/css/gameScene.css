@@ -1,0 +1,55 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Feb 22, 2016, 3:55:10 PM
+    Author     : yafita870
+*/
+
+.scrollDiv{
+    width: 1200px;
+    height: 350px;
+    overflow-y: scroll;
+    overflow-x:hidden; 
+}
+
+.hand{
+    height: 80px;
+    overflow-x: scroll;
+    overflow-y:hidden; 
+    width: 1200px;
+}
+
+.gameSceneButton{
+    background-color: rgb(205,239,155);
+    font-size:24px;
+    width: 256px;
+    height: 64px;
+    color: rgb(94,24,216);
+    alignment-adjust:middle
+}
+
+.sequnceDiv{
+    
+    padding-bottom: 15px;
+    padding-right: 50px;
+    background-color:#cac6f9
+}
+
+.RED{
+    background-color: red;
+}
+
+.YELLOW{
+    background-color: yellow;
+}
+
+.BLUE{
+    background-color :blue;
+}
+
+.BLACK{
+    background-color : #7c7c7c
+}

@@ -37,11 +37,11 @@ public class CreateGameFromXmlServlet extends WebClient {
                 out.write(json.toJson(webService.createGameFromXML(xmlData)));
             } 
             catch (DuplicateGameName_Exception | InvalidParameters_Exception | InvalidXML_Exception ex) {
-                response.sendError(404, ex.getMessage());
+                response.sendError(400, ex.getMessage());
             }
         } 
         else{
-            response.sendError(404, "Invalid xml data supplied");
+            response.sendError(400, "Invalid xml data supplied");
         }
     }
 }

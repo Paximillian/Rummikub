@@ -33,10 +33,10 @@ public class ResignServlet extends WebClient {
             webService.resign(playerId);
         }
         catch(NumberFormatException ex){
-                response.sendError(404, "Invalid player ID supplied");
+                response.sendError(400, "Invalid player ID supplied");
         } 
         catch (InvalidParameters_Exception ex) {
-                response.sendError(404, ex.getMessage());
+                response.sendError(400, ex.getMessage());
         }
     }
 }

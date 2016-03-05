@@ -72,6 +72,9 @@ and open the template in the editor.
                     {
                         if(xhttp.status == 200)
                         {
+                            var playerID = jQuery.parseJSON(xhttp.responseText);
+                            setCookie('playerId',playerID);
+                            setCookie('eventId',0);
                             location.href='createGame.html';
                         }
                         else

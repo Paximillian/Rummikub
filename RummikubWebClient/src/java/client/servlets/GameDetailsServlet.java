@@ -39,7 +39,7 @@ public class GameDetailsServlet extends WebClient {
             }
         }
         else{
-            response.sendError(404, "Invalid game name supplied");
+            response.sendError(400, "Invalid game name supplied");
         }
     }
 }

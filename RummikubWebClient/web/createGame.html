@@ -6,6 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
+        
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
         <title>createGame</title>
         <meta charset="UTF-8">
@@ -139,7 +140,7 @@ and open the template in the editor.
                                 setInterval(watingRoom(),4000);
                             }
                             else{
-                                location.href='index.html';
+                                location.href='gameScene.html';
                             }
                         }     
                     }
@@ -194,6 +195,9 @@ and open the template in the editor.
                 xhttp.onreadystatechange = function() {
                     if (xhttp.readyState == 4 && xhttp.status == 200)
                     {  
+                        var playerID = jQuery.parseJSON(xhttp.responseText);
+                        setCookie('playerId',playerID);
+                        setCookie('eventId',0);
                         getGameDetals(gamename);
                     }
                     else

@@ -6,6 +6,7 @@
 package client.servlets;
 
 import client.serverConnection.WebClient;
+import static client.servlets.Cookie.CookieUtils.CookieMap;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
@@ -30,15 +31,15 @@ public class FinishTurnServlet extends WebClient {
         
         int playerId;
         try{
-            playerId = Integer.parseInt(request.getParameter("playerId"));
+            playerId = Integer.parseInt(CookieMap(request.getCookies() ,"playerId"));
 
             webService.finishTurn(playerId);
         }
         catch(NumberFormatException ex){
-                response.sendError(404, "Invalid player ID supplied");
+                response.sendError(400, "Invalid player ID supplied");
         } 
         catch (InvalidParameters_Exception ex) {
-                response.sendError(404, ex.getMessage());
+                response.sendError(400, ex.getMessage());
         }
     }
 }

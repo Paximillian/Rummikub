@@ -35,7 +35,7 @@ public class PlayerDetailsServlet extends WebClient {
             out.write(json.toJson(webService.getPlayerDetails(playerId)));
         } 
         catch (GameDoesNotExists_Exception | InvalidParameters_Exception | NumberFormatException ex) {
-            response.sendError(404, "Invalid player ID supplied");
+            response.sendError(400, "Invalid player ID supplied");
         }
     }
 }

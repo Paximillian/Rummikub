@@ -29,7 +29,7 @@ import ws.rummikub.InvalidParameters_Exception;
 //          playerName - string
 //          humanPlayers - int
 //          computerPlayers - int
-//Returns: 
+//Returns: playerId - int
 public class CreateGameServlet extends WebClient {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -51,21 +51,22 @@ public class CreateGameServlet extends WebClient {
                 try{
                     computerPlayers = Integer.parseInt(CookieMap(cookies ,"computerPlayers"));
                     webService.createGame(gameName, humanPlayers, computerPlayers);
-                    webService.joinGame(gameName, playerName);
+                    String returnId = json.toJson(webService.joinGame(gameName, playerName));
+                    out.write(returnId);
                 }
                 catch (NumberFormatException ex) {
-                    response.sendError(404, "Invalid number of computer players supplied");
+                    response.sendError(400, "Invalid number of computer players supplied");
                 }
                 catch(InvalidParameters_Exception | GameDoesNotExists_Exception | DuplicateGameName_Exception ex){
-                    response.sendError(404, ex.getMessage());
+                    response.sendError(400, ex.getMessage());
                 }
             }
             catch(NumberFormatException ex){
-                    response.sendError(404, "Invalid number of players supplied");
+                    response.sendError(400, "Invalid number of players supplied");
             }
         }
         else{
-            response.sendError(404, "Invalid game name supplied");
+            response.sendError(400, "Invalid game name supplied");
         }
     }
 }

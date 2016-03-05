@@ -6,6 +6,7 @@
 package client.servlets;
 
 import client.serverConnection.WebClient;
+import static client.servlets.Cookie.CookieUtils.CookieMap;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -19,7 +20,7 @@ import ws.rummikub.InvalidParameters_Exception;
  *
  * @author Mor
  */
-@WebServlet("/Game/CreateGame")
+@WebServlet("/Game/MoveTile")
 //Expects: playerId - int
 //          sourceSequenceIndex - int 
 //          sourceSequencePosition - int 
@@ -33,27 +34,27 @@ public class MoveTileServlet extends WebClient {
         
         int playerId;
         try{
-            playerId = Integer.parseInt(request.getParameter("playerId"));
+            playerId = Integer.parseInt(CookieMap(request.getCookies() ,"playerId"));
 
             int sourceSequenceId, sourceSequencePos, targetSequenceId, targetSequencePos;
 
             try{
-                sourceSequenceId = Integer.parseInt(request.getParameter("sourceSequenceId"));
-                sourceSequencePos = Integer.parseInt(request.getParameter("sourceSequencePo"));
-                targetSequenceId = Integer.parseInt(request.getParameter("targetSequenceId"));
-                targetSequencePos = Integer.parseInt(request.getParameter("targetSequencePos"));
+                sourceSequenceId = Integer.parseInt(CookieMap(request.getCookies() ,"sourceSequenceIndex"));
+                sourceSequencePos = Integer.parseInt(CookieMap(request.getCookies() ,"sourceSequencePosition"));
+                targetSequenceId = Integer.parseInt(CookieMap(request.getCookies() ,"targetSequenceIndex"));
+                targetSequencePos = Integer.parseInt(CookieMap(request.getCookies() ,"targetSequencePosition"));
                 
                 webService.moveTile(playerId, sourceSequenceId, sourceSequencePos, targetSequenceId, targetSequencePos);
             }
             catch (NumberFormatException ex) {
-                response.sendError(404, "Invalid move data supplied");
+                response.sendError(400, "Invalid move data supplied");
             }
             catch(InvalidParameters_Exception ex){
-                response.sendError(404, ex.getMessage());
+                response.sendError(400, ex.getMessage());
             } 
         }
         catch(NumberFormatException ex){
-                response.sendError(404, "Invalid player ID supplied");
+                response.sendError(400, "Invalid player ID supplied");
         }
     }
 }

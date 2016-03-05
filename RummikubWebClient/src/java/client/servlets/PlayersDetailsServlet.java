@@ -36,11 +36,11 @@ public class PlayersDetailsServlet extends WebClient {
                 out.write(json.toJson(webService.getPlayersDetails(gameName)));
             } 
             catch (GameDoesNotExists_Exception ex) {
-                response.sendError(404, ex.getMessage());
+                response.sendError(400, ex.getMessage());
             }
         }
         else{
-            response.sendError(404, "Invalid game name supplied");
+            response.sendError(400, "Invalid game name supplied");
         }
     }
 }
